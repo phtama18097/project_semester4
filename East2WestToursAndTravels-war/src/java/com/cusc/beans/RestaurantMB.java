@@ -84,11 +84,38 @@ public class RestaurantMB implements Serializable {
     }
 
     public void update() {
+        try{
+            Restaurants r = restaurantsFacade.find(editID);
+            r.setRestaurantName(restaurants.getRestaurantName());
+            r.setDescription(restaurants.getDescription());
+            r.setMinPrice(restaurants.getMinPrice());
+            r.setMaxPrice(restaurants.getMaxPrice());
+            r.setLocation(restaurants.getLocation());
+            r.setTownId(townsFacade.find(townID));
 
+            if(file != null){
+                deleteFile(r.getThumbnail());
+                r.setThumbnail(uploadFile());
+            }
+            restaurantsFacade.edit(r);
+            resetForm();
+            notice = "toastr.success(\"The restaurant has been updated successfully!\");";
+        }catch(Exception ex){
+            notice = "toastr.error(\"The restaurant has not updated. Try again.\");";
+        }
     }
 
     public void resetForm() {
-
+        restaurants.setRestaurantName(null);
+        restaurants.setDescription(null);
+        restaurants.setLocation(null);
+        restaurants.setMinPrice(null);
+        restaurants.setMaxPrice(null);
+        restaurants.setThumbnail(null);
+        restaurants.setTownId(null);
+        setEditID(0);
+        setTownID(0);
+        
     }
 
     private String uploadFile() {
@@ -99,7 +126,7 @@ public class RestaurantMB implements Serializable {
                 String type = file.getContentType();
                 if (type.equals("image/jpeg") || type.equals("image/png") || type.equals("image/jpg")) {
                     if (file.getSize() > 5242880) {
-                        //return "admin_blogs_form";
+                        //notice = "toastr.error(\"The thumbnail must less than 5MB. Try again\");";
                     }
                     Date date = new Date();
                     fileName = file.getSubmittedFileName().substring(0, file.getSubmittedFileName().lastIndexOf("."));
