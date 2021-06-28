@@ -20,7 +20,7 @@ $("#btnCloseChange").click(function () {
     $('#btnSaveChange').hide();
     $('#passfield').show();
     $('#userfield').show();
-    $('#modalTitle').text("New Customer");
+    $('#modalTitle').text("New Employee");
 
     $('#username').val("");
     $('#password').val("");
@@ -87,7 +87,7 @@ function editObject(id, username, firstname, lastname, gender, birthdate, email,
     $('#customFile').val("");
 
     $('#newItem').modal();
-    $('#modalTitle').text("Edit The Customer");
+    $('#modalTitle').text("Edit The Employee");
     $('#btnSaveChange').show();
     $('#btnAddNew').hide();
 }
@@ -109,7 +109,7 @@ function detailObject(id, username, firstname, lastname, gender, birthdate, emai
     $('#dtAddress').val(address);
     $('#dtStatus').prop("checked", status);
     $('#dtPoint').val(point);
-    $('#dtAvatar').attr('src', "/East2WestToursAndTravels-war/uploads/imgCustomers/" + avatar);
+    $('#dtAvatar').attr('src', "/East2WestToursAndTravels-war/uploads/imgEmployees/" + avatar);
 
     $('#detailModal').modal();
 }

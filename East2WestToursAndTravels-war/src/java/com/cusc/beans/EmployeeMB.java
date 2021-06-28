@@ -5,8 +5,8 @@
  */
 package com.cusc.beans;
 
-import com.cusc.entities.Customers;
-import com.cusc.sessionbean.CustomersFacadeLocal;
+import com.cusc.entities.Employees;
+import com.cusc.sessionbean.EmployeesFacadeLocal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,50 +27,46 @@ import javax.servlet.http.Part;
  *
  * @author Admin
  */
-@Named(value = "customerMB")
+@Named(value = "employeeMB")
 @SessionScoped
-public class CustomerMB implements Serializable {
+public class EmployeeMB implements Serializable {
 
     @EJB
-    private CustomersFacadeLocal customersFacade;
+    private EmployeesFacadeLocal employeesFacade;
 
     private Part file;
-    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgCustomers";
+    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgEmployees";
 
-    private Customers customers;
+    private Employees employees;
     private String notice = "";
     private int editID = 0;
     private boolean gender = true;
-    private boolean customerStatus = true;
+    private boolean employeeStatus = true;
 
-    public CustomerMB() {
-        customers = new Customers();
-    }
-    
-    public List<Customers> showAll() {
-        return customersFacade.findAll();
+    public EmployeeMB() {
+        employees = new Employees();
     }
 
     public void create() {
         try {
-            Customers c = new Customers();
-            c.setUsername(customers.getUsername());
-            c.setPassword(customers.getPassword());
-            c.setFirstName(customers.getFirstName());
-            c.setLastName(customers.getLastName());
+            Employees c = new Employees();
+            c.setUsername(employees.getUsername());
+            c.setPassword(employees.getPassword());
+            c.setFirstName(employees.getFirstName());
+            c.setLastName(employees.getLastName());
             c.setGender(gender);
-            c.setBirthDate(customers.getBirthDate());
-            c.setPhone(customers.getPhone());
-            c.setEmail(customers.getEmail());
-            c.setAddress(customers.getAddress());
+            c.setBirthDate(employees.getBirthDate());
+            c.setPhone(employees.getPhone());
+            c.setEmail(employees.getEmail());
+            c.setAddress(employees.getAddress());
             c.setAvatar(uploadFile());
             c.setPoint(0);
-            if (customerStatus) {
+            if (employeeStatus) {
                 c.setStatus((short) 1);
             } else {
                 c.setStatus((short) 0);
             }
-            customersFacade.create(c);
+            employeesFacade.create(c);
             resetForm();
             notice = "toastr.success(\"New customer has been added successfully!\");";
         } catch (Exception ex) {
@@ -78,9 +74,9 @@ public class CustomerMB implements Serializable {
         }
     }
 
-    public void delete(Customers cus) {
+    public void delete(Employees cus) {
         try{
-            customersFacade.remove(cus);
+            employeesFacade.remove(cus);
             notice = "toastr.success(\"The customer has been deleted successfully!\");";
             deleteFile(cus.getAvatar());
         }catch(Exception ex){
@@ -90,24 +86,24 @@ public class CustomerMB implements Serializable {
 
     public void update() {
         try {
-            Customers c = customersFacade.find(editID);
-            c.setFirstName(customers.getFirstName());
-            c.setLastName(customers.getLastName());
+            Employees c = employeesFacade.find(editID);
+            c.setFirstName(employees.getFirstName());
+            c.setLastName(employees.getLastName());
             c.setGender(gender);
-            c.setBirthDate(customers.getBirthDate());
-            c.setPhone(customers.getPhone());
-            c.setEmail(customers.getEmail());
-            c.setAddress(customers.getAddress());
+            c.setBirthDate(employees.getBirthDate());
+            c.setPhone(employees.getPhone());
+            c.setEmail(employees.getEmail());
+            c.setAddress(employees.getAddress());
             if(file != null){
                 deleteFile(c.getAvatar());
                 c.setAvatar(uploadFile());
             }
-            if (customerStatus) {
+            if (employeeStatus) {
                 c.setStatus((short) 1);
             } else {
                 c.setStatus((short) 0);
             }
-            customersFacade.edit(c);
+            employeesFacade.edit(c);
             resetForm();
             notice = "toastr.success(\"The customer has been updated successfully!\");";
         } catch (Exception ex) {
@@ -116,20 +112,20 @@ public class CustomerMB implements Serializable {
     }
 
     public void resetForm() {
-        customers.setUsername(null);
-        customers.setPassword(null);
-        customers.setFirstName(null);
-        customers.setLastName(null);
-        customers.setGender(null);
-        customers.setBirthDate(null);
-        customers.setPhone(null);
-        customers.setEmail(null);
-        customers.setAddress(null);
-        customers.setAvatar(null);
-        customers.setPoint(null);
-        customers.setStatus(null);
+        employees.setUsername(null);
+        employees.setPassword(null);
+        employees.setFirstName(null);
+        employees.setLastName(null);
+        employees.setGender(null);
+        employees.setBirthDate(null);
+        employees.setPhone(null);
+        employees.setEmail(null);
+        employees.setAddress(null);
+        employees.setAvatar(null);
+        employees.setPoint(null);
+        employees.setStatus(null);
         setEditID(0);
-        setCustomerStatus(true);     
+        setEmployeeStatus(true);     
         setGender(true);
     }
 
@@ -211,12 +207,24 @@ public class CustomerMB implements Serializable {
         }
     }
 
-    public Customers getCustomers() {
-        return customers;
+    public List<Employees> showAll() {
+        return employeesFacade.findAll();
     }
 
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    public Employees getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Employees employees) {
+        this.employees = employees;
     }
 
     public String getNotice() {
@@ -235,22 +243,6 @@ public class CustomerMB implements Serializable {
         this.editID = editID;
     }
 
-    public Part getFile() {
-        return file;
-    }
-
-    public void setFile(Part file) {
-        this.file = file;
-    }
-
-    public boolean isCustomerStatus() {
-        return customerStatus;
-    }
-
-    public void setCustomerStatus(boolean customerStatus) {
-        this.customerStatus = customerStatus;
-    }
-
     public boolean isGender() {
         return gender;
     }
@@ -259,4 +251,12 @@ public class CustomerMB implements Serializable {
         this.gender = gender;
     }
 
+    public boolean isEmployeeStatus() {
+        return employeeStatus;
+    }
+
+    public void setEmployeeStatus(boolean employeeStatus) {
+        this.employeeStatus = employeeStatus;
+    }
+    
 }
