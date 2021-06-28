@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,7 +38,7 @@ public class CarModels implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ModelId")
     private Integer modelId;
     @Size(max = 50)
@@ -48,16 +50,8 @@ public class CarModels implements Serializable {
     public CarModels() {
     }
 
-    public CarModels(Integer modelId) {
-        this.modelId = modelId;
-    }
-
     public Integer getModelId() {
         return modelId;
-    }
-
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
     }
 
     public String getModelName() {

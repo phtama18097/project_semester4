@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -44,7 +46,7 @@ public class Accommodations implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AccommodationId")
     private Integer accommodationId;
     @Size(max = 50)
@@ -74,16 +76,8 @@ public class Accommodations implements Serializable {
     public Accommodations() {
     }
 
-    public Accommodations(Integer accommodationId) {
-        this.accommodationId = accommodationId;
-    }
-
     public Integer getAccommodationId() {
         return accommodationId;
-    }
-
-    public void setAccommodationId(Integer accommodationId) {
-        this.accommodationId = accommodationId;
     }
 
     public String getAccommodationName() {
