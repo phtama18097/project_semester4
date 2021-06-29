@@ -43,8 +43,7 @@ public class EmployeeMB implements Serializable {
     private boolean gender = true;
     private boolean employeeStatus = true;
     private boolean isAdmin = false;
-    String stem;
-
+    
     public EmployeeMB() {
         employees = new Employees();
     }
