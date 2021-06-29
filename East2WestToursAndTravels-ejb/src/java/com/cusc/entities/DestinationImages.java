@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,7 +37,7 @@ public class DestinationImages implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ImageId")
     private Integer imageId;
     @Size(max = 100)
@@ -48,16 +50,8 @@ public class DestinationImages implements Serializable {
     public DestinationImages() {
     }
 
-    public DestinationImages(Integer imageId) {
-        this.imageId = imageId;
-    }
-
     public Integer getImageId() {
         return imageId;
-    }
-
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
     }
 
     public String getFileName() {

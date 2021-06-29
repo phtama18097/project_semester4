@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,7 +36,7 @@ public class Configuration implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ConfigId")
     private Integer configId;
     @Size(max = 30)
@@ -47,16 +49,8 @@ public class Configuration implements Serializable {
     public Configuration() {
     }
 
-    public Configuration(Integer configId) {
-        this.configId = configId;
-    }
-
     public Integer getConfigId() {
         return configId;
-    }
-
-    public void setConfigId(Integer configId) {
-        this.configId = configId;
     }
 
     public String getConfigName() {

@@ -5,8 +5,10 @@
  */
 package com.cusc.beans;
 
-import com.cusc.entities.Employees;
-import com.cusc.sessionbean.EmployeesFacadeLocal;
+import com.cusc.entities.Destinations;
+import com.cusc.sessionbean.DestinationsFacadeLocal;
+import com.cusc.sessionbean.TourTypesFacadeLocal;
+import com.cusc.sessionbean.TownsFacadeLocal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,110 +29,92 @@ import javax.servlet.http.Part;
  *
  * @author Admin
  */
-@Named(value = "employeeMB")
+@Named(value = "destinationMB")
 @SessionScoped
-public class EmployeeMB implements Serializable {
+public class DestinationMB implements Serializable {
 
     @EJB
-    private EmployeesFacadeLocal employeesFacade;
+    private TourTypesFacadeLocal tourTypesFacade;
+
+    @EJB
+    private TownsFacadeLocal townsFacade;
+
+    @EJB
+    private DestinationsFacadeLocal destinationsFacade;
 
     private Part file;
-    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgEmployees";
+    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgDestinations";
 
-    private Employees employees;
+    private Destinations destinations;
     private String notice = "";
     private int editID = 0;
-    private boolean gender = true;
-    private boolean employeeStatus = true;
-    private boolean isAdmin = false;
+    private int townID = 0;
+    private int typeID = 0;
 
-    public EmployeeMB() {
-        employees = new Employees();
+    public DestinationMB() {
+        destinations = new Destinations();
+    }
+
+    public List<Destinations> showAll() {
+        return destinationsFacade.findAll();
     }
 
     public void create() {
         try {
-            Employees c = new Employees();
-            c.setUsername(employees.getUsername());
-            c.setPassword(employees.getPassword());
-            c.setFirstName(employees.getFirstName());
-            c.setLastName(employees.getLastName());
-            c.setGender(gender);
-            c.setBirthDate(employees.getBirthDate());
-            c.setPhone(employees.getPhone());
-            c.setEmail(employees.getEmail());
-            c.setAddress(employees.getAddress());
-            c.setAvatar(uploadFile());
-            c.setPoint(0);
-            c.setIsAdmin(isAdmin);
-            if (employeeStatus) {
-                c.setStatus((short) 1);
-            } else {
-                c.setStatus((short) 0);
-            }
-            employeesFacade.create(c);
+            Destinations d = new Destinations();
+            d.setDestinationName(destinations.getDestinationName());
+            d.setDescription(destinations.getDescription());
+            d.setThumbnail(uploadFile());
+            d.setTypeId(tourTypesFacade.find(typeID));
+            d.setTownId(townsFacade.find(townID));
+
+            destinationsFacade.create(d);
             resetForm();
-            notice = "toastr.success(\"New customer has been added successfully!\");";
+            notice = "toastr.success(\"New destination has been added successfully!\");";
         } catch (Exception ex) {
-            notice = "toastr.error(\"New customer has not added. Try again\");";
+            notice = "toastr.error(\"New destination has not added. Try again\");";
         }
     }
 
-    public void delete(Employees cus) {
-        try{
-            employeesFacade.remove(cus);
-            notice = "toastr.success(\"The customer has been deleted successfully!\");";
-            deleteFile(cus.getAvatar());
-        }catch(Exception ex){
-            notice = "toastr.error(\"The customer has a constraint. You cannot delete it.\");";
+    public void delete(Destinations d) {
+        try {
+            destinationsFacade.remove(d);
+            notice = "toastr.success(\"The destination has been deleted successfully!\");";
+            deleteFile(d.getThumbnail());
+        } catch (Exception ex) {
+            notice = "toastr.error(\"The destination has a constraint. You cannot delete it.\");";
         }
     }
 
     public void update() {
         try {
-            Employees c = employeesFacade.find(editID);
-            c.setFirstName(employees.getFirstName());
-            c.setLastName(employees.getLastName());
-            c.setGender(gender);
-            c.setBirthDate(employees.getBirthDate());
-            c.setPhone(employees.getPhone());
-            c.setEmail(employees.getEmail());
-            c.setAddress(employees.getAddress());
-            if(file != null){
-                deleteFile(c.getAvatar());
-                c.setAvatar(uploadFile());
+            Destinations d = destinationsFacade.find(editID);
+            d.setDestinationName(destinations.getDestinationName());
+            d.setDescription(destinations.getDescription());
+            d.setTypeId(tourTypesFacade.find(typeID));
+            d.setTownId(townsFacade.find(townID));
+
+            if (file != null) {
+                deleteFile(d.getThumbnail());
+                d.setThumbnail(uploadFile());
             }
-            if (employeeStatus) {
-                c.setStatus((short) 1);
-            } else {
-                c.setStatus((short) 0);
-            }
-            c.setIsAdmin(isAdmin);
-            employeesFacade.edit(c);
+            destinationsFacade.edit(d);
             resetForm();
-            notice = "toastr.success(\"The customer has been updated successfully!\");";
+            notice = "toastr.success(\"The destination has been updated successfully!\");";
         } catch (Exception ex) {
-            notice = "toastr.error(\"The customer has not updated. Try again\");";
+            notice = "toastr.error(\"The detination has not updated. Try again.\");";
         }
     }
 
     public void resetForm() {
-        employees.setUsername(null);
-        employees.setPassword(null);
-        employees.setFirstName(null);
-        employees.setLastName(null);
-        employees.setGender(null);
-        employees.setBirthDate(null);
-        employees.setPhone(null);
-        employees.setEmail(null);
-        employees.setAddress(null);
-        employees.setAvatar(null);
-        employees.setPoint(null);
-        employees.setStatus(null);
+        destinations.setDestinationName(null);
+        destinations.setDescription(null);
+        destinations.setThumbnail(null);
+        destinations.setTypeId(null);
+        destinations.setTownId(null);
         setEditID(0);
-        setEmployeeStatus(true);     
-        setGender(true);
-        setIsAdmin(false);
+        setTownID(0);
+        setTypeID(0);
         setFile(null);
     }
 
@@ -212,10 +196,6 @@ public class EmployeeMB implements Serializable {
         }
     }
 
-    public List<Employees> showAll() {
-        return employeesFacade.findAll();
-    }
-
     public Part getFile() {
         return file;
     }
@@ -224,12 +204,12 @@ public class EmployeeMB implements Serializable {
         this.file = file;
     }
 
-    public Employees getEmployees() {
-        return employees;
+    public Destinations getDestinations() {
+        return destinations;
     }
 
-    public void setEmployees(Employees employees) {
-        this.employees = employees;
+    public void setDestinations(Destinations destinations) {
+        this.destinations = destinations;
     }
 
     public String getNotice() {
@@ -248,28 +228,20 @@ public class EmployeeMB implements Serializable {
         this.editID = editID;
     }
 
-    public boolean isGender() {
-        return gender;
+    public int getTownID() {
+        return townID;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
+    public void setTownID(int townID) {
+        this.townID = townID;
     }
 
-    public boolean isEmployeeStatus() {
-        return employeeStatus;
+    public int getTypeID() {
+        return typeID;
     }
 
-    public void setEmployeeStatus(boolean employeeStatus) {
-        this.employeeStatus = employeeStatus;
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
     }
 
-    public boolean isIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-    
 }

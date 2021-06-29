@@ -116,7 +116,7 @@ public class AccommodationMB implements Serializable {
         accommodations.setTownId(null);
         setEditID(0);
         setTownID(0);
-        
+        setFile(null);
     }
 
     private String uploadFile() {

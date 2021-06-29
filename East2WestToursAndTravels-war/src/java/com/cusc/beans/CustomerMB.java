@@ -131,6 +131,7 @@ public class CustomerMB implements Serializable {
         setEditID(0);
         setCustomerStatus(true);     
         setGender(true);
+        setFile(null);
     }
 
     private String uploadFile() {

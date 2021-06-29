@@ -115,7 +115,7 @@ public class RestaurantMB implements Serializable {
         restaurants.setTownId(null);
         setEditID(0);
         setTownID(0);
-        
+        setFile(null);
     }
 
     private String uploadFile() {

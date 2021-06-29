@@ -11,13 +11,13 @@
 
     <ui:define name="subheader">
         <div class="d-flex align-items-center flex-wrap mr-2">
-            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Employees</h5>
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Destinations</h5>
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                 <li class="breadcrumb-item">
                     <a href="" class="text-muted">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="" class="text-muted">Manage Employees</a>
+                    <a href="" class="text-muted">Manage Destinations</a>
                 </li>
             </ul>
         </div>
@@ -98,50 +98,31 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-body">
-                <h:dataTable value="#{employeeMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+                <h:dataTable value="#{destinationMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
                     <h:column>
                         <f:facet name="header"><h:outputText value="ID"/></f:facet>
-                        <h:outputText value="#{item.employeeId}"/>
+                        <h:outputText value="#{item.destinationId}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Employee"/></f:facet>
+                        <f:facet name="header"><h:outputText value="Destination"/></f:facet>
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-50 flex-shrink-0">
-                                <h:graphicImage value="/uploads/imgEmployees/#{item.avatar}" alt="avatar"/> 
+                                <h:graphicImage value="/uploads/imgDestinations/#{item.thumbnail}" alt="photo" /> 
                             </div>
                             <div class="ml-3">
-                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.firstName} "/><h:outputText value="#{item.lastName}"/></span>
-                                <a href="#" class="text-muted text-hover-primary"><h:outputText value="#{item.username}"/></a>
+                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.destinationName}"/></span>
+                                <a href="#" class="text-muted text-hover-primary"><h:outputText value="#{item.typeId.typeName}"/></a>
                             </div>
                         </div>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Gender"/></f:facet>
-                        <h:outputText rendered="#{item.gender}" value="Male"/>
-                        <h:outputText rendered="#{!item.gender}" value="Female"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Phone"/></f:facet>
-                        <h:outputText value="#{item.phone}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Email"/></f:facet>
-                        <h:outputText value="#{item.phone}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Role"/></f:facet>
-                        <h:outputText class="label label-lg font-weight-bold label-light-info label-inline" rendered="#{item.isAdmin}" value="Admin" />
-                        <h:outputText rendered="#{!item.isAdmin}" class="label label-lg font-weight-bold label-light-info label-inline" value="Employee"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Status"/></f:facet>
-                        <h:outputText class="label label-lg font-weight-bold label-light-success label-inline" rendered="#{item.status == 1}" value="Active" />
-                        <h:outputText rendered="#{item.status == 0}" class="label label-lg font-weight-bold label-light-danger label-inline" value="Block"/>
+                        <f:facet name="header"><h:outputText value="Town"/></f:facet>
+                        <h:outputText value="#{item.townId.townName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}', '#{item.avatar}',#{item.point},#{item.status},#{item.isAdmin})" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.destinationId}, '#{item.destinationName}', '#{item.description}', '#{item.typeId.typeName}', '#{item.thumbnail}', '#{item.townId.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -153,7 +134,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}',#{item.status},#{item.isAdmin})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a onclick="editObject(#{item.destinationId}, '#{item.destinationName}', '#{item.description}', #{item.typeId.typeId}, '#{item.thumbnail}', #{item.townId.townId})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -164,7 +145,17 @@
                                 </svg>
                             </span>
                         </a>
-                        <a onclick="confirmDelete(#{item.employeeId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                        <a jsf:outcome="manageDestinationImages" class="btn btn-sm btn-clean btn-icon mr-2" title="Images">
+                            <span class="svg-icon svg-icon-md">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24"/>
+                                        <path d="M6,5 L18,5 C19.6568542,5 21,6.34314575 21,8 L21,17 C21,18.6568542 19.6568542,20 18,20 L6,20 C4.34314575,20 3,18.6568542 3,17 L3,8 C3,6.34314575 4.34314575,5 6,5 Z M5,17 L14,17 L9.5,11 L5,17 Z M16,14 C17.6568542,14 19,12.6568542 19,11 C19,9.34314575 17.6568542,8 16,8 C14.3431458,8 13,9.34314575 13,11 C13,12.6568542 14.3431458,14 16,14 Z" fill="#000000"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a onclick="confirmDelete(#{item.destinationId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -176,7 +167,7 @@
                             </span>
                         </a>
                         <h:form>
-                            <h:commandButton p:id="btnDelete-#{item.employeeId}" action="#{employeeMB.delete(item)}" style="display: none"/>
+                            <h:commandButton p:id="btnDelete-#{item.destinationId}" action="#{destinationMB.delete(item)}" style="display: none"/>
                         </h:form>
                     </h:column>
 
@@ -191,7 +182,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Employee</div></h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Destination</div></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -199,110 +190,54 @@
                     <h:form enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="card-body">
-                                <div id="userfield" class="form-group row">
-                                    <h:outputLabel value="Username" class="col-2 col-form-label" />
+                                <div class="form-group row">
+                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.username}" id="username" p:id="username" class="form-control" p:placeholder="Enter Username" />
-                                        <h:message for="username" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div id="passfield" class="form-group row">
-                                    <h:outputLabel value="Password" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputSecret value="#{employeeMB.employees.password}" id="password" p:id="password" class="form-control" p:placeholder="Enter Password" />
-                                        <h:message for="password" class="text-danger"/>  
+                                        <h:inputText value="#{destinationMB.destinations.destinationName}" id="name" p:id="name" class="form-control" p:placeholder="Enter Destination Name" />
+                                        <h:message for="name" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Firstname" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Description" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.firstName}" id="firstname" p:id="firstname" class="form-control" p:placeholder="Enter Firstname" />
-                                        <h:message for="firstname" class="text-danger"/>  
+                                        <h:inputTextarea value="#{destinationMB.destinations.description}" id="txaDescription" p:id="txaDescription" />
+                                        <h:message for="txaDescription" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Lastname" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Tour Type" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.lastName}" id="lastname" p:id="lastname" class="form-control" p:placeholder="Enter Lastname" />
-                                        <h:message for="lastname" class="text-danger"/>  
+                                        <h:selectOneMenu value="#{destinationMB.typeID}" class="form-control" p:id="slType">
+                                            <f:selectItem itemValue="0" itemLabel="Select the type of the destination"/>
+                                            <f:selectItems value="#{tourTypeMB.showAll()}" var="typ" itemValue="#{typ.typeId}" itemLabel="#{typ.typeName}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Gender" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Town" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:selectOneRadio value="#{employeeMB.gender}" id="gender">
-                                            <f:selectItem itemValue="true" itemLabel="&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;" p:id="rdMale" />
-                                            <f:selectItem itemValue="false" itemLabel="&nbsp;&nbsp;Female" p:id="rdFemale"/>
-                                        </h:selectOneRadio>
+                                        <h:selectOneMenu value="#{destinationMB.townID}" class="form-control" p:id="slTown">
+                                            <f:selectItem itemValue="0" itemLabel="Select the town of the destination"/>
+                                            <f:selectItems value="#{townMB.showAll()}" var="twn" itemValue="#{twn.townId}" itemLabel="#{twn.townName}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <h:outputLabel value="Birthdate" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.birthDate}" p:type="date" id="birthdate" p:id="birthdate" class="form-control"  >
-                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                        </h:inputText>
-                                        <h:message for="birthdate" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Email" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.email}" p:type="email" id="email" p:id="email" class="form-control" p:placeholder="Enter Email" />
-                                        <h:message for="email" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Phone" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.phone}" id="phone" p:id="phone" class="form-control" p:placeholder="Enter Phone Number" />
-                                        <h:message for="phone" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Address" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputText value="#{employeeMB.employees.address}" id="address" p:id="address" class="form-control" p:placeholder="Enter Address" />
-                                        <h:message for="address" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Status:" class="col-2 col-form-label" />
-                                    <div class="col-4">
-                                        <span class="switch switch-outline switch-icon switch-success">
-                                            <label>
-                                                <input jsf:value="#{employeeMB.employeeStatus}" type="checkbox" p:id="status" checked="checked" name="select"/>
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                    <h:outputLabel value="Is Admin:" class="col-2 col-form-label" />
-                                    <div class="col-4 right">
-                                        <span class="switch switch-outline switch-icon switch-success">
-                                            <label>
-                                                <input jsf:value="#{employeeMB.isAdmin}" type="checkbox" p:id="admin" checked="checked"/>
-                                                <span></span>
-                                            </label>
-                                        </span> 
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <h:outputLabel value="Avatar" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <div class="custom-file">
-                                            <h:inputFile value="#{employeeMB.file}" p:type="file" class="custom-file-input" id="customFile" p:id="customFile"/>
+                                            <h:inputFile value="#{destinationMB.file}" p:type="file" class="custom-file-input" p:id="customFile"/>
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
-                                        <h:message for="customFile" class="text-danger"/>
                                     </div>
                                 </div>
-                                <h:inputHidden p:id="customerID" value="#{employeeMB.editID}" />
+                                <h:inputHidden p:id="destinationID" value="#{destinationMB.editID}" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{employeeMB.create()}" />
-                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{employeeMB.update()}" />
+                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{destinationMB.create()}" />
+                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{destinationMB.update()}" />
                             <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
                         </div>
                     </h:form>
@@ -316,7 +251,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Employee Details</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Destination Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -331,84 +266,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Username" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <input id="dtUsername" class="form-control" readonly="true"/>
+                                        <input id="dtName" class="form-control" readonly="true"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Firstname" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Description" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <input id="dtFirstname" class="form-control" readonly="true"/>
+                                        <textarea id="dtDescription" readonly="true" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Lastname" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Tour Type" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <input id="dtLastname" class="form-control" readonly="true"/>
+                                        <input id="dtType" class="form-control" readonly="true"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Gender" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Town" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <input id="dtGender" class="form-control" readonly="true"/>
+                                        <input id="dtTown" class="form-control" readonly="true"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Birthdate" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <input id="dtBirthdate" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Email" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtEmail" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Phone" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtPhone" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Address" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtAddress" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Point" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtPoint" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Status" class="col-2 col-form-label" />
-                                    <div class="col-4">
-                                        <span class="switch switch-outline switch-icon switch-success">
-                                            <label>
-                                                <input type="checkbox" id="dtStatus" checked="checked" disabled="true" name="select"/>
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                    <h:outputLabel value="Is Admin" class="col-2 col-form-label" />
-                                    <div class="col-4">
-                                        <span class="switch switch-outline switch-icon switch-success">
-                                            <label>
-                                                <input type="checkbox" id="dtAdmin" disabled="true"/>
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <h:outputLabel value="Avatar" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <img id="dtAvatar" width="50%" /> 
+                                        <img id="dtThumbnail" width="50%" /> 
                                     </div>
                                 </div>
                             </div>
@@ -425,10 +309,12 @@
     </ui:define>
 
     <ui:define name="myScript">
-        <h:outputScript name="admin/js/manage/employees.js" />
+        <h:outputScript name="admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js" />
+        <h:outputScript name="admin/js/pages/crud/forms/editors/ckeditor-classic.js" />
+        <h:outputScript name="admin/js/manage/destinations.js" />
         <script>
-            #{employeeMB.notice}
-            #{employeeMB.notice = ""}
+            #{destinationMB.notice}
+            #{destinationMB.notice = ""}
         </script>
     </ui:define>
 

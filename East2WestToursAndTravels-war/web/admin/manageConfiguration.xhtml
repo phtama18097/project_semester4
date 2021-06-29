@@ -11,13 +11,13 @@
 
     <ui:define name="subheader">
         <div class="d-flex align-items-center flex-wrap mr-2">
-            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Towns</h5>
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Configuration</h5>
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                 <li class="breadcrumb-item">
                     <a href="" class="text-muted">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="" class="text-muted">Manage Towns</a>
+                    <a href="" class="text-muted">Manage Configuration</a>
                 </li>
             </ul>
         </div>
@@ -80,17 +80,6 @@
                     </ul>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#newItem">
-                <span class="svg-icon svg-icon-md">
-                    <svg   width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24" />
-                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                        </g>
-                    </svg>
-                </span>New Record
-            </a>
         </div>
     </ui:define>
 
@@ -98,19 +87,28 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-body">
-                <h:dataTable value="#{townMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+                <h:dataTable value="#{configurationMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Town ID"/></f:facet>
-                        <h:outputText value="#{item.townId}"/>
+                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                        <h:outputText value="#{item.configId}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Town Name"/></f:facet>
-                        <h:outputText value="#{item.townName}"/>
+                        <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                        <h:outputText value="#{item.configName}"/>
                     </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Image"/></f:facet>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-50 flex-shrink-0">
+                                <h:graphicImage value="/uploads/imgConfigurations/#{item.fileLocation}" alt="photo" /> 
+                            </div>
+                        </div>
+                    </h:column>
+                    
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.townId}, '#{item.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.configId}, '#{item.configName}', '#{item.fileLocation}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -122,7 +120,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.townId}, '#{item.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a onclick="editObject(#{item.configId}, '#{item.configName}', '#{item.fileLocation}')" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -133,20 +131,6 @@
                                 </svg>
                             </span>
                         </a>
-                        <a onclick="confirmDelete(#{item.townId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                            <span class="svg-icon svg-icon-md">
-                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="0" y="0" width="24" height="24"/>
-                                        <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"/>
-                                        <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>
-                                    </g>
-                                </svg>
-                            </span>
-                        </a>
-                        <h:form>
-                            <h:commandButton p:id="btnDelete-#{item.townId}" action="#{townMB.delete(item)}" style="display: none"/>
-                        </h:form>
                     </h:column>
 
                 </h:dataTable>
@@ -160,27 +144,35 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Town</div></h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Edit The Configuration</div></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
                     </div>
-                    <h:form>
+                    <h:form enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <h:outputLabel value="Town Name" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:inputText value="#{townMB.towns.townName}" id="townName" p:id="townName" class="form-control" p:placeholder="Enter Town Name" />
-                                        <h:message for="townName" class="text-danger"/>  
+                                        <h:inputText value="#{configurationMB.configuration.configName}" id="name" p:id="name" p:readonly="true" class="form-control" p:placeholder="Enter Destination Name" />
+                                        <h:message for="name" class="text-danger"/>  
                                     </div>
                                 </div>
-                                <h:inputHidden p:id="townID" value="#{townMB.editID}" />
+                                <div class="form-group row">
+                                    <h:outputLabel value="File" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <div class="custom-file">
+                                            <h:inputFile value="#{configurationMB.file}" p:type="file" class="custom-file-input" p:id="customFile"  />
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h:inputHidden p:id="configID" value="#{configurationMB.editID}" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{townMB.create()}" />
-                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{townMB.update()}" />
+                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{configurationMB.update()}" />
                             <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
                         </div>
                     </h:form>
@@ -194,7 +186,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Town Details</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Configuration Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -203,15 +195,21 @@
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <h:outputLabel value="Town Id" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Id" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <input id="dtID" class="form-control" readonly="true"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Town Name" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <input id="dtName" class="form-control" readonly="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <img id="dtThumbnail" width="50%" /> 
                                     </div>
                                 </div>
                             </div>
@@ -228,10 +226,10 @@
     </ui:define>
 
     <ui:define name="myScript">
-        <h:outputScript name="admin/js/manage/towns.js" />
+        <h:outputScript name="admin/js/manage/configuration.js" />
         <script>
-           #{townMB.notice}
-           #{townMB.notice = ""} 
+            #{configurationMB.notice}
+            #{configurationMB.notice = ""}
         </script>
     </ui:define>
 

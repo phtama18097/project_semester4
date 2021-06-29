@@ -5,8 +5,8 @@
  */
 package com.cusc.beans;
 
-import com.cusc.entities.Employees;
-import com.cusc.sessionbean.EmployeesFacadeLocal;
+import com.cusc.entities.Configuration;
+import com.cusc.sessionbean.ConfigurationFacadeLocal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,113 +27,52 @@ import javax.servlet.http.Part;
  *
  * @author Admin
  */
-@Named(value = "employeeMB")
+@Named(value = "configurationMB")
 @SessionScoped
-public class EmployeeMB implements Serializable {
+public class ConfigurationMB implements Serializable {
 
     @EJB
-    private EmployeesFacadeLocal employeesFacade;
+    private ConfigurationFacadeLocal configurationFacade;
 
     private Part file;
-    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgEmployees";
-
-    private Employees employees;
-    private String notice = "";
+    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgConfigurations";
+    
+    private Configuration configuration;
     private int editID = 0;
-    private boolean gender = true;
-    private boolean employeeStatus = true;
-    private boolean isAdmin = false;
-
-    public EmployeeMB() {
-        employees = new Employees();
+    private String notice = "";
+    
+    
+    public ConfigurationMB() {
+        configuration = new Configuration();
     }
-
-    public void create() {
-        try {
-            Employees c = new Employees();
-            c.setUsername(employees.getUsername());
-            c.setPassword(employees.getPassword());
-            c.setFirstName(employees.getFirstName());
-            c.setLastName(employees.getLastName());
-            c.setGender(gender);
-            c.setBirthDate(employees.getBirthDate());
-            c.setPhone(employees.getPhone());
-            c.setEmail(employees.getEmail());
-            c.setAddress(employees.getAddress());
-            c.setAvatar(uploadFile());
-            c.setPoint(0);
-            c.setIsAdmin(isAdmin);
-            if (employeeStatus) {
-                c.setStatus((short) 1);
-            } else {
-                c.setStatus((short) 0);
-            }
-            employeesFacade.create(c);
-            resetForm();
-            notice = "toastr.success(\"New customer has been added successfully!\");";
-        } catch (Exception ex) {
-            notice = "toastr.error(\"New customer has not added. Try again\");";
-        }
+    
+    public List<Configuration> showAll(){
+        return configurationFacade.findAll();
     }
-
-    public void delete(Employees cus) {
-        try{
-            employeesFacade.remove(cus);
-            notice = "toastr.success(\"The customer has been deleted successfully!\");";
-            deleteFile(cus.getAvatar());
-        }catch(Exception ex){
-            notice = "toastr.error(\"The customer has a constraint. You cannot delete it.\");";
-        }
-    }
-
+    
     public void update() {
         try {
-            Employees c = employeesFacade.find(editID);
-            c.setFirstName(employees.getFirstName());
-            c.setLastName(employees.getLastName());
-            c.setGender(gender);
-            c.setBirthDate(employees.getBirthDate());
-            c.setPhone(employees.getPhone());
-            c.setEmail(employees.getEmail());
-            c.setAddress(employees.getAddress());
-            if(file != null){
-                deleteFile(c.getAvatar());
-                c.setAvatar(uploadFile());
+            Configuration c = configurationFacade.find(editID);
+
+            if (file != null) {
+                deleteFile(c.getFileLocation());
+                c.setFileLocation(uploadFile());
             }
-            if (employeeStatus) {
-                c.setStatus((short) 1);
-            } else {
-                c.setStatus((short) 0);
-            }
-            c.setIsAdmin(isAdmin);
-            employeesFacade.edit(c);
+            configurationFacade.edit(c);
             resetForm();
-            notice = "toastr.success(\"The customer has been updated successfully!\");";
+            notice = "toastr.success(\"The configuration has been updated successfully!\");";
         } catch (Exception ex) {
-            notice = "toastr.error(\"The customer has not updated. Try again\");";
+            notice = "toastr.error(\"The configuration has not updated. Try again.\");";
         }
     }
-
-    public void resetForm() {
-        employees.setUsername(null);
-        employees.setPassword(null);
-        employees.setFirstName(null);
-        employees.setLastName(null);
-        employees.setGender(null);
-        employees.setBirthDate(null);
-        employees.setPhone(null);
-        employees.setEmail(null);
-        employees.setAddress(null);
-        employees.setAvatar(null);
-        employees.setPoint(null);
-        employees.setStatus(null);
-        setEditID(0);
-        setEmployeeStatus(true);     
-        setGender(true);
-        setIsAdmin(false);
+    
+    public void resetForm(){
+        configuration.setConfigName(null);
+        configuration.setFileLocation(null);
         setFile(null);
+        setEditID(0);
     }
-
+    
     private String uploadFile() {
         String fileName = "";
         if (file != null) {
@@ -212,32 +151,12 @@ public class EmployeeMB implements Serializable {
         }
     }
 
-    public List<Employees> showAll() {
-        return employeesFacade.findAll();
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
-    public Part getFile() {
-        return file;
-    }
-
-    public void setFile(Part file) {
-        this.file = file;
-    }
-
-    public Employees getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employees employees) {
-        this.employees = employees;
-    }
-
-    public String getNotice() {
-        return notice;
-    }
-
-    public void setNotice(String notice) {
-        this.notice = notice;
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public int getEditID() {
@@ -248,28 +167,22 @@ public class EmployeeMB implements Serializable {
         this.editID = editID;
     }
 
-    public boolean isGender() {
-        return gender;
+    public String getNotice() {
+        return notice;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
+    public void setNotice(String notice) {
+        this.notice = notice;
     }
 
-    public boolean isEmployeeStatus() {
-        return employeeStatus;
+    public Part getFile() {
+        return file;
     }
 
-    public void setEmployeeStatus(boolean employeeStatus) {
-        this.employeeStatus = employeeStatus;
+    public void setFile(Part file) {
+        this.file = file;
     }
-
-    public boolean isIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
+    
+    
     
 }
