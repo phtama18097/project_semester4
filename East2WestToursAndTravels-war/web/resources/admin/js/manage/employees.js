@@ -15,6 +15,7 @@ $(document).ready(function () {
 
 // Hide save button
 $('#btnSaveChange').hide();
+$('#admin').prop("checked", false);
 // Catch closed modal event
 $("#btnCloseChange").click(function () {
     $('#btnSaveChange').hide();
@@ -26,13 +27,13 @@ $("#btnCloseChange").click(function () {
     $('#password').val("");
     $('#firstname').val("");
     $('#lastname').val("");
-    
-    
+    $("input:radio[value='true']").prop('checked', true);
     $('#birthdate').val("");
     $('#email').val("");
     $('#phone').val("");
     $('#address').val("");
     $('#status').prop("checked", true);
+    $('#admin').prop("checked", false);
     $('#customFile').val("");
 
     $('#btnAddNew').show();
@@ -66,24 +67,25 @@ function convertDate(str) {
     return [date.getFullYear(), mnth, day].join("-");
 }
 // Edit object
-function editObject(id, username, firstname, lastname, gender, birthdate, email, phone, address, status) {
+function editObject(id, username, firstname, lastname, gender, birthdate, email, phone, address, status, admin) {
     $('#passfield').hide();
     $('#userfield').hide();
     $('#username').val(username);
     $('#customerID').val(id);
     $('#firstname').val(firstname);
     $('#lastname').val(lastname);
-    if(gender){
-        $("input:radio[value='true']").prop('checked',true);
-    }else{
-        $("input:radio[value='false']").prop('checked',true);
+    if (gender) {
+        $("input:radio[value='true']").prop('checked', true);
+    } else {
+        $("input:radio[value='false']").prop('checked', true);
     }
-    
+
     $('#birthdate').val(convertDate(birthdate));
     $('#email').val(email);
     $('#phone').val(phone);
     $('#address').val(address);
     $('#status').prop("checked", status);
+    $('#admin').prop("checked", admin);
     $('#customFile').val("");
 
     $('#newItem').modal();
@@ -93,14 +95,14 @@ function editObject(id, username, firstname, lastname, gender, birthdate, email,
 }
 
 // Detail object
-function detailObject(id, username, firstname, lastname, gender, birthdate, email, phone, address, avatar, point, status) {
+function detailObject(id, username, firstname, lastname, gender, birthdate, email, phone, address, avatar, point, status, admin) {
     $('#dtID').val(id);
     $('#dtUsername').val(username);
     $('#dtFirstname').val(firstname);
     $('#dtLastname').val(lastname);
-    if(gender === true){
+    if (gender === true) {
         $('#dtGender').val('Male');
-    }else{
+    } else {
         $('#dtGender').val('Female');
     }
     $('#dtBirthdate').val(convertDate(birthdate));
@@ -108,6 +110,7 @@ function detailObject(id, username, firstname, lastname, gender, birthdate, emai
     $('#dtPhone').val(phone);
     $('#dtAddress').val(address);
     $('#dtStatus').prop("checked", status);
+    $('#dtAdmin').prop("checked", admin);
     $('#dtPoint').val(point);
     $('#dtAvatar').attr('src', "/East2WestToursAndTravels-war/uploads/imgEmployees/" + avatar);
 

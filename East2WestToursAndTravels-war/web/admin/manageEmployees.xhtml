@@ -125,6 +125,11 @@
                         <h:outputText value="#{item.phone}"/>
                     </h:column>
                     <h:column>
+                        <f:facet name="header"><h:outputText value="Role"/></f:facet>
+                        <h:outputText class="label label-lg font-weight-bold label-light-info label-inline" rendered="#{item.isAdmin}" value="Admin" />
+                        <h:outputText rendered="#{!item.isAdmin}" class="label label-lg font-weight-bold label-light-info label-inline" value="Employee"/>
+                    </h:column>
+                    <h:column>
                         <f:facet name="header"><h:outputText value="Avatar"/></f:facet>
                         <h:graphicImage value="/uploads/imgEmployees/#{item.avatar}" alt="" width="90"/> 
                     </h:column>
@@ -136,7 +141,7 @@
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}', '#{item.avatar}',#{item.point},#{item.status})" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}', '#{item.avatar}',#{item.point},#{item.status},#{item.isAdmin})" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -148,7 +153,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}',#{item.status})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a onclick="editObject(#{item.employeeId}, '#{item.username}', '#{item.firstName}', '#{item.lastName}',#{item.gender}, '#{item.birthDate}', '#{item.email}', '#{item.phone}', '#{item.address}',#{item.status},#{item.isAdmin})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -262,8 +267,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Status" class="col-2 col-form-label" />
-                                    <div class="col-10">
+                                    <h:outputLabel value="Status:" class="col-2 col-form-label" />
+                                    <div class="col-4">
                                         <span class="switch switch-outline switch-icon switch-success">
                                             <label>
                                                 <input jsf:value="#{employeeMB.employeeStatus}" type="checkbox" p:id="status" checked="checked" name="select"/>
@@ -271,7 +276,17 @@
                                             </label>
                                         </span>
                                     </div>
+                                    <h:outputLabel value="Is Admin:" class="col-2 col-form-label" />
+                                    <div class="col-4 right">
+                                        <span class="switch switch-outline switch-icon switch-success">
+                                            <label>
+                                                <input jsf:value="#{employeeMB.isAdmin}" type="checkbox" p:id="admin" checked="checked"/>
+                                                <span></span>
+                                            </label>
+                                        </span> 
+                                    </div>
                                 </div>
+                                
                                 <div class="form-group row">
                                     <h:outputLabel value="Avatar" class="col-2 col-form-label" />
                                     <div class="col-10">
@@ -371,7 +386,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <h:outputLabel value="Status" class="col-2 col-form-label" />
-                                    <div class="col-10">
+                                    <div class="col-4">
                                         <span class="switch switch-outline switch-icon switch-success">
                                             <label>
                                                 <input type="checkbox" id="dtStatus" checked="checked" disabled="true" name="select"/>
@@ -379,7 +394,17 @@
                                             </label>
                                         </span>
                                     </div>
+                                    <h:outputLabel value="Is Admin" class="col-2 col-form-label" />
+                                    <div class="col-4">
+                                        <span class="switch switch-outline switch-icon switch-success">
+                                            <label>
+                                                <input type="checkbox" id="dtAdmin" disabled="true"/>
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
                                 </div>
+                                
                                 <div class="form-group row">
                                     <h:outputLabel value="Avatar" class="col-2 col-form-label" />
                                     <div class="col-10">

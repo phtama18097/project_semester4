@@ -44,7 +44,8 @@ CREATE TABLE [Employees](
 	[Address] NVARCHAR(120),
 	[Avatar] NVARCHAR(100),
 	Point INT,
-	[Status] TINYINT
+	[Status] TINYINT,
+	[IsAdmin] bit
 
 	PRIMARY KEY (EmployeeId)
 )

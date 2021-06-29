@@ -42,6 +42,7 @@ public class EmployeeMB implements Serializable {
     private int editID = 0;
     private boolean gender = true;
     private boolean employeeStatus = true;
+    private boolean isAdmin = false;
 
     public EmployeeMB() {
         employees = new Employees();
@@ -61,6 +62,7 @@ public class EmployeeMB implements Serializable {
             c.setAddress(employees.getAddress());
             c.setAvatar(uploadFile());
             c.setPoint(0);
+            c.setIsAdmin(isAdmin);
             if (employeeStatus) {
                 c.setStatus((short) 1);
             } else {
@@ -103,6 +105,7 @@ public class EmployeeMB implements Serializable {
             } else {
                 c.setStatus((short) 0);
             }
+            c.setIsAdmin(isAdmin);
             employeesFacade.edit(c);
             resetForm();
             notice = "toastr.success(\"The customer has been updated successfully!\");";
@@ -127,6 +130,7 @@ public class EmployeeMB implements Serializable {
         setEditID(0);
         setEmployeeStatus(true);     
         setGender(true);
+        setIsAdmin(false);
     }
 
     private String uploadFile() {
@@ -257,6 +261,14 @@ public class EmployeeMB implements Serializable {
 
     public void setEmployeeStatus(boolean employeeStatus) {
         this.employeeStatus = employeeStatus;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
     
 }

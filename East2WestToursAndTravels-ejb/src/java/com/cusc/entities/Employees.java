@@ -90,6 +90,8 @@ public class Employees implements Serializable {
     private Integer point;
     @Column(name = "Status")
     private Short status;
+    @Column(name = "IsAdmin")
+    private Boolean isAdmin;
     @OneToMany(mappedBy = "employeeId")
     private Collection<Tours> toursCollection;
 
@@ -228,6 +230,14 @@ public class Employees implements Serializable {
     @Override
     public String toString() {
         return "com.cusc.entities.Employees[ employeeId=" + employeeId + " ]";
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
     
 }
