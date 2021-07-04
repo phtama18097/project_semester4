@@ -27,6 +27,8 @@ public interface DestinationImagesFacadeLocal {
     List<DestinationImages> findAll();
 
     List<DestinationImages> findRange(int[] range);
+    
+    public List<DestinationImages> findImagesByDestination(int destinationID);
 
     int count();
     

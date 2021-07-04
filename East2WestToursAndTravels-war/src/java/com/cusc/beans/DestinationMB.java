@@ -125,9 +125,6 @@ public class DestinationMB implements Serializable {
             try {
                 String type = file.getContentType();
                 if (type.equals("image/jpeg") || type.equals("image/png") || type.equals("image/jpg")) {
-                    if (file.getSize() > 5242880) {
-                        //notice = "toastr.error(\"The thumbnail must less than 5MB. Try again\");";
-                    }
                     Date date = new Date();
                     fileName = file.getSubmittedFileName().substring(0, file.getSubmittedFileName().lastIndexOf("."));
                     String extension = file.getSubmittedFileName().substring(file.getSubmittedFileName().lastIndexOf("."), file.getSubmittedFileName().length());

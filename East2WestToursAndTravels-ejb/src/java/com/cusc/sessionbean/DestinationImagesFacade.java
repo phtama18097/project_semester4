@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.DestinationImages;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,13 @@ public class DestinationImagesFacade extends AbstractFacade<DestinationImages> i
         return em;
     }
 
+    @Override
+    public List<DestinationImages> findImagesByDestination(int destinationID){
+        Query query = em.createQuery("SELECT d FROM DestinationImages d WHERE d.destinationId.destinationId = ?1", DestinationImages.class);
+        query.setParameter(1, destinationID);
+        return query.getResultList();
+    }
+    
     public DestinationImagesFacade() {
         super(DestinationImages.class);
     }

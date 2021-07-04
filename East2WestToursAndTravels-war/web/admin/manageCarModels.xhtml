@@ -11,13 +11,13 @@
 
     <ui:define name="subheader">
         <div class="d-flex align-items-center flex-wrap mr-2">
-            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Destinations</h5>
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Car Models</h5>
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                 <li class="breadcrumb-item">
                     <a href="" class="text-muted">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="" class="text-muted">Manage Destinations</a>
+                    <a href="" class="text-muted">Manage Car Models</a>
                 </li>
             </ul>
         </div>
@@ -98,31 +98,19 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-body">
-                <h:dataTable value="#{destinationMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+                <h:dataTable value="#{carModelMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
                     <h:column>
-                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
-                        <h:outputText value="#{item.destinationId}"/>
+                        <f:facet name="header"><h:outputText value="Model ID"/></f:facet>
+                        <h:outputText value="#{item.modelId}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Destination"/></f:facet>
-                        <div class="d-flex align-items-center">
-                            <div class="symbol symbol-50 flex-shrink-0">
-                                <h:graphicImage value="/uploads/imgDestinations/#{item.thumbnail}" alt="photo" /> 
-                            </div>
-                            <div class="ml-3">
-                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.destinationName}"/></span>
-                                <a href="#" class="text-muted text-hover-primary"><h:outputText value="#{item.typeId.typeName}"/></a>
-                            </div>
-                        </div>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Town"/></f:facet>
-                        <h:outputText value="#{item.townId.townName}"/>
+                        <f:facet name="header"><h:outputText value="Model Name"/></f:facet>
+                        <h:outputText value="#{item.modelName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.destinationId}, '#{item.destinationName}', '#{item.description}', '#{item.typeId.typeName}', '#{item.thumbnail}', '#{item.townId.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.modelId}, '#{item.modelName}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -134,7 +122,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.destinationId}, '#{item.destinationName}', '#{item.description}', #{item.typeId.typeId}, '#{item.thumbnail}', #{item.townId.townId})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a onclick="editObject(#{item.modelId}, '#{item.modelName}')" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -145,17 +133,7 @@
                                 </svg>
                             </span>
                         </a>
-                        <a onclick="editImages(#{item.destinationId});" class="btn btn-sm btn-clean btn-icon mr-2" title="Images">
-                            <span class="svg-icon svg-icon-md">
-                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <polygon points="0 0 24 0 24 24 0 24"/>
-                                        <path d="M6,5 L18,5 C19.6568542,5 21,6.34314575 21,8 L21,17 C21,18.6568542 19.6568542,20 18,20 L6,20 C4.34314575,20 3,18.6568542 3,17 L3,8 C3,6.34314575 4.34314575,5 6,5 Z M5,17 L14,17 L9.5,11 L5,17 Z M16,14 C17.6568542,14 19,12.6568542 19,11 C19,9.34314575 17.6568542,8 16,8 C14.3431458,8 13,9.34314575 13,11 C13,12.6568542 14.3431458,14 16,14 Z" fill="#000000"/>
-                                    </g>
-                                </svg>
-                            </span>
-                        </a>
-                        <a onclick="confirmDelete(#{item.destinationId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                        <a onclick="confirmDelete(#{item.modelId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -167,10 +145,7 @@
                             </span>
                         </a>
                         <h:form>
-                            <h:commandButton p:id="btnDelete-#{item.destinationId}" action="#{destinationMB.delete(item)}" style="display: none"/>
-                        </h:form>
-                        <h:form>
-                            <h:commandButton p:id="btnImages-#{item.destinationId}" action="#{destinationImageMB.editImages(item.destinationId)}" style="display: none"/>
+                            <h:commandButton p:id="btnDelete-#{item.modelId}" action="#{carModelMB.delete(item)}" style="display: none"/>
                         </h:form>
                     </h:column>
 
@@ -185,62 +160,27 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Destination</div></h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Car Model</div></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
                     </div>
-                    <h:form enctype="multipart/form-data">
+                    <h:form>
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Model Name" class="col-2 col-form-label" />
                                     <div class="col-10">
-                                        <h:inputText value="#{destinationMB.destinations.destinationName}" id="name" p:id="name" class="form-control" p:placeholder="Enter Destination Name" />
-                                        <h:message for="name" class="text-danger"/>  
+                                        <h:inputText value="#{carModelMB.carModels.modelName}" id="typeName" p:id="typeName" class="form-control" p:placeholder="Enter Model Name" />
+                                        <h:message for="typeName" class="text-danger"/>  
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Description" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:inputTextarea value="#{destinationMB.destinations.description}" id="txaDescription" p:id="txaDescription" />
-                                        <h:message for="txaDescription" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Tour Type" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:selectOneMenu value="#{destinationMB.typeID}" class="form-control" p:id="slType">
-                                            <f:selectItem itemValue="0" itemLabel="Select the type of the destination"/>
-                                            <f:selectItems value="#{tourTypeMB.showAll()}" var="typ" itemValue="#{typ.typeId}" itemLabel="#{typ.typeName}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Town" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <h:selectOneMenu value="#{destinationMB.townID}" class="form-control" p:id="slTown">
-                                            <f:selectItem itemValue="0" itemLabel="Select the town of the destination"/>
-                                            <f:selectItems value="#{townMB.showAll()}" var="twn" itemValue="#{twn.townId}" itemLabel="#{twn.townName}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <div class="custom-file">
-                                            <h:inputFile value="#{destinationMB.file}" p:type="file" class="custom-file-input" p:id="customFile"/>
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h:inputHidden p:id="destinationID" value="#{destinationMB.editID}" />
+                                <h:inputHidden p:id="typeID" value="#{carModelMB.editID}" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{destinationMB.create()}" />
-                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{destinationMB.update()}" />
+                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{carModelMB.create()}" />
+                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{carModelMB.update()}" />
                             <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
                         </div>
                     </h:form>
@@ -254,7 +194,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Destination Details</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Car Model Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -263,39 +203,15 @@
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <h:outputLabel value="Id" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Model Id" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <input id="dtID" class="form-control" readonly="true"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <h:outputLabel value="Name" class="col-2 col-form-label" />
+                                    <h:outputLabel value="Model Name" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <input id="dtName" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Description" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <textarea id="dtDescription" readonly="true" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Tour Type" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtType" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Town" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <input id="dtTown" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
-                                    <div class="col-10">
-                                        <img id="dtThumbnail" width="50%" /> 
                                     </div>
                                 </div>
                             </div>
@@ -312,12 +228,10 @@
     </ui:define>
 
     <ui:define name="myScript">
-        <h:outputScript name="admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js" />
-        <h:outputScript name="admin/js/pages/crud/forms/editors/ckeditor-classic.js" />
-        <h:outputScript name="admin/js/manage/destinations.js" />
+        <h:outputScript name="admin/js/manage/carModels.js" />
         <script>
-            #{destinationMB.notice}
-            #{destinationMB.notice = ""}
+           #{carModelMB.notice}
+           #{carModelMB.notice = ""} 
         </script>
     </ui:define>
 
