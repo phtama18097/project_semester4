@@ -17,7 +17,6 @@ import java.io.OutputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -157,7 +156,7 @@ public class DestinationImageMB implements Serializable {
             }
             notice = "toastr.success(\"The destination has been added successfully!\");";
         } else {
-            notice = "toastr.info(\"You must select a file to add to database.\");";
+            notice = "toastr.info(\"You must select images to add to database.\");";
         }
         imageList = null;
         imageList = destinationImagesFacade.findImagesByDestination(destination.getDestinationId());

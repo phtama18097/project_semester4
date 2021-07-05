@@ -105,7 +105,8 @@ CREATE TABLE [Cars](
 	ShortDescripiton NVARCHAR(300),
 	[Description] TEXT,
 	Thumbnail NVARCHAR(100),
-	[Status] TINYINT
+	[Status] TINYINT,
+	CarName NVARCHAR(80)
 	
 	PRIMARY KEY (CarId)
 )

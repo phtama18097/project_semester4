@@ -69,6 +69,9 @@ public class Cars implements Serializable {
     private String thumbnail;
     @Column(name = "Status")
     private Short status;
+    @Size(max = 80)
+    @Column(name = "CarName")
+    private String carName;
     @OneToMany(mappedBy = "carId")
     private Collection<CarImages> carImagesCollection;
     @JoinColumn(name = "ModelId", referencedColumnName = "ModelId")
@@ -200,6 +203,14 @@ public class Cars implements Serializable {
     @Override
     public String toString() {
         return "com.cusc.entities.Cars[ carId=" + carId + " ]";
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
     }
     
 }

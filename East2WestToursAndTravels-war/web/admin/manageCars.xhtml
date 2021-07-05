@@ -98,18 +98,30 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-body">
-                <h:dataTable value="#{tourMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+                <h:dataTable value="#{carMB.showAll()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Tour ID"/></f:facet>
-                        <h:outputText value="#{item.tourId}"/>
+                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                        <h:outputText value="#{item.carId}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Tour Name"/></f:facet>
-                        <h:outputText value="#{item.tourName}"/>
+                        <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-50 flex-shrink-0">
+                                <h:graphicImage value="/uploads/imgCars/#{item.thumbnail}" alt="car"/> 
+                            </div>
+                            <div class="ml-3">
+                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.firstName} "/><h:outputText value="#{item.lastName}"/></span>
+                                <a href="#" class="text-muted text-hover-primary"><h:outputText value="#{item.username}"/></a>
+                            </div>
+                        </div>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Package Name"/></f:facet>
-                        <h:outputText value="#{item.packageId.packageName}"/>
+                        <f:facet name="header"><h:outputText value="Type"/></f:facet>
+                        <h:outputText value="#{item.typeId.description}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Model"/></f:facet>
+                        <h:outputText value="#{item.modelId.modelName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Unit Price"/></f:facet>
@@ -118,21 +130,14 @@
                         </h:outputText>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Departute Date"/></f:facet>
-                        <h:outputText value="#{item.departureDate}">
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
-                        </h:outputText>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Return Date"/></f:facet>
-                        <h:outputText value="#{item.returnDate}">
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
-                        </h:outputText>
+                        <f:facet name="header"><h:outputText value="In Stock"/></f:facet>
+                        <h:outputText value="#{item.unitInStock}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Status"/></f:facet>
-                        <h:outputText class="label label-lg font-weight-bold label-light-success label-inline" rendered="#{item.status == 1}" value="Active" />
                         <h:outputText rendered="#{item.status == 0}" class="label label-lg font-weight-bold label-light-danger label-inline" value="Disable"/>
+                        <h:outputText rendered="#{item.status == 1}" class="label label-lg font-weight-bold label-light-success label-inline" value="Active" />
+                        <h:outputText rendered="#{item.status == 2}" class="label label-lg font-weight-bold label-light-danger label-inline" value="Disable"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
@@ -172,7 +177,7 @@
                             </span>
                         </a>
                         <h:form>
-                            <h:commandButton p:id="btnDelete-#{item.tourId}" action="#{tourMB.delete(item)}" style="display: none"/>
+                            <h:commandButton p:id="btnDelete-#{item.tourId}" action="#{carMB.delete(item)}" style="display: none"/>
                         </h:form>
                     </h:column>
 
@@ -198,14 +203,14 @@
                                 <div class="form-group row">
                                     <h:outputLabel value="Tour Name" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.tourName}" id="tourName" p:id="tourName" class="form-control" p:placeholder="Enter Tour Name" />
+                                        <h:inputText value="#{carMB.tours.tourName}" id="tourName" p:id="tourName" class="form-control" p:placeholder="Enter Tour Name" />
                                         <h:message for="tourName" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <h:outputLabel value="Package" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:selectOneMenu value="#{tourMB.packageID}" class="form-control" p:id="slPack">
+                                        <h:selectOneMenu value="#{carMB.packageID}" class="form-control" p:id="slPack">
                                             <f:selectItem itemValue="0" itemLabel="Select a package for the tour"/>
                                             <f:selectItems value="#{tourPackageMB.showAll()}" var="pkg" itemValue="#{pkg.packageId}" itemLabel="#{pkg.packageName}"/>
                                         </h:selectOneMenu>
@@ -214,7 +219,7 @@
                                 <div class="form-group row">
                                     <h:outputLabel value="Unit Price" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.unitPrice}" id="unitPrice" p:data-mask="000,000,000,000" p:data-mask-reverse="true"  p:id="unitPrice" class="form-control" p:placeholder="Enter Unit Price" >
+                                        <h:inputText value="#{carMB.tours.unitPrice}" id="unitPrice" p:data-mask="000,000,000,000" p:data-mask-reverse="true"  p:id="unitPrice" class="form-control" p:placeholder="Enter Unit Price" >
                                             <f:convertNumber pattern="#,###" />
                                         </h:inputText>
                                         <h:message for="unitPrice" class="text-danger"/>  
@@ -223,21 +228,21 @@
                                 <div class="form-group row">
                                     <h:outputLabel value="Short Description" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.shortDescription}" id="shortDescription" p:id="shortDescription" class="form-control" p:placeholder="Enter Short Description" />
+                                        <h:inputText value="#{carMB.tours.shortDescription}" id="shortDescription" p:id="shortDescription" class="form-control" p:placeholder="Enter Short Description" />
                                         <h:message for="shortDescription" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <h:outputLabel value="Description" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputTextarea value="#{tourMB.tours.description}" id="txaDescription" p:id="txaDescription" />
+                                        <h:inputTextarea value="#{carMB.tours.description}" id="txaDescription" p:id="txaDescription" />
                                         <h:message for="txaDescription" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <h:outputLabel value="Departure Date" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.departureDate}" p:type="date" id="departure" p:id="departure" class="form-control"  >
+                                        <h:inputText value="#{carMB.tours.departureDate}" p:type="date" id="departure" p:id="departure" class="form-control"  >
                                             <f:convertDateTime pattern="yyyy-MM-dd"/>
                                         </h:inputText>
                                         <h:message for="departure" class="text-danger"/>  
@@ -246,7 +251,7 @@
                                 <div class="form-group row">
                                     <h:outputLabel value="Return Date" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.returnDate}" p:type="date" id="returnDate" p:id="returnDate" class="form-control" >
+                                        <h:inputText value="#{carMB.tours.returnDate}" p:type="date" id="returnDate" p:id="returnDate" class="form-control" >
                                             <f:convertDateTime pattern="yyyy-MM-dd"/>
                                         </h:inputText>
                                         <h:message for="returnDate" class="text-danger"/>  
@@ -255,14 +260,14 @@
                                 <div class="form-group row">
                                     <h:outputLabel value="Min Quantity" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.minQuantity}" p:type="number" id="minQty" p:id="minQty" class="form-control" p:placeholder="Enter Minimum Quantity" />
+                                        <h:inputText value="#{carMB.tours.minQuantity}" p:type="number" id="minQty" p:id="minQty" class="form-control" p:placeholder="Enter Minimum Quantity" />
                                         <h:message for="minQty" class="text-danger"/>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <h:outputLabel value="Max Quantity" class="col-3 col-form-label" />
                                     <div class="col-9">
-                                        <h:inputText value="#{tourMB.tours.maxQuantity}" p:type="number" id="maxQty" p:id="maxQty" class="form-control" p:placeholder="Enter Minimum Quantity" />
+                                        <h:inputText value="#{carMB.tours.maxQuantity}" p:type="number" id="maxQty" p:id="maxQty" class="form-control" p:placeholder="Enter Minimum Quantity" />
                                         <h:message for="maxQty" class="text-danger"/>  
                                     </div>
                                 </div>
@@ -271,18 +276,18 @@
                                     <div class="col-9">
                                         <span class="switch switch-outline switch-icon switch-success">
                                             <label>
-                                                <input jsf:value="#{tourMB.tourStatus}" type="checkbox" p:id="tourStatus" checked="checked" name="select"/>
+                                                <input jsf:value="#{carMB.tourStatus}" type="checkbox" p:id="tourStatus" checked="checked" name="select"/>
                                                 <span></span>
                                             </label>
                                         </span>
                                     </div>
                                 </div>
-                                <h:inputHidden p:id="tourID" value="#{tourMB.editID}" />
+                                <h:inputHidden p:id="tourID" value="#{carMB.editID}" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{tourMB.create()}" />
-                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{tourMB.update()}" />
+                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{carMB.create()}" />
+                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{carMB.update()}" />
                             <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
                         </div>
                     </h:form>
@@ -401,8 +406,8 @@
         <h:outputScript name="admin/js/pages/input-mask/dist/jquery.mask.min.js" />
         <h:outputScript name="admin/js/manage/tours.js" />
         <script>
-            #{tourMB.notice}
-            #{tourMB.notice = ""}
+            #{carMB.notice}
+            #{carMB.notice = ""}
         </script>
     </ui:define>
 

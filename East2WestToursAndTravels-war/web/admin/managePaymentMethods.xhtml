@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a class="navi-link" data-toggle="modal" data-target="#importItem" >
                                 <span class="navi-icon">
                                     <i class="la la-file-excel-o"></i>
                                 </span>
@@ -251,6 +251,41 @@
             </div>
         </div>
         <!--end:Detail-->
+        
+        
+        <!--begin::Import-->
+        <div class="modal fade" id="importItem" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Import Restaurants</div></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <h:form enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <h:outputLabel value="Excel File" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <div class="custom-file">
+                                            <h:inputFile value="#{paymentMethodMB.excelFile}" p:type="file" class="custom-file-input" p:id="customFile"/>
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton value="Import" class="btn btn-primary font-weight-bold" action="#{paymentMethodMB.importData()}" />
+                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <!-- end:Import -->
 
     </ui:define>
 
