@@ -154,7 +154,7 @@ public class DestinationImageMB implements Serializable {
                     return "manageDestinationImages";
                 }
             }
-            notice = "toastr.success(\"The destination has been added successfully!\");";
+            notice = "toastr.success(\"The images have been added successfully!\");";
         } else {
             notice = "toastr.info(\"You must select images to add to database.\");";
         }

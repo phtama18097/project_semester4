@@ -6,6 +6,7 @@
 package com.cusc.beans;
 
 import com.cusc.entities.Employees;
+import com.cusc.helps.PasswordTools;
 import com.cusc.sessionbean.EmployeesFacadeLocal;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,7 +53,7 @@ public class EmployeeMB implements Serializable {
         try {
             Employees c = new Employees();
             c.setUsername(employees.getUsername());
-            c.setPassword(employees.getPassword());
+            c.setPassword(PasswordTools.encrypt(employees.getPassword()));
             c.setFirstName(employees.getFirstName());
             c.setLastName(employees.getLastName());
             c.setGender(gender);

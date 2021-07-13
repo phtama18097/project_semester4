@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.CarImages;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,6 +25,13 @@ public class CarImagesFacade extends AbstractFacade<CarImages> implements CarIma
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @Override
+    public List<CarImages> findImagesByCar(int carID){
+        Query query = em.createQuery("SELECT c FROM CarImages c WHERE c.carId.carId = ?1", CarImages.class);
+        query.setParameter(1, carID);
+        return query.getResultList();
     }
 
     public CarImagesFacade() {

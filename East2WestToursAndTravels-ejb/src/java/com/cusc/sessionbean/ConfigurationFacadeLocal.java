@@ -29,5 +29,7 @@ public interface ConfigurationFacadeLocal {
     List<Configuration> findRange(int[] range);
 
     int count();
+
+    public Configuration findByConfigName(String configName);
     
 }

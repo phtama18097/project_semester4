@@ -27,6 +27,8 @@ public interface CarImagesFacadeLocal {
     List<CarImages> findAll();
 
     List<CarImages> findRange(int[] range);
+    
+    public List<CarImages> findImagesByCar(int carID);
 
     int count();
     

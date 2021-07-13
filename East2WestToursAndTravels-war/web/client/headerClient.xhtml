@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:body>
+        <header class="header header-12">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <a href="tel:#"><i class="icon-phone"></i>Call: +84 327 291 328</a>
+                    </div>
+
+                    <div class="header-right">
+
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul class="dropdown-links">
+                                    <li>
+                                        <div class="header-dropdown">
+                                            <a href="#">USD</a>
+                                            <div class="header-menu">
+                                                <ul>
+                                                    <li><a href="#">Eur</a></li>
+                                                    <li><a href="#">Usd</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="header-dropdown">
+                                            <a href="#">English</a>
+                                            <div class="header-menu">
+                                                <ul>
+                                                    <li><a href="#">English</a></li>
+                                                    <li><a href="#">French</a></li>
+                                                    <li><a href="#">Spanish</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><a href="#signin-modal" data-toggle="modal">Sign in / Sign up</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="header-middle">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="#" class="logo">
+                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/logo.png" alt="Molla Logo" width="105" height="25"/>
+                        </a>
+                    </div>
+
+                    <div class="header-right">
+                        <div class="header-search header-search-extended header-search-visible header-search-no-radius">
+                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="#" method="get">
+                                <div class="header-search-wrapper search-wrapper-wide">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..."  />
+
+                                    <div class="select-custom">
+                                        <select id="cat" name="cat">
+                                            <option value="">All Departments</option>
+                                            <option value="1">Tours and Travels</option>
+                                            <option value="2">- Destination</option>
+                                            <option value="3">- Restaurant</option>
+                                            <option value="4">- Accommodation</option>
+                                            <option value="6">Cars</option>
+                                            <option value="7">- Model</option>
+                                            <option value="8">- Type</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="header-dropdown-link">
+                            <div class="account">
+                                <a href="#" title="My account">
+                                    <div class="icon">
+                                        <i class="icon-user"></i>
+                                    </div>
+                                    <p>Account</p>
+                                </a>
+                            </div>
+
+                            <div class="wishlist">
+                                <a href="#" title="Wishlist">
+                                    <div class="icon">
+                                        <i class="icon-heart-o"></i>
+                                        <span class="wishlist-count badge">3</span>
+                                    </div>
+                                    <p>Wishlist</p>
+                                </a>
+                            </div>
+
+                            <div class="dropdown cart-dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                    <div class="icon">
+                                        <i class="icon-shopping-cart"></i>
+                                        <span class="cart-count">2</span>
+                                    </div>
+                                    <p>Cart</p>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-cart-products">
+                                        <div class="product">
+                                            <div class="product-cart-details">
+                                                <h4 class="product-title">
+                                                    <a href="#">Beige knitted elastic runner shoes</a>
+                                                </h4>
+
+                                                <span class="cart-product-info">
+                                                    <span class="cart-product-qty">1</span>
+                                                    x $84.00
+                                                </span>
+                                            </div>
+
+                                            <figure class="product-image-container">
+                                                <a href="#" class="product-image">
+                                                    <img src="#{request.contextPath}/resources/client/assets/images/products/cart/product-1.jpg" alt="product"/>
+                                                </a>
+                                            </figure>
+                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        </div>
+
+                                        <div class="product">
+                                            <div class="product-cart-details">
+                                                <h4 class="product-title">
+                                                    <a href="product.html">Blue utility pinafore denim dress</a>
+                                                </h4>
+
+                                                <span class="cart-product-info">
+                                                    <span class="cart-product-qty">1</span>
+                                                    x $76.00
+                                                </span>
+                                            </div>
+
+                                            <figure class="product-image-container">
+                                                <a href="product.html" class="product-image">
+                                                    <img src="#{request.contextPath}/resources/client/assets/images/products/cart/product-2.jpg" alt="product"/>
+                                                </a>
+                                            </figure>
+                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="dropdown-cart-total">
+                                        <span>Total</span>
+
+                                        <span class="cart-total-price">$160.00</span>
+                                    </div>
+
+                                    <div class="dropdown-cart-action">
+                                        <a href="#" class="btn btn-primary">View Cart</a>
+                                        <a href="#" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom sticky-header">
+                <div class="container">
+                    <div style="background-color: #333; display: flex; width: 100%;">   
+                        <div class="header-left">
+                            <div class="dropdown category-dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+                                    Browse Categories
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <nav class="side-nav">
+                                        <ul class="menu-vertical sf-arrows">
+                                            <li class="item-lead"><a href="#">Tours and Travels</a></li>
+                                            <li class="item-lead"><a href="#">Car Models</a></li>
+                                            <c:forEach items="#{carModelMB.showAll()}" var="md">
+                                                <li><a href="#"><h:outputText value="#{md.modelName}" /></a></li>
+                                            </c:forEach>
+                                            <li class="item-lead"><a href="#">Car Types</a></li>
+                                            <c:forEach items="#{carTypeMB.showAll()}" var="tp">
+                                                <li><a href="#"><h:outputText value="#{tp.description}" /></a></li>
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header-center">
+
+                            <nav class="main-nav">
+                                <ul class="menu sf-arrows">
+                                    <li class="megamenu-container active">
+                                        <a jsf:outcome="homepage" >Home</a>  
+                                    </li>
+                                    <li>
+                                        <a href="#" class="sf-with-ul">Tours</a>
+                                        <div class="megamenu megamenu-sm">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-6">
+                                                    <div class="menu-col">
+                                                        <div class="menu-title">Destination Types</div>
+                                                        <ul>
+                                                            <c:forEach items="#{tourTypeMB.showAll()}" var="tt">
+                                                                <li><a href="#"><h:outputText value="#{tt.typeName}" /></a></li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="banner banner-overlay">
+                                                        <a href="#">
+                                                            <img src="#{request.contextPath}/resources/client/assets/images/menu/banner-2.jpg" alt="Banner"/>
+
+                                                            <div class="banner-content banner-content-bottom">
+                                                                <div class="banner-title text-white">New Trends<br/><span><strong>spring 2019</strong></span></div><!-- End .banner-title -->
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="sf-with-ul">Cars</a>
+
+                                        <div class="megamenu megamenu-sm">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-6">
+                                                    <div class="menu-col">
+                                                        <div class="menu-title">Car Types</div>
+                                                        <ul>
+                                                            <c:forEach items="#{carTypeMB.showAll()}" var="tp">
+                                                                <li><a href="#"><h:outputText value="#{tp.description}" /></a></li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="menu-col">
+                                                        <div class="menu-title">Car Models</div>
+                                                        <ul>
+                                                            <c:forEach items="#{carModelMB.showAll()}" var="md">
+                                                                <li><a href="#"><h:outputText value="#{md.modelName}" /></a></li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#" >About</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" >Contact</a>                                   
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="header-right">
+                            <i class="la la-lightbulb-o"></i><p>Clearance Up to 30% Off</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </h:body>
+</html>
+

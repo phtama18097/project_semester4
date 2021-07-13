@@ -100,13 +100,12 @@ CREATE TABLE [Cars](
 	ModelId INT REFERENCES [CarModels](ModelId),
 	TypeId INT REFERENCES [CarTypes](TypeId),
 	UnitPrice BIGINT,
-	UnitInStock INT,
-	UnitOnOrder INT,
 	ShortDescripiton NVARCHAR(300),
 	[Description] TEXT,
 	Thumbnail NVARCHAR(100),
 	[Status] TINYINT,
-	CarName NVARCHAR(80)
+	CarName NVARCHAR(80),
+	LicencePlate NVARCHAR(15)
 	
 	PRIMARY KEY (CarId)
 )

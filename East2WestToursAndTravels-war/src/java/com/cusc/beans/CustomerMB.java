@@ -6,6 +6,7 @@
 package com.cusc.beans;
 
 import com.cusc.entities.Customers;
+import com.cusc.helps.PasswordTools;
 import com.cusc.sessionbean.CustomersFacadeLocal;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +56,7 @@ public class CustomerMB implements Serializable {
         try {
             Customers c = new Customers();
             c.setUsername(customers.getUsername());
-            c.setPassword(customers.getPassword());
+            c.setPassword(PasswordTools.encrypt(customers.getPassword()));
             c.setFirstName(customers.getFirstName());
             c.setLastName(customers.getLastName());
             c.setGender(gender);

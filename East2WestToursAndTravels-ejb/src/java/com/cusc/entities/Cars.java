@@ -38,8 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cars.findAll", query = "SELECT c FROM Cars c")
     , @NamedQuery(name = "Cars.findByCarId", query = "SELECT c FROM Cars c WHERE c.carId = :carId")
     , @NamedQuery(name = "Cars.findByUnitPrice", query = "SELECT c FROM Cars c WHERE c.unitPrice = :unitPrice")
-    , @NamedQuery(name = "Cars.findByUnitInStock", query = "SELECT c FROM Cars c WHERE c.unitInStock = :unitInStock")
-    , @NamedQuery(name = "Cars.findByUnitOnOrder", query = "SELECT c FROM Cars c WHERE c.unitOnOrder = :unitOnOrder")
     , @NamedQuery(name = "Cars.findByShortDescripiton", query = "SELECT c FROM Cars c WHERE c.shortDescripiton = :shortDescripiton")
     , @NamedQuery(name = "Cars.findByThumbnail", query = "SELECT c FROM Cars c WHERE c.thumbnail = :thumbnail")
     , @NamedQuery(name = "Cars.findByStatus", query = "SELECT c FROM Cars c WHERE c.status = :status")})
@@ -53,10 +51,6 @@ public class Cars implements Serializable {
     private Integer carId;
     @Column(name = "UnitPrice")
     private BigInteger unitPrice;
-    @Column(name = "UnitInStock")
-    private Integer unitInStock;
-    @Column(name = "UnitOnOrder")
-    private Integer unitOnOrder;
     @Size(max = 300)
     @Column(name = "ShortDescripiton")
     private String shortDescripiton;
@@ -72,6 +66,9 @@ public class Cars implements Serializable {
     @Size(max = 80)
     @Column(name = "CarName")
     private String carName;
+    @Size(max = 15)
+    @Column(name = "LicencePlate")
+    private String licencePlate;
     @OneToMany(mappedBy = "carId")
     private Collection<CarImages> carImagesCollection;
     @JoinColumn(name = "ModelId", referencedColumnName = "ModelId")
@@ -96,22 +93,6 @@ public class Cars implements Serializable {
 
     public void setUnitPrice(BigInteger unitPrice) {
         this.unitPrice = unitPrice;
-    }
-
-    public Integer getUnitInStock() {
-        return unitInStock;
-    }
-
-    public void setUnitInStock(Integer unitInStock) {
-        this.unitInStock = unitInStock;
-    }
-
-    public Integer getUnitOnOrder() {
-        return unitOnOrder;
-    }
-
-    public void setUnitOnOrder(Integer unitOnOrder) {
-        this.unitOnOrder = unitOnOrder;
     }
 
     public String getShortDescripiton() {
@@ -211,6 +192,14 @@ public class Cars implements Serializable {
 
     public void setCarName(String carName) {
         this.carName = carName;
+    }
+
+    public String getLicencePlate() {
+        return licencePlate;
+    }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
     
 }

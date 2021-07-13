@@ -30,7 +30,7 @@ public class ImageTools {
                 String type = file.getContentType();
                 if (type.equals("image/jpeg") || type.equals("image/png") || type.equals("image/jpg")) {
                     if (file.getSize() > 5242880) {
-                        return  "FILE_SIZE";                        
+                        return CommonConstant.FILE_SIZE;                        
                     }
                     Date date = new Date();
                     fileName = file.getSubmittedFileName().substring(0, file.getSubmittedFileName().lastIndexOf("."));
@@ -47,8 +47,8 @@ public class ImageTools {
                     String applicationPath = request.getServletContext().getRealPath("");
 
                     String uploadFilePath = applicationPath + File.separator + "uploads" + File.separator + directory;
-
                     File fileSaveDir = new File(uploadFilePath);
+                    
                     if (!fileSaveDir.exists()) {
                         fileSaveDir.mkdirs();
                     }
@@ -63,7 +63,7 @@ public class ImageTools {
                             outputStream.write(bytes, 0, read);
                         }
                     } catch (IOException e) {
-                        return "FILE_IO";
+                        return CommonConstant.FILE_IO;
                     } finally {
                         if (outputStream != null) {
                             outputStream.close();
@@ -73,15 +73,17 @@ public class ImageTools {
                         }
                     }
                 }else{
-                    return "FILE_EXTENSION";
+                    return CommonConstant.FILE_IO;
                 }
             } catch (IOException ex) {
-                return "FILE_IO";
+                return CommonConstant.FILE_IO;
+            } catch( Exception ex){
+                return CommonConstant.FILE_IO;
             } finally {
                 try {
                     content.close();
                 } catch (IOException ex) {
-                    return "FILE_IO";
+                    return CommonConstant.FILE_IO;
                 }
             }
         }
@@ -96,8 +98,8 @@ public class ImageTools {
 
             String applicationPath = request.getServletContext().getRealPath("");
 
-            String uploadFilePath = applicationPath + File.separator + directory;
-
+            String uploadFilePath = applicationPath + File.separator + "uploads" + File.separator + directory;
+            
             File fl = new File(uploadFilePath + File.separator + fileName);
             fl.delete();
             return true;

@@ -34,7 +34,7 @@ $('#btnSaveChange').hide();
 // Catch closed modal event
 $("#btnCloseChange").click(function () {
     $('#btnSaveChange').hide();
-    $('#modalTitle').text("New Tours");
+    $('#modalTitle').text("New Tour");
     $('#tourName').val("");
     $('select').val(0);
     $('#unitPrice').val("");
@@ -93,7 +93,7 @@ function editObject(id, name, pkgID, uPrice, sDescription, description, dDate, r
         $('#tourStatus').prop("checked", false);
     }
     $('#newItem').modal();
-    $('#modalTitle').text("Edit The Tours");
+    $('#modalTitle').text("Edit The Tour");
     $('#btnSaveChange').show();
     $('#btnAddNew').hide();
 }

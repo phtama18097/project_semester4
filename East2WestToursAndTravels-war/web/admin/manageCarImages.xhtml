@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="mainLayout.xhtml">
+
+    <ui:define name="subheader">
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <h5 class="text-dark font-weight-bold my-1 mr-5"><h:outputText value="#{carImageMB.car.carName}" /></h5>
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted">Manage Car Images</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted"><h:outputText value="#{carImageMB.car.carName}" /></a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex align-items-center">
+            <a jsf:outcome="manageCars" type="button" class="btn btn-light-primary font-weight-bold"  id="btnCloseChange" data-dismiss="modal">Back</a>
+        </div>
+    </ui:define>
+
+    <ui:define name="content">
+        <!--begin::Card-->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-custom">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">
+                                Add New Images <br/>
+                                <small> You can upload many pictures </small>
+                            </h3>
+                        </div>
+                    </div>
+                    <h:form enctype="multipart/form-data">
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <h:outputLabel value="Image" class="col-2 col-form-label" />
+                                <div class="col-10">
+                                    <div class="custom-file">
+                                        <h:inputFile value="#{carImageMB.file}" p:type="file" p:multiple="true" p:accept="image/*" class="custom-file-input" p:id="customFile"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <div class="text-danger" id="filemessage"></div>
+                                </div> 
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-2"></div>
+                                <div class="col-10" >
+                                    <div class="filenames"></div>   
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Reset</button>
+                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-light-primary font-weight-bold" action="#{carImageMB.create()}" />
+                        </div>
+
+                    </h:form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card card-custom">
+                    <div class="card-body">
+                        <h:dataTable value="#{carImageMB.imageList}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                <h:outputText value="#{item.imageId}"/>
+                            </h:column> 
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Thumbnail"/></f:facet>
+                                <h:graphicImage value="/uploads/imgCars/#{item.fileName}" alt="" width="90"/> 
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Actions"/></f:facet>
+                                <div class="dropdown dropdown-inline">
+                                    <a onclick="detailObject(#{item.imageId},'#{item.fileName}');" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                                        <span class="svg-icon svg-icon-md">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"/>
+                                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                                <a onclick="confirmDelete(#{item.imageId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                    <span class="svg-icon svg-icon-md">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"/>
+                                                <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </a>
+                                <h:form>
+                                    <h:commandButton p:id="btnDelete-#{item.imageId}" action="#{carImageMB.delete(item)}" style="display: none"/>
+                                </h:form>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <!--begin::Detail-->
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Image Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <h:form>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <h:outputLabel value="Id" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <input id="dtID" class="form-control" readonly="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <h:outputLabel value="Thumbnail" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <img id="dtThumbnail" width="50%" /> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <!--end:Detail-->
+
+
+    </ui:define>
+
+    <ui:define name="myScript">
+        <h:outputScript name="admin/js/manage/carImages.js" />
+        <script>
+            #{carImageMB.notice}
+            #{carImageMB.notice = ""}
+        </script>
+    </ui:define>
+
+</ui:composition>

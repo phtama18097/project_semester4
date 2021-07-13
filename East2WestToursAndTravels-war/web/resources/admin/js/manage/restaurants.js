@@ -90,7 +90,7 @@ function detailObject(id, name, description, minp, maxp, location, thumbnail, to
     $('#dtMax').val(maxp);
     $('#dtLocation').val(location);
     $('#dtTown').val(town);
-    $('#dtThumbnail').attr('src', "/East2WestToursAndTravels-war/uploads/imgRestaurants/"+thumbnail);
+    $('#dtThumbnail').attr('src', "/East2WestToursAndTravels-war/uploads/imgRestaurants/" + thumbnail);
     
     $('#detailModal').modal();
 }

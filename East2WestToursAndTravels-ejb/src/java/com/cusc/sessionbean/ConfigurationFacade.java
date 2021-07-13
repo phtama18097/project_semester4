@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.Configuration;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,19 @@ public class ConfigurationFacade extends AbstractFacade<Configuration> implement
 
     public ConfigurationFacade() {
         super(Configuration.class);
+    }
+    
+    
+    @Override
+    public Configuration findByConfigName(String configName){
+        Query query = em.createQuery("SELECT c FROM Configuration c WHERE c.configName = ?1");
+        query.setParameter(1, configName);
+        List<Configuration> list = query.getResultList();
+        if(list == null){
+            return null;
+        }else{
+            return list.get(0);
+        }
     }
     
 }

@@ -9,7 +9,6 @@ import com.cusc.entities.Cars;
 import com.cusc.sessionbean.CarModelsFacadeLocal;
 import com.cusc.sessionbean.CarTypesFacadeLocal;
 import com.cusc.sessionbean.CarsFacadeLocal;
-import com.cusc.sessionbean.EmployeesFacadeLocal;
 import com.cusc.helps.ImageTools;
 import com.cusc.helps.*;
 import javax.inject.Named;
@@ -43,7 +42,6 @@ public class CarMB implements Serializable {
     private Cars car;
     private String notice = "";
     private int editID = 0;
-    private boolean carStatus = true;
     private int typeID = 0;
     private int modelID = 0;
 
@@ -77,14 +75,13 @@ public class CarMB implements Serializable {
                     break;
             }
             c.setCarName(car.getCarName());
+            c.setLicencePlate(car.getLicencePlate());
             c.setModelId(carModelsFacade.find(modelID));
             c.setTypeId(carTypesFacade.find(typeID));
             c.setUnitPrice(car.getUnitPrice());
-            c.setUnitInStock(car.getUnitInStock());
-            c.setUnitOnOrder(0);
             c.setShortDescripiton(car.getShortDescripiton());
             c.setDescription(car.getDescription());
-            c.setStatus(StatusTools.readStatus(carStatus));
+            c.setStatus(car.getStatus());
             carsFacade.create(c);
             resetForm();
             notice = NotificationTools.createSuccess(BEAN_OBJECT);
@@ -131,13 +128,13 @@ public class CarMB implements Serializable {
                 }
             }
             c.setCarName(car.getCarName());
+            c.setLicencePlate(car.getLicencePlate());
             c.setModelId(carModelsFacade.find(modelID));
             c.setTypeId(carTypesFacade.find(typeID));
             c.setUnitPrice(car.getUnitPrice());
-            c.setUnitInStock(car.getUnitInStock());
             c.setShortDescripiton(car.getShortDescripiton());
             c.setDescription(car.getDescription());
-            c.setStatus(StatusTools.readStatus(carStatus));
+            c.setStatus(car.getStatus());
             carsFacade.edit(c);
             resetForm();
             notice = NotificationTools.updateSuccess(BEAN_OBJECT);
@@ -148,11 +145,10 @@ public class CarMB implements Serializable {
 
     public void resetForm() {
         car.setCarName(null);
+        car.setLicencePlate(null);
         car.setModelId(null);
         car.setTypeId(null);
         car.setUnitPrice(null);
-        car.setUnitInStock(null);
-        car.setUnitOnOrder(null);
         car.setShortDescripiton(null);
         car.setDescription(null);
         car.setThumbnail(null);
@@ -176,14 +172,6 @@ public class CarMB implements Serializable {
 
     public void setEditID(int editID) {
         this.editID = editID;
-    }
-
-    public boolean isCarStatus() {
-        return carStatus;
-    }
-
-    public void setCarStatus(boolean carStatus) {
-        this.carStatus = carStatus;
     }
 
     public int getTypeID() {
