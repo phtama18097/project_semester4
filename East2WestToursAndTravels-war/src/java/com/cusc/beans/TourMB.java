@@ -6,6 +6,10 @@
 package com.cusc.beans;
 
 import com.cusc.entities.Tours;
+import com.cusc.helps.CommonConstant;
+import com.cusc.helps.ImageTools;
+import com.cusc.helps.NotificationTools;
+import com.cusc.helps.StatusTools;
 import com.cusc.sessionbean.EmployeesFacadeLocal;
 import com.cusc.sessionbean.TourPackagesFacadeLocal;
 import com.cusc.sessionbean.ToursFacadeLocal;
@@ -14,6 +18,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -33,10 +38,14 @@ public class TourMB implements Serializable {
     private ToursFacadeLocal toursFacade;
     
     private Tours tours;
+    private Part file;
     private String notice = "";
     private int editID = 0;
     private boolean tourStatus = true;
     private int packageID = 0;
+    
+    private static final String UPLOAD_DIRECTORY = "imgTours";
+    private static final String BEAN_OBJECT = "TOUR";
             
     public TourMB() {
         tours = new Tours();
@@ -49,6 +58,24 @@ public class TourMB implements Serializable {
     public void create() {
         try {
             Tours t = new Tours();
+            String result = ImageTools.uploadFile(file, UPLOAD_DIRECTORY);
+            switch (result) {
+                case "":
+                    notice = NotificationTools.info(CommonConstant.IMAGE_IS_NULL_NOTICE);
+                    return;
+                case CommonConstant.FILE_IO:
+                    notice = NotificationTools.error(CommonConstant.UPLOADING_FAIL_NOTICE);
+                    return;
+                case CommonConstant.FILE_EXTENSION:
+                    notice = NotificationTools.error(CommonConstant.INVALID_IMAGE_EXTENSION_NOTICE);
+                    return;
+                case CommonConstant.FILE_SIZE:
+                    notice = NotificationTools.error(CommonConstant.INVALID_FILE_SIZE_NOTICE);
+                    return;
+                default:
+                    t.setThumbnail(result);
+                    break;
+            }
             t.setTourName(tours.getTourName());
             t.setPackageId(tourPackagesFacade.find(packageID));
             t.setUnitPrice(tours.getUnitPrice());
@@ -59,31 +86,52 @@ public class TourMB implements Serializable {
             t.setMinQuantity(tours.getMinQuantity());
             t.setMaxQuantity(tours.getMaxQuantity());
             t.setEmployeeId(null); // Them employee khi xong dang nhap
-            if(tourStatus){
-                t.setStatus((short)1);
-            }else{
-                t.setStatus((short)0);
-            }
+            t.setStatus(StatusTools.readStatus(tourStatus));
             toursFacade.create(t);
             resetForm();
-            notice = "toastr.success(\"New tour has been added successfully!\");";
+            notice = NotificationTools.createSuccess(BEAN_OBJECT);
         } catch (Exception ex) {
-            notice = "toastr.error(\"New tour has not added. Try again\");";
+            notice = NotificationTools.createFail(BEAN_OBJECT);
         }
     }
 
     public void delete(Tours t){
         try{
             toursFacade.remove(t);
-            notice = "toastr.success(\"The tour has been deleted successfully!\");";
+            if(ImageTools.deleteFile(t.getThumbnail(), UPLOAD_DIRECTORY)){
+                notice = NotificationTools.deleteSuccess(BEAN_OBJECT);
+            }else{
+                notice = NotificationTools.deleteFail(BEAN_OBJECT);
+            }
         }catch(Exception ex){
-            notice = "toastr.error(\"The tour has a constraint. You cannot delete it.\");";
+            notice = NotificationTools.deleteFail(BEAN_OBJECT);
         }
     }
     
     public void update() {
         try{
             Tours t = toursFacade.find(editID);
+            if (file != null) {
+                ImageTools.deleteFile(t.getThumbnail(), UPLOAD_DIRECTORY);
+                String result = ImageTools.uploadFile(file, UPLOAD_DIRECTORY);
+                switch (result) {
+                    case "":
+                        notice = NotificationTools.info(CommonConstant.IMAGE_IS_NULL_NOTICE);
+                        return;
+                    case CommonConstant.FILE_IO:
+                        notice = NotificationTools.error(CommonConstant.UPLOADING_FAIL_NOTICE);
+                        return;
+                    case CommonConstant.FILE_EXTENSION:
+                        notice = NotificationTools.error(CommonConstant.INVALID_IMAGE_EXTENSION_NOTICE);
+                        return;
+                    case CommonConstant.FILE_SIZE:
+                        notice = NotificationTools.error(CommonConstant.INVALID_FILE_SIZE_NOTICE);
+                        return;
+                    default:
+                        t.setThumbnail(result);
+                        break;
+                }
+            }
             t.setTourName(tours.getTourName());
             t.setPackageId(tourPackagesFacade.find(packageID));
             t.setUnitPrice(tours.getUnitPrice());
@@ -94,16 +142,12 @@ public class TourMB implements Serializable {
             t.setMinQuantity(tours.getMinQuantity());
             t.setMaxQuantity(tours.getMaxQuantity());
             t.setEmployeeId(null); // Them employee khi xong dang nhap
-            if(tourStatus){
-                t.setStatus((short)1);
-            }else{
-                t.setStatus((short)0);
-            }
+            t.setStatus(StatusTools.readStatus(tourStatus));
             toursFacade.edit(t);
             resetForm();
-            notice = "toastr.success(\"The tour has been updated successfully!\");";
+            notice = NotificationTools.updateSuccess(BEAN_OBJECT);
         }catch(Exception ex){
-            notice = "toastr.error(\"The tour has not updated. Try again.\");";
+            notice = NotificationTools.updateFail(BEAN_OBJECT);
         }
     }
     
@@ -121,6 +165,7 @@ public class TourMB implements Serializable {
         tours.setStatus((short)0);
         setTourStatus(true);
         setPackageID(0);
+        setFile(null);
         editID = 0;
     }
 
@@ -162,6 +207,14 @@ public class TourMB implements Serializable {
 
     public void setTourStatus(boolean tourStatus) {
         this.tourStatus = tourStatus;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
     }
     
     

@@ -96,7 +96,7 @@ public class CarMB implements Serializable {
             if(ImageTools.deleteFile(c.getThumbnail(), UPLOAD_DIRECTORY)){
                 notice = NotificationTools.deleteSuccess(BEAN_OBJECT);
             }else{
-                notice = NotificationTools.createFail(BEAN_OBJECT);
+                notice = NotificationTools.deleteFail(BEAN_OBJECT);
             }         
         } catch (Exception ex) {
             notice = NotificationTools.createFail(BEAN_OBJECT);

@@ -80,6 +80,9 @@ public class Tours implements Serializable {
     private Integer maxQuantity;
     @Column(name = "Status")
     private Short status;
+    @Size(max = 100)
+    @Column(name = "Thumbnail")
+    private String thumbnail;
     @ManyToMany(mappedBy = "toursCollection")
     private Collection<Flights> flightsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tours")
@@ -249,6 +252,14 @@ public class Tours implements Serializable {
     @Override
     public String toString() {
         return "com.cusc.entities.Tours[ tourId=" + tourId + " ]";
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
     
 }

@@ -261,7 +261,8 @@ CREATE TABLE [Tours](
 	MinQuantity INT,
 	MaxQuantity INT,
 	EmployeeId INT REFERENCES [Employees](EmployeeId),
-	[Status] TINYINT
+	[Status] TINYINT,
+	Thumbnail NVARCHAR(100)
 
 	PRIMARY KEY (TourId)
 )

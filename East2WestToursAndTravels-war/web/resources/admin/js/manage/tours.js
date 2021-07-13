@@ -43,6 +43,7 @@ $("#btnCloseChange").click(function () {
     $('#returnDate').val("");
     $('#minQty').val("");
     $('#maxQty').val("");
+    $('#customFile').val("");
     MyEditor.setData("");
     $('#tourStatus').prop("checked", true);
     $('#btnAddNew').show();
@@ -99,7 +100,7 @@ function editObject(id, name, pkgID, uPrice, sDescription, description, dDate, r
 }
 
 // Detail object
-function detailObject(id, name, pkg, uPrice, sDescription, description, dDate, rDate, minQty, maxQty, status) {
+function detailObject(id, name, pkg, uPrice, sDescription, description, dDate, rDate, minQty, maxQty, status, thumbnail) {
     $('#dtID').val(id);
     $('#dtName').val(name);
     $('#dtPrice').val(uPrice);
@@ -109,6 +110,7 @@ function detailObject(id, name, pkg, uPrice, sDescription, description, dDate, r
     $('#dtMin').val(minQty);
     $('#dtMax').val(maxQty);
     $('#dtPackage').val(pkg);
+    $('#dtThumbnail').attr('src', "/East2WestToursAndTravels-war/uploads/imgTours/" + thumbnail);
     DetailEditor.setData(description);
     if(status == 1){
         $('#dtStatus').prop("checked", true);
