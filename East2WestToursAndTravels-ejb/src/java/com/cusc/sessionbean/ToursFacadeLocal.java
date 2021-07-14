@@ -29,5 +29,7 @@ public interface ToursFacadeLocal {
     List<Tours> findRange(int[] range);
 
     int count();
+
+    public List<Tours> findNewTours(int records, int page);
     
 }

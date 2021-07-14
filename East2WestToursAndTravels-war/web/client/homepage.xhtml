@@ -3,8 +3,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                template="./mainTemplate.xhtml"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="./mainTemplate.xhtml">
 
     <ui:define name="content">
         <main class="main">
@@ -18,8 +19,8 @@
                                 </a>
 
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle text-white"><a href="#">Your Guide To The World</a></h4>
-                                    <h2 class="banner-title text-white"><a href="#">Must-Read <br/>Travel Books</a></h2>
+                                    <h4 class="banner-subtitle text-white"><a href="#">Explore the world</a></h4>
+                                    <h2 class="banner-title text-white"><a href="#">Must-Visit <br/>Destinations</a></h2>
                                     <a href="#" class="btn btn-outline-white-3 banner-link">Find out more<i class="icon-long-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -32,8 +33,8 @@
                                 </a>
 
                                 <div class="banner-content banner-content-stretch">
-                                    <h4 class="banner-subtitle text-white"><a href="#">New This Week</a></h4>
-                                    <h3 class="banner-title text-white"><a href="#">Discover Our <br/>Best Romance <br/>Books</a></h3>
+                                    <h4 class="banner-subtitle text-white"><a href="#">New This Company</a></h4>
+                                    <h3 class="banner-title text-white"><a href="#">Discover The <br/>Best Wonderful <br/>Places</a></h3>
                                     <a href="#" class="btn btn-outline-white-3 banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -131,11 +132,11 @@
                         <div class="container">
                             <div class="heading heading-flex">
                                 <div class="heading-left">
-                                    <h2 class="title">Bestsellers</h2>
+                                    <h2 class="title">New Tours</h2>
                                 </div>
 
                                 <div class="heading-right">
-                                    <a href="category.html" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
+                                    <a href="category.html" class="title-link">View more Tours <i class="icon-long-arrow-right"></i></a>
                                 </div>
                             </div>
 
@@ -163,23 +164,30 @@
                                  }
                                  }
                                  }'>
-                                
+                                <c:forEach items="#{homePageMB.showNewTours()}" var="item">
                                     <div class="product">
                                         <span class="product-label label-sale">Sale</span>
                                         <figure class="product-media">
                                             <a href="#">
-                                                <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-1.jpg" alt="Product image" class="product-image"/>
+                                                <img src="#{request.contextPath}/uploads/imgTours/#{item.thumbnail}" alt="Product image" class="product-image"/>
                                             </a>
                                         </figure>
 
                                         <div class="product-body">
                                             <div class="product-cat">
-                                                by <a href="#">Michelle Obama</a>
+                                                depart <a href="#">
+                                                    <h:outputText value="#{item.departureDate}">
+                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    </h:outputText>
+                                                </a>
                                             </div>
-                                            <h3 class="product-title"><a href="product.html">Becoming</a></h3>
+                                            <h3 class="product-title"><a href="#"><h:outputText value="#{item.tourName}" /></a></h3>
                                             <div class="product-price">
-                                                <span class="new-price">$19.50</span>
-                                                <span class="old-price">Was $32.50</span>
+                                                <span class="new-price">
+                                                    <h:outputText value="#{item.unitPrice}">
+                                                        <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                    </h:outputText>
+                                                </span>
                                             </div>
 
                                             <div class="product-footer">
@@ -196,8 +204,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                
-
+                                </c:forEach>
 
 
                             </div>
@@ -209,13 +216,13 @@
             <div class="container">
                 <div class="heading heading-flex">
                     <div class="heading-left">
-                        <h2 class="title">New Releases</h2><!-- End .title -->
-                    </div><!-- End .heading-left -->
+                        <h2 class="title">New Cars</h2>
+                    </div>
 
                     <div class="heading-right">
-                        <a href="category.html" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
-                    </div><!-- End .heading-right -->
-                </div><!-- End .header-flex -->
+                        <a href="#" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xl-4">
@@ -225,61 +232,40 @@
                              "dots": true,
                              "margin": 10
                              }'>
-                            <div class="product-big">
-                                <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-big-1-bg.jpg" alt="product bg img"/>
+                            <c:forEach items="#{homePageMB.showNewCarsOnLeft()}" var="item">
+                                <div class="product-big">
+                                    <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-big-1-bg.jpg" alt="product bg img"/>
 
-                                <div class="product-wrap">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-big-1.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
+                                    <div class="product-wrap">
+                                        <figure class="product-media">
+                                            <a href="product.html">
+                                                <img src="#{request.contextPath}/uploads/imgCars/#{item.thumbnail}" alt="Product image" class="product-image"/>
+                                            </a>
+                                        </figure>
 
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">Becky Albertalli</a> and <a href="#">Adam Silvera</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">What If <br/>It's Us.</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $18.99
-                                        </div><!-- End .product-price -->
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><h:outputText value="#{item.modelId.modelName}" /></a>
+                                            </div>
+                                            <h3 class="product-title"><a href="#"><h:outputText value="#{item.carName}" /></a></h3>
+                                            <div class="product-price">
+                                                <h:outputText value="#{item.unitPrice}">
+                                                    <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                </h:outputText>
+                                            </div>
 
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product-wrap -->
-                            </div><!-- End .product-big -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
 
-                            <div class="product-big">
-                                <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-big-2-bg.jpg" alt="product bg img"/>
+                        </div>
 
-                                <div class="product-wrap">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-12.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">Nicola Yoon </a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">The Sun Is Also a Star.</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $10.99
-                                        </div><!-- End .product-price -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product-wrap -->
-                            </div><!-- End .product-big -->
-                        </div><!-- End .owl-carousel -->
-
-                        <div class="mb-3 d-xl-none"></div><!-- End .mb-3 d-none -->
-                    </div><!-- End .col-lg-4 -->
+                        <div class="mb-3 d-xl-none"></div>
+                    </div>
 
                     <div class="col-xl-8">
                         <div class="block-wrapper ">
@@ -310,136 +296,49 @@
                                  }
                                  }
                                  }'>
-                                <div class="product">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-6.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
+                                <c:forEach items="#{homePageMB.showNewCarsOnRight()}" var="item">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="product.html">
+                                                <img src="#{request.contextPath}/uploads/imgCars/#{item.thumbnail}" alt="Product image" class="product-image"/>
+                                            </a>
+                                        </figure>
 
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">John Gray</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">The Durrells of Corfu: Exclusive Edition</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $24.48
-                                        </div><!-- End .product-price -->
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><h:outputText value="#{item.modelId.modelName}" /></a>
+                                            </div>
+                                            <h3 class="product-title"><a href="#"><h:outputText value="#{item.carName}" /></a></h3>
+                                            <div class="product-price">
+                                                <h:outputText value="#{item.unitPrice}">
+                                                    <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                </h:outputText>
+                                            </div>
 
-                                        <div class="product-footer">
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 5 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                            </div><!-- End .product-action -->
-                                        </div><!-- End .product-footer -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
+                                            <div class="product-footer">
+                                                <div class="ratings-container">
+                                                    <div class="ratings">
+                                                        <div class="ratings-val" style="width: 80%;"></div>
+                                                    </div>
+                                                    <span class="ratings-text">( 5 Reviews )</span>
+                                                </div>
+                                                <div class="product-action">
+                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                    <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                                
 
-                                <div class="product">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-7.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">John Gray</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">The Moon: A History for the Future </a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $16.97
-                                        </div><!-- End .product-price -->
-
-                                        <div class="product-footer">
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 5 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                            </div><!-- End .product-action -->
-                                        </div><!-- End .product-footer -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-8.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">John Gray</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Hard Pushed: A Midwife's Story</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $12.99
-                                        </div><!-- End .product-price -->
-
-                                        <div class="product-footer">
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                            </div><!-- End .product-action -->
-                                        </div><!-- End .product-footer -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-9.jpg" alt="Product image" class="product-image"/>
-                                        </a>
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            by <a href="#">John Gray</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">This Lie Will Kill You</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $7.99
-                                        </div><!-- End .product-price -->
-
-                                        <div class="product-footer">
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 0 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                            </div><!-- End .product-action -->
-                                        </div><!-- End .product-footer -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-                            </div><!-- End .owl-carousel -->
-                        </div><!-- End .block-wrapper -->
-                    </div><!-- End .col-lg-8 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-
-            <div class="mb-5"></div><!-- End .mb-3 -->
+            <div class="mb-5"></div>
 
             <div class="banner-group mb-2">
                 <div class="container">
@@ -447,60 +346,60 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="banner banner-overlay">
                                 <a href="#">
-                                    <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/banners/banner-6.jpg" alt="Banner"/>
+                                    <img src="#{request.contextPath}/uploads/imgConfigurations/#{homePageMB.homeBanner5()}" alt="Banner"/>
                                 </a>
 
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle text-white"><a href="#">A Perfect Choice For Your Children</a></h4><!-- End .banner-subtitle -->
-                                    <h3 class="banner-title text-white"><a href="#">Children's <br/>Bestselling Books</a></h3><!-- End .banner-title -->
+                                    <h4 class="banner-subtitle text-white"><a href="#">A Perfect Choice For Your Children</a></h4>
+                                    <h3 class="banner-title text-white"><a href="#">Children's <br/>Bestselling Books</a></h3>
                                     <a href="#" class="btn btn-outline-white-3 banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .banner-content -->
-                            </div><!-- End .banner -->
-                        </div><!-- End .col-lg-4 -->
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-6 col-lg-4">
                             <div class="banner banner-overlay">
                                 <a href="#">
-                                    <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/banners/banner-7.jpg" alt="Banner"/>
+                                    <img src="#{request.contextPath}/uploads/imgConfigurations/#{homePageMB.homeBanner6()}" alt="Banner"/>
                                 </a>
 
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle text-white"><a href="#">Mental Health Awareness Week</a></h4><!-- End .banner-subtitle -->
-                                    <h3 class="banner-title text-white"><a href="#">Self-Help For <br/>Your Future.</a></h3><!-- End .banner-title -->
+                                    <h4 class="banner-subtitle text-white"><a href="#">Mental Health Awareness Week</a></h4>
+                                    <h3 class="banner-title text-white"><a href="#">Self-Help For <br/>Your Future.</a></h3>
                                     <a href="#" class="btn btn-outline-white-3 banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .banner-content -->
-                            </div><!-- End .banner -->
-                        </div><!-- End .col-lg-4 -->
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-6 col-lg-4">
                             <div class="banner banner-overlay">
                                 <a href="#">
-                                    <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/banners/banner-8.jpg" alt="Banner"/>
+                                    <img src="#{request.contextPath}/uploads/imgConfigurations/#{homePageMB.homeBanner7()}" alt="Banner"/>
                                 </a>
 
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle text-white"><a href="#">New York Times Bestsellers</a></h4><!-- End .banner-subtitle -->
-                                    <h3 class="banner-title text-white"><a href="#">Bestselling Food <br/>and Drink Books.</a></h3><!-- End .banner-title -->
+                                    <h4 class="banner-subtitle text-white"><a href="#">New York Times Bestsellers</a></h4>
+                                    <h3 class="banner-title text-white"><a href="#">Bestselling Food <br/>and Drink Books.</a></h3>
                                     <a href="#" class="btn btn-outline-white-3 banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .banner-content -->
-                            </div><!-- End .banner -->
-                        </div><!-- End .col-lg-4 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .banner-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="block">
                 <div class="block-wrapper ">
                     <div class="container">
                         <div class="heading heading-flex">
                             <div class="heading-left">
-                                <h2 class="title">Picks From Our Experts</h2><!-- End .title -->
-                            </div><!-- End .heading-left -->
+                                <h2 class="title">Picks From Our Experts</h2>
+                            </div>
 
                             <div class="heading-right">
                                 <a href="category.html" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .heading-right -->
-                        </div><!-- End .header-flex -->
+                            </div>
+                        </div>
 
                         <div class="owl-carousel carousel-equal-height owl-simple" data-toggle="owl" 
                              data-owl-options='{
@@ -529,207 +428,51 @@
                              }
                              }
                              }'>
+                            
                             <div class="product">
                                 <span class="product-label label-sale">Sale</span>
                                 <figure class="product-media">
                                     <a href="product.html">
                                         <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-10.jpg" alt="Product image" class="product-image"/>
                                     </a>
-                                </figure><!-- End .product-media -->
+                                </figure>
 
                                 <div class="product-body">
                                     <div class="product-cat">
                                         by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Normal People</a></h3><!-- End .product-title -->
+                                    </div>
+                                    <h3 class="product-title"><a href="product.html">Normal People</a></h3>
                                     <div class="product-price">
                                         <span class="new-price">$6.99</span>
                                         <span class="old-price">Was $10.99</span>
-                                    </div><!-- End .product-price -->
+                                    </div>
 
                                     <div class="product-footer">
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
+                                                <div class="ratings-val" style="width: 60%;"></div>
+                                            </div>
                                             <span class="ratings-text">( 5 Reviews )</span>
-                                        </div><!-- End .rating-container -->
+                                        </div>
                                         <div class="product-action">
                                             <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                                             <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="product">
-                                <span class="product-label label-sale">Sale</span>
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-11.jpg" alt="Product image" class="product-image"/>
-                                    </a>
-                                </figure><!-- End .product-media -->
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">The Silence of the Girls</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">$6.99</span>
-                                        <span class="old-price">Was $9.99</span>
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 7 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-12.jpg" alt="Product image" class="product-image"/>
-                                    </a>
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">You Got This</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $7.99
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 6 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-1.jpg" alt="Product image" class="product-image"/>
-                                    </a>
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">The Librarian of <br/>Auschwitz</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $10.99
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 0 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <span class="product-label label-sale">Sale</span>
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-14.jpg" alt="Product image" class="product-image"/>
-                                    </a>
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Moneyland: Why Thieves And Crooks Now Rule ...</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">$7.99</span>
-                                        <span class="old-price">Was $12.99</span>
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 13 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-2.jpg" alt="Product image" class="product-image"/>
-                                    </a>
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        by <a href="#">John Gray</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">This is Going to Hurt: Secret Diaries of a Juni</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $12.00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-footer -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .owl-carousel -->
-                    </div><!-- End .container -->
-                </div><!-- End .block-wrapper -->
-            </div><!-- End .block -->
-
-            <div class="mb-5"></div><!-- End .mb-5 -->
+            <div class="mb-5"></div>
 
             <div class="blog-posts bg-light pt-4 pb-4">
                 <div class="container">
-                    <h2 class="title">From Our Blog</h2><!-- End .title-lg text-center -->
+                    <h2 class="title">From Our Blog</h2>
 
                     <div class="owl-carousel owl-simple" data-toggle="owl" 
                          data-owl-options='{
@@ -862,9 +605,9 @@
                             </div><!-- .End .input-group-append -->
                         </div><!-- .End .input-group -->
                     </form>
-                </div><!-- End .container -->
-            </div><!-- End .cta-newsletter -->
-        </main><!-- End .main -->
+                </div>
+            </div>
+        </main>
     </ui:define>
 
 </ui:composition>

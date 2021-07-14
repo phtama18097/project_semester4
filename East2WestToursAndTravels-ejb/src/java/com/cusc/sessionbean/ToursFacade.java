@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.Tours;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,13 @@ public class ToursFacade extends AbstractFacade<Tours> implements ToursFacadeLoc
         return em;
     }
 
+    @Override
+    public List<Tours> findNewTours(int records, int page){
+        Query query = em.createQuery("SELECT t FROM Tours t WHERE t.status = 1 ORDER BY t.tourId DESC");
+        query.setMaxResults(records);
+        query.setFirstResult((page-1)*records);
+        return query.getResultList();
+    }
     public ToursFacade() {
         super(Tours.class);
     }
