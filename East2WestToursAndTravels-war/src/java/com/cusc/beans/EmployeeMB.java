@@ -209,8 +209,7 @@ public class EmployeeMB implements Serializable {
             fl.delete();
         } catch (Exception ex) {
         }
-    }
-
+    }   
     public List<Employees> showAll() {
         return employeesFacade.findAll();
     }
