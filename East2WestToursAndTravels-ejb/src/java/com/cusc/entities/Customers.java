@@ -100,6 +100,23 @@ public class Customers implements Serializable {
     public Customers() {
     }
 
+    public Customers(String username, String password, String firstName, String lastName, Boolean gender, Date birthDate, String email, String phone, String address, String avatar, Short status) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.avatar = avatar;
+        this.status = status;
+    }
+
+    
+    
+
     public Integer getCustomerId() {
         return customerId;
     }

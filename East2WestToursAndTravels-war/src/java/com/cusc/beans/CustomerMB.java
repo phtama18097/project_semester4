@@ -43,7 +43,6 @@ public class CustomerMB implements Serializable {
     private int editID = 0;
     private boolean gender = true;
     private boolean customerStatus = true;
-
     public CustomerMB() {
         customers = new Customers();
     }
