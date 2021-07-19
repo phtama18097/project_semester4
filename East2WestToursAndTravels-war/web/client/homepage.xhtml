@@ -133,6 +133,13 @@
                                 <div class="heading-left">
                                     <h2 class="title">Bestsellers</h2>
                                 </div>
+                                <c:forEach items="#{carModelMB.showAll()}" var="md">
+                                    <h:form>
+
+                                        <h:commandLink value="#{md.modelName}" action="#{carMB.showByModel(md.modelId)}"/>
+
+                                    </h:form>
+                                </c:forEach>
 
                                 <div class="heading-right">
                                     <a href="category.html" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
@@ -163,40 +170,40 @@
                                  }
                                  }
                                  }'>
-                                
-                                    <div class="product">
-                                        <span class="product-label label-sale">Sale</span>
-                                        <figure class="product-media">
-                                            <a href="#">
-                                                <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-1.jpg" alt="Product image" class="product-image"/>
-                                            </a>
-                                        </figure>
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                by <a href="#">Michelle Obama</a>
-                                            </div>
-                                            <h3 class="product-title"><a href="product.html">Becoming</a></h3>
-                                            <div class="product-price">
-                                                <span class="new-price">$19.50</span>
-                                                <span class="old-price">Was $32.50</span>
-                                            </div>
+                                <div class="product">
+                                    <span class="product-label label-sale">Sale</span>
+                                    <figure class="product-media">
+                                        <a href="#">
+                                            <img src="#{request.contextPath}/resources/client/assets/images/demos/demo-20/products/product-1.jpg" alt="Product image" class="product-image"/>
+                                        </a>
+                                    </figure>
 
-                                            <div class="product-footer">
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 80%;"></div>
-                                                    </div>
-                                                    <span class="ratings-text">( 10 Reviews )</span>
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            by <a href="#">Michelle Obama</a>
+                                        </div>
+                                        <h3 class="product-title"><a href="product.html">Becoming</a></h3>
+                                        <div class="product-price">
+                                            <span class="new-price">$19.50</span>
+                                            <span class="old-price">Was $32.50</span>
+                                        </div>
+
+                                        <div class="product-footer">
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 80%;"></div>
                                                 </div>
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
-                                                </div>
+                                                <span class="ratings-text">( 10 Reviews )</span>
+                                            </div>
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
                                             </div>
                                         </div>
                                     </div>
-                                
+                                </div>
+
 
 
 

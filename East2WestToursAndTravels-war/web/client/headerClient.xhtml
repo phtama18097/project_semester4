@@ -193,11 +193,15 @@
                                             <li class="item-lead"><a href="#">Tours and Travels</a></li>
                                             <li class="item-lead"><a href="#">Car Models</a></li>
                                             <c:forEach items="#{carModelMB.showAll()}" var="md">
-                                                <li><a href="#"><h:outputText value="#{md.modelName}" /></a></li>
+                                                <h:form>
+                                                    <h:commandLink value="#{md.modelName}" action="#{carMB.showByModel(md.modelId, 1)}"/>   
+                                                </h:form>
                                             </c:forEach>
                                             <li class="item-lead"><a href="#">Car Types</a></li>
                                             <c:forEach items="#{carTypeMB.showAll()}" var="tp">
-                                                <li><a href="#"><h:outputText value="#{tp.description}" /></a></li>
+                                                <h:form>
+                                                    <h:commandLink value="#{tp.seat} seats" action="#{carMB.showByType(tp.typeId, 1)}"/>   
+                                                </h:form>
                                             </c:forEach>
                                         </ul>
                                     </nav>
@@ -242,7 +246,9 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="#" class="sf-with-ul">Cars</a>
+                                        <h:form>
+                                            <h:commandLink value="Cars" action="#{carMB.showAllClient(1)}" class="sf-with-ul"></h:commandLink>
+                                        </h:form>
 
                                         <div class="megamenu megamenu-sm">
                                             <div class="row no-gutters">
@@ -251,7 +257,9 @@
                                                         <div class="menu-title">Car Types</div>
                                                         <ul>
                                                             <c:forEach items="#{carTypeMB.showAll()}" var="tp">
-                                                                <li><a href="#"><h:outputText value="#{tp.description}" /></a></li>
+                                                                <h:form>
+                                                                    <h:commandLink value="#{tp.seat} seats" action="#{carMB.showByType(tp.typeId, 1)}"/>   
+                                                                </h:form>
                                                             </c:forEach>
                                                         </ul>
                                                     </div>
@@ -262,7 +270,9 @@
                                                         <div class="menu-title">Car Models</div>
                                                         <ul>
                                                             <c:forEach items="#{carModelMB.showAll()}" var="md">
-                                                                <li><a href="#"><h:outputText value="#{md.modelName}" /></a></li>
+                                                                <h:form>
+                                                                    <h:commandLink value="#{md.modelName}" action="#{carMB.showByModel(md.modelId, 1)}"/>   
+                                                                </h:form>
                                                             </c:forEach>
                                                         </ul>
                                                     </div>
@@ -276,7 +286,7 @@
                                     <li>
                                         <a href="#" >Contact</a>                                   
                                     </li>
-                                    
+
                                 </ul>
                             </nav>
                         </div>

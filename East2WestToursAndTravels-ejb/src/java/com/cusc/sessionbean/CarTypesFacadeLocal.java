@@ -29,5 +29,7 @@ public interface CarTypesFacadeLocal {
     List<CarTypes> findRange(int[] range);
 
     int count();
+
+    public int countCarByType(int typeId);
     
 }

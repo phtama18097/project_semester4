@@ -5,6 +5,7 @@
  */
 package com.cusc.beans;
 
+import com.cusc.entities.CarImages;
 import com.cusc.entities.Cars;
 import com.cusc.sessionbean.CarModelsFacadeLocal;
 import com.cusc.sessionbean.CarTypesFacadeLocal;
@@ -15,6 +16,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.servlet.http.Part;
 
@@ -40,17 +42,78 @@ public class CarMB implements Serializable {
 
     private Part file;
     private Cars car;
+    private Cars carClient;
     private String notice = "";
     private int editID = 0;
     private int typeID = 0;
     private int modelID = 0;
+    
+    private List<Cars> listCars;
+    
+    private int currentModel;
+    private int currentCarType;
+    private int currentPage;
+    
 
     public CarMB() {
         car = new Cars();
+        listCars = null;
     }
 
     public List<Cars> showAll() {
         return carsFacade.findAll();
+    }
+    
+   public String showAllClient(int page) {
+       reset();
+       listCars = carsFacade.findAllAvai(12, page);
+       setCurrentPage(page);
+        return "car";
+    }
+    
+    public int countCar() {
+        return carsFacade.count();
+    }
+    
+    public String showByModel(int modelId, int page) {
+        reset();
+        listCars = carsFacade.findByModel(modelId, 12, page);
+        setCurrentModel(modelId);
+        setCurrentPage(page);
+        return "car";
+    }
+    
+    public String showByType(int typeId, int page) {
+        reset();
+        listCars = carsFacade.findByType(typeId, 12, page);
+        setCurrentCarType(typeId);
+        setCurrentPage(page);
+        return "car";
+    }
+    
+    public int totalCarPage() {
+        if(currentModel != 0) {
+            return (int)Math.ceil((float)carModelsFacade.carCount(currentModel).size()/(float)12);
+        }
+        else if(currentCarType != 0) {
+            return (int)Math.ceil((float)carTypesFacade.countCarByType(currentCarType)/(float)12);
+        }
+        else {
+            return (int)Math.ceil((float)carsFacade.countAllCars()/(float)12);
+        }
+    }
+    public void reset() {
+        listCars = null;
+        setCurrentModel(0);
+        setCurrentCarType(0);
+        setCurrentPage(0);
+    }
+    
+    public List<Cars> showCarOther(int typeId, int modelId, int carId) {
+        return carsFacade.carOther(typeId, modelId, carId);
+    }
+    public List<CarImages> showAllImages(int carId, String thumbnail) {
+        return carsFacade.showImage(carId, thumbnail);
     }
 
     public void create() {
@@ -142,6 +205,18 @@ public class CarMB implements Serializable {
             notice = NotificationTools.updateFail(BEAN_OBJECT);
         }
     }
+    public String detail(int carId) {
+        carClient = carsFacade.find(carId);
+        carClient.setCarName(carClient.getCarName());
+            carClient.setLicencePlate(carClient.getLicencePlate());
+            carClient.setModelId(carClient.getModelId());
+            carClient.setTypeId(carClient.getTypeId());
+            carClient.setUnitPrice(carClient.getUnitPrice());
+            carClient.setShortDescripiton(carClient.getShortDescripiton());
+            carClient.setDescription(carClient.getDescription());
+            carClient.setStatus(carClient.getStatus());
+            return "carDetail";
+    }
 
     public void resetForm() {
         car.setCarName(null);
@@ -206,4 +281,43 @@ public class CarMB implements Serializable {
         this.file = file;
     }
 
+    public List<Cars> getListCars() {
+        return listCars;
+    }
+
+    public void setListCars(List<Cars> listCars) {
+        this.listCars = listCars;
+    }
+
+    public Cars getCarClient() {
+        return carClient;
+    }
+
+    public void setCarClient(Cars carClient) {
+        this.carClient = carClient;
+    }
+
+    public int getCurrentModel() {
+        return currentModel;
+    }
+
+    public void setCurrentModel(int currentModel) {
+        this.currentModel = currentModel;
+    }
+
+    public int getCurrentCarType() {
+        return currentCarType;
+    }
+
+    public void setCurrentCarType(int currentCarType) {
+        this.currentCarType = currentCarType;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 }

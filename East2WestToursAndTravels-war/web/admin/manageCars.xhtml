@@ -117,7 +117,7 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Type"/></f:facet>
-                        <h:outputText value="#{item.typeId.description}"/>
+                        <h:outputText value="#{item.typeId.seat}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Model"/></f:facet>
@@ -138,7 +138,7 @@
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.carId}, '#{item.carName}', '#{item.licencePlate}', '#{item.typeId.description}', '#{item.modelId.modelName}', #{item.unitPrice}, '#{item.shortDescripiton}', '#{item.description}', '#{item.thumbnail}', #{item.status});" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.carId}, '#{item.carName}', '#{item.licencePlate}', '#{item.typeId.seat}', '#{item.modelId.modelName}', #{item.unitPrice}, '#{item.shortDescripiton}', '#{item.description}', '#{item.thumbnail}', #{item.status});" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -228,7 +228,7 @@
                                     <div class="col-9">
                                         <h:selectOneMenu value="#{carMB.typeID}" class="form-control" p:id="slType">
                                             <f:selectItem itemValue="0" itemLabel="Select a type for the car"/>
-                                            <f:selectItems value="#{carTypeMB.showAll()}" var="typ" itemValue="#{typ.typeId}" itemLabel="#{typ.description}"/>
+                                            <f:selectItems value="#{carTypeMB.showAll()}" var="typ" itemValue="#{typ.typeId}" itemLabel="#{typ.seat}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>

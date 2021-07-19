@@ -6,6 +6,7 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.CarModels;
+import com.cusc.entities.Cars;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,6 @@ public interface CarModelsFacadeLocal {
     List<CarModels> findRange(int[] range);
 
     int count();
+    List<Cars> carCount(int modelId);
     
 }

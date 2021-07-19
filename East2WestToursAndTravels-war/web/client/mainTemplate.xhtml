@@ -402,6 +402,17 @@
         <h:outputScript name="client/assets/js/jquery.magnific-popup.min.js" />
         <h:outputScript name="client/assets/js/main.js" />
         <h:outputScript name="client/assets/js/demos/demo-20.js" />
+        <script>
+            function changePage(id) {
+                $('btnChangePage-'+id).click();
+            }
+            function nextPage() {
+                $('btnNextPage').click();
+            }
+            function previousPage() {
+                $('btnPreviousPage').click();
+            }
+        </script>
     </h:body>
 
 </html>

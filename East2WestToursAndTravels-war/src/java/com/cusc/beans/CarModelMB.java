@@ -6,6 +6,7 @@
 package com.cusc.beans;
 
 import com.cusc.entities.CarModels;
+import com.cusc.entities.Cars;
 import com.cusc.sessionbean.CarModelsFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -34,6 +35,9 @@ public class CarModelMB implements Serializable {
     
     public List<CarModels> showAll() {
         return carModelsFacade.findAll();
+    }
+    public int showCarCount(int modelId) {
+        return carModelsFacade.carCount(modelId).size();
     }
 
     public void create() {

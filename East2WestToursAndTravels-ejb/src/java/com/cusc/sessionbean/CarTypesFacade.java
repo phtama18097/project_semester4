@@ -9,6 +9,7 @@ import com.cusc.entities.CarTypes;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,13 @@ public class CarTypesFacade extends AbstractFacade<CarTypes> implements CarTypes
 
     public CarTypesFacade() {
         super(CarTypes.class);
+    }
+    
+    @Override
+    public int countCarByType(int typeId) {
+        Query query = em.createQuery("SELECT c FROM Cars c WHERE c.typeId.typeId = :typeId AND c.status = 1");
+        query.setParameter("typeId", typeId);
+        return query.getResultList().size();
     }
     
 }
