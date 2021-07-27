@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./profile.xhtml">
+
+    <ui:define name="profileStyle">
+        <link href="#{request.contextPath}/resources/css/detailButton.css" rel="stylesheet" type="text/css"/>
+    </ui:define>
+    <ui:define name="navigation">
+        <li class="nav-item">
+            <a class="nav-link " >Account Details</a>
+        </li>
+        <li class="nav-item">
+            <a href="#{request.contextPath}/faces/client/profile.xhtml" class="nav-link">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="#{request.contextPath}/faces/client/changePassword.xhtml" class="nav-link">Change Password</a>
+        </li>
+        <li class="nav-item">
+            <a href="#{request.contextPath}/faces/client/tourRegistration.xhtml" class="nav-link">Your Booked Tour</a>
+        </li>
+        <li class="nav-item">
+            <a href="#{request.contextPath}/faces/client/carRegistration.xhtml" class="nav-link active">Car Registration History</a>
+        </li>
+        <li class="nav-item">
+            <a style="cursor: pointer" class="nav-link" onclick="$('#btnSignout').click();">Sign Out</a>
+        </li>
+    </ui:define>
+    <ui:define name="clientProfile">
+        <h:dataTable value="#{cartMB.showCarRegistrationHistory()}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin">
+            <h:column>
+                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                <h:outputText class="product-title" value="#{item.registrationId}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Registration Date"/></f:facet>
+                <h:outputText class="product-title" value="#{cartMB.convertDate(item.registrationDate)}"/>      
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Payment"/></f:facet>
+                <h:outputText class="product-title" value="#{item.methodId.methodName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Total"/></f:facet>
+                <h:outputText class="product-title" value="#{item.total}" >
+                    <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Status"/></f:facet>
+                <h:outputText class="product-title text-success" rendered="#{item.status == 2}" value="success" />
+                <h:outputText class="product-title text-info" rendered="#{item.status == 1}" value="renting" />
+                <h:outputText class="product-title text-info" rendered="#{item.status == 0}" value="pending"/>
+                <h:outputText class="product-title text-danger" rendered="#{item.status == 3}" value="canceled" />
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Actions"/></f:facet>
+                <div >
+                    <h:form> 
+                        <h:commandButton action="#{cartMB.viewRegistrationCarDetail(item.registrationId)}" style="font-family: Poppins, sans-serif; font-size: 14px" class="bn54" value="Detail"/>   
+                    </h:form>
+                </div>
+            </h:column>
+
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,7 +49,7 @@ public class CarRegistration implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RegistrationId")
     private Integer registrationId;
     @Column(name = "RegistrationDate")
@@ -75,16 +77,8 @@ public class CarRegistration implements Serializable {
     public CarRegistration() {
     }
 
-    public CarRegistration(Integer registrationId) {
-        this.registrationId = registrationId;
-    }
-
     public Integer getRegistrationId() {
         return registrationId;
-    }
-
-    public void setRegistrationId(Integer registrationId) {
-        this.registrationId = registrationId;
     }
 
     public Date getRegistrationDate() {

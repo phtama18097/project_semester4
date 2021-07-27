@@ -29,5 +29,7 @@ public interface CarRegistrationDetailsFacadeLocal {
     List<CarRegistrationDetails> findRange(int[] range);
 
     int count();
+
+    public List<CarRegistrationDetails> findDetailsByRegistration(int registrationId);
     
 }

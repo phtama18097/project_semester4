@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/homepage.xhtml">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/cart.xhtml">Your Cart</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Check out</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content pb-0">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h2 class="title mb-1">Billing Details</h2>
+                            <p class="mb-2">Check your information detail.</p>
+                            <h:form enctype="multipart/form-data" class="contact-form mb-3" >
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Payment Methods: </label>
+                                        <h:selectOneMenu value="#{cartMB.selectedPayment}" class="form-control">
+                                            <f:selectItems value="#{cartMB.showActivePaymentMethods()}" var="pm" itemValue="#{pm.methodId}" itemLabel="#{pm.methodName}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Order notes (optional)</label>
+                                        <h:inputTextarea class="form-control" value="#{cartMB.note}" cols="30" rows="4" p:placeholder="Notes about your order" />
+                                    </div>
+                                </div>
+
+                                <h:commandButton value="PLACE ORDER" action="#{cartMB.placeOrder()}" class="btn btn-outline-primary-2 btn-minwidth-sm" />
+                            </h:form>
+                        </div>
+
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                <table class="table table-summary">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <c:forEach items="#{cartMB.tourCart}" var="ct" rendered="#{cartMB.tourCart.size()>0}">
+                                            <tr>
+                                                <td><a><h:outputText value="#{ct.tourId.tourName}" /></a></td>
+                                                <td>
+                                                    <h:outputText value="#{(ct.tourId.unitPrice*ct.quantity)}" >
+                                                        <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        <c:forEach items="#{cartMB.carCart}" var="cd" rendered="#{cartMB.carCart.size()>0}">
+                                            <tr>
+                                                <td><a><h:outputText value="#{cd.cars.carName}" /></a></td>
+                                                <td>
+                                                    <h:outputText value="#{(cd.cars.unitPrice*cd.quantity)}" >
+                                                        <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        <tr class="summary-subtotal">
+                                            <td>Subtotal:</td>
+                                            <td>
+                                                <h:outputText value="#{cartMB.totalCart()}" >
+                                                    <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                </h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping:</td>
+                                            <td>Free shipping</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total:</td>
+                                            <td>
+                                                <h:outputText value="#{cartMB.totalCart()}" >
+                                                    <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                </h:outputText>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </aside>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </ui:define>
+
+</ui:composition>

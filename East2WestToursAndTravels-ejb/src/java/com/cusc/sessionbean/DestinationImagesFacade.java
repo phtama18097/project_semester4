@@ -34,6 +34,15 @@ public class DestinationImagesFacade extends AbstractFacade<DestinationImages> i
         return query.getResultList();
     }
     
+    @Override
+    public List<DestinationImages> findImages(int destinationID, int records, int page){
+        Query query = em.createQuery("SELECT d FROM DestinationImages d WHERE d.destinationId.destinationId = ?1", DestinationImages.class);
+        query.setParameter(1, destinationID);
+        query.setMaxResults(records);
+        query.setFirstResult((page-1)*records);
+        return query.getResultList();
+    }
+    
     public DestinationImagesFacade() {
         super(DestinationImages.class);
     }

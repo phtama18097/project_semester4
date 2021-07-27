@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+    <ui:define name="clientStyle">
+        <ui:insert name="profileStyle"></ui:insert>
+    </ui:define>
+    
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/homepage.xhtml">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Account</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content pb-0">
+                <div class="container">
+                    <div class="row">
+
+                        <aside class="col-md-4 col-lg-3">
+                            <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                <ui:insert name="navigation">
+                                    <li class="nav-item">
+                                        <a class="nav-link " >Account Details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#{request.contextPath}/faces/client/profile.xhtml" class="nav-link active">Edit Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#{request.contextPath}/faces/client/changePassword.xhtml" class="nav-link">Change Password</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#{request.contextPath}/faces/client/tourRegistration.xhtml" class="nav-link">Your Booked Tour</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#{request.contextPath}/faces/client/carRegistration.xhtml" class="nav-link">Car Registration History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a style="cursor: pointer" class="nav-link" onclick="$('#btnSignout').click();">Sign Out</a>
+                                    </li>
+                                </ui:insert>
+                            </ul>
+                        </aside>
+                        <div class="col-md-8 col-lg-9">
+                            <ui:insert name="clientProfile">
+                                <h:form enctype="multipart/form-data" class="contact-form mb-3" >
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Firstname:</label>
+                                            <h:inputText value="#{customerLoginMB.cusSignedIn.firstName}" id="firstname" class="form-control" p:placeholder="Firstname" />
+                                            <h:message for="firstname" class="text-danger"/> 
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <label>Lastname: </label>
+                                            <h:inputText value="#{customerLoginMB.cusSignedIn.lastName}" id="lastname" class="form-control"  p:placeholder="Lastname" />
+                                            <h:message for="lastname" class="text-danger"/> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Birthdate: </label>
+                                            <h:inputText p:type="date" value="#{customerLoginMB.cusSignedIn.birthDate}" class="form-control" id="birthdate" >
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                            </h:inputText>
+                                            <h:message for="birthdate" class="text-danger"/> 
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Gender: </label>
+                                            <h:selectOneMenu value="#{customerLoginMB.gender}" class="form-control" id="gender">
+                                                <f:selectItem itemValue="true" itemLabel="Male" />
+                                                <f:selectItem itemValue="false" itemLabel="Female" />
+                                            </h:selectOneMenu>
+                                            <h:message for="gender" class="text-danger"/> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Email: </label>
+                                            <h:inputText value="#{customerLoginMB.cusSignedIn.email}" id="email" class="form-control" p:placeholder="Email" />
+                                            <h:message for="email" class="text-danger"/> 
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Phone: </label>
+                                            <h:inputText value="#{customerLoginMB.cusSignedIn.phone}" id="phone" class="form-control" p:placeholder="Phone" />
+                                            <h:message for="phone" class="text-danger"/> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Address: </label>
+                                            <h:inputText value="#{customerLoginMB.cusSignedIn.address}" id="address" class="form-control" p:placeholder="Address" />
+                                            <h:message for="address" class="text-danger"/> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Avatar: </label>
+                                            <h:inputFile value="#{customerLoginMB.file}" id="avatar" class="form-control" />
+                                            <h:message for="avatar" class="text-danger"/> 
+                                        </div>
+                                    </div>
+
+                                    <h:commandButton value="UPDATE" action="#{customerLoginMB.updateProfile()}" class="btn btn-outline-primary-2 btn-minwidth-sm" />
+                                </h:form>
+                            </ui:insert>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </main>
+    </ui:define>
+
+</ui:composition>

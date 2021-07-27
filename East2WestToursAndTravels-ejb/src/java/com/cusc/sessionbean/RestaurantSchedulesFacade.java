@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.RestaurantSchedules;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,6 +25,13 @@ public class RestaurantSchedulesFacade extends AbstractFacade<RestaurantSchedule
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @Override
+    public List<RestaurantSchedules> findRestaurantsOfTour(int tourID){
+        Query query = em.createQuery("SELECT d FROM RestaurantSchedules d WHERE d.tours.tourId = ?1");
+        query.setParameter(1, tourID);
+        return query.getResultList();
     }
 
     public RestaurantSchedulesFacade() {

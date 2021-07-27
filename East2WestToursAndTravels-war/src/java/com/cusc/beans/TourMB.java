@@ -18,6 +18,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 /**
@@ -37,6 +38,9 @@ public class TourMB implements Serializable {
     @EJB
     private ToursFacadeLocal toursFacade;
     
+    @Inject
+    private EmployeeLoginMB employeeLoginMB;
+    
     private Tours tours;
     private Part file;
     private String notice = "";
@@ -44,7 +48,7 @@ public class TourMB implements Serializable {
     private boolean tourStatus = true;
     private int packageID = 0;
     
-    private static final String UPLOAD_DIRECTORY = "imgTours";
+    private static final String UPLOAD_DIRECTORY = "imgDestinations";
     private static final String BEAN_OBJECT = "TOUR";
             
     public TourMB() {
@@ -85,7 +89,7 @@ public class TourMB implements Serializable {
             t.setReturnDate(tours.getReturnDate());
             t.setMinQuantity(tours.getMinQuantity());
             t.setMaxQuantity(tours.getMaxQuantity());
-            t.setEmployeeId(null); // Them employee khi xong dang nhap
+            t.setEmployeeId(employeesFacade.find(employeeLoginMB.getEmpSignedIn().getEmployeeId()));
             t.setStatus(StatusTools.readStatus(tourStatus));
             toursFacade.create(t);
             resetForm();
@@ -141,7 +145,7 @@ public class TourMB implements Serializable {
             t.setReturnDate(tours.getReturnDate());
             t.setMinQuantity(tours.getMinQuantity());
             t.setMaxQuantity(tours.getMaxQuantity());
-            t.setEmployeeId(null); // Them employee khi xong dang nhap
+            t.setEmployeeId(employeesFacade.find(employeeLoginMB.getEmpSignedIn().getEmployeeId()));
             t.setStatus(StatusTools.readStatus(tourStatus));
             toursFacade.edit(t);
             resetForm();

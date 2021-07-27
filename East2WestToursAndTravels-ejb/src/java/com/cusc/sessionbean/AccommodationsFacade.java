@@ -24,7 +24,7 @@ public class AccommodationsFacade extends AbstractFacade<Accommodations> impleme
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public AccommodationsFacade() {
         super(Accommodations.class);
     }

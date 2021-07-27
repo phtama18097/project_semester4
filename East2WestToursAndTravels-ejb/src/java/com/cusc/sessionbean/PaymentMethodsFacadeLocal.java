@@ -29,5 +29,7 @@ public interface PaymentMethodsFacadeLocal {
     List<PaymentMethods> findRange(int[] range);
 
     int count();
+
+    public List<PaymentMethods> findActivePaymentMethods();
     
 }

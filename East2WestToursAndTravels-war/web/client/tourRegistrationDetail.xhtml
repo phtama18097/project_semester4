@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/homepage.xhtml">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/profile.xhtml">Account</a></li>
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/tourRegistration.xhtml">Your Booked Tour</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><h:outputText value="#{cartMB.regisTour.tourId.tourName}" /></li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content pb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>Tour Registration Detail</h3>
+                        </div>
+                        <div class="col-2">
+                            <a href="#{request.contextPath}/faces/client/tourRegistration.xhtml" class="btn btn-outline-primary-2 btn-order btn-block">BACK TO HISTORY</a>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <aside class="col-md-4 col-lg-3">
+                            <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist" >
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Registration ID:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.registrationId}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Tour Name:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.tourId.tourName}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Departure Date:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.toDate(cartMB.regisTour.tourId.departureDate)}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Return Date:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.toDate(cartMB.regisTour.tourId.returnDate)}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Registration Date:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.convertDate(cartMB.regisTour.registrationDate)}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Unit Price:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.tourId.unitPrice}" >
+                                                <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                            </h:outputText>
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Quantity:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.quantity}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Total:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.total}" >
+                                                <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                            </h:outputText>
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Payment Method:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.methodId.methodName}" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Note:
+                                        <span style="float:right;">
+                                            <h:outputText value="#{cartMB.regisTour.note}" />
+                                        </span>
+                                    </p>  
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        Status:
+                                        <span style="float:right;">
+                                            <h:outputText class="product-title text-primary" rendered="#{cartMB.regisTour.status == 1}" value="success" />
+                                            <h:outputText class="product-title text-info" rendered="#{cartMB.regisTour.status == 0}" value="pending..."/>
+                                            <h:outputText class="product-title text-danger" rendered="#{cartMB.regisTour.status == -1}" value="canceled" />
+                                        </span>
+                                    </p>
+                                </li>
+                                <li class="nav-item">
+                                    <p style="text-align:left;" class="nav-link">
+                                        <a href="#{request.contextPath}/faces/client/tourRegistration.xhtml" class="btn btn-outline-primary-2 btn-order btn-block">PRINT SCHEDULE</a>     
+                                    </p>
+                                </li>
+
+
+                            </ul>
+                        </aside>
+                        <div class="col-md-8 col-lg-9">
+                            <div class="product-details-tab">
+                                <ul class="nav nav-pills justify-content-center" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Destinations (<h:outputText value="#{cartMB.showDestinationSchedules().size()}" />)</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Restaurants (<h:outputText value="#{cartMB.showRestaurantSchedules().size()}" />)</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"  role="tab" aria-controls="product-review-tab" aria-selected="false">Accommodation (<h:outputText value="#{cartMB.showAccommodationSchedules().size()}" />)</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade  show active" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+                                        <div class="reviews">
+                                            <h3>Destination Information</h3>
+                                            <c:forEach items="#{cartMB.showDestinationSchedules()}" var="dt">
+                                                <div class="review">
+                                                    <div class="row no-gutters">
+                                                        <div class="col-2">
+                                                            <h4><a href="#"><h:outputText value="#{dt.destinations.destinationName}"/></a></h4>  
+                                                            <span class="review-date"><h:outputText value="#{dt.dayQuantity} day(s)" style="color: #1cc0a0;" /></span>
+                                                        </div>
+                                                        <div class="col-10 row" style="padding-bottom: 2%">
+                                                            <div class="col-2">
+                                                                <img src="#{request.contextPath}/uploads/imgDestinations/#{dt.destinations.thumbnail}" alt="destination" />
+                                                            </div>
+                                                            <c:forEach items="#{businessMB.showDestinationImages(dt.destinations.destinationId)}" var="des">
+                                                                <div class="col-2">
+                                                                    <img src="#{request.contextPath}/uploads/imgDestinations/#{des.fileName}" alt="destination" />
+                                                                </div>
+                                                            </c:forEach>
+                                                        </div>
+                                                        <div class="col-2"></div>
+                                                        <div class="col-10">
+                                                            <div class="review-content">
+                                                                <h:outputText value="#{dt.destinations.description}" escape="false"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+                                        <div class="reviews">
+                                            <h3>Restaurant Information</h3>
+                                            <c:forEach items="#{cartMB.showRestaurantSchedules()}" var="rs">
+                                                <div class="review">
+                                                    <div class="row no-gutters">
+                                                        <div class="col-2">
+                                                            <h4><a href="#"><h:outputText value="#{rs.restaurants.restaurantName}"/></a></h4>  
+                                                            <span class="review-date">
+                                                                <h:outputText value="#{cartMB.toDate(rs.visitDate)}" style="color: #1cc0a0;" />
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-10 row" style="padding-bottom: 2%">
+                                                            <div class="col-4">
+                                                                <img src="#{request.contextPath}/uploads/imgRestaurants/#{rs.restaurants.thumbnail}" alt="restaurant" />
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="review-content">
+                                                                    <h:outputText value="#{rs.restaurants.description}" escape="false"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                                        <div class="reviews">
+                                            <h3>Accommodation Information</h3>
+                                            <c:forEach items="#{cartMB.showAccommodationSchedules()}" var="ac">
+                                                <div class="review">
+                                                    <div class="row no-gutters">
+                                                        <div class="col-2">
+                                                            <h4><a href="#"><h:outputText value="#{ac.accommodations.accommodationName}"/></a></h4>  
+                                                            <span class="review-date">
+                                                                <h:outputText value="#{cartMB.toDate(ac.visitDate)}" style="color: #1cc0a0;" />
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-10 row" style="padding-bottom: 2%">
+                                                            <div class="col-4">
+                                                                <img src="#{request.contextPath}/uploads/imgAccommodations/#{ac.accommodations.thumbnail}" alt="accommodation" />
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="review-content">
+                                                                    <h:outputText value="#{ac.accommodations.description}" escape="false"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </ui:define>
+
+</ui:composition>

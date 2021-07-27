@@ -33,6 +33,14 @@ public class CarImagesFacade extends AbstractFacade<CarImages> implements CarIma
         query.setParameter(1, carID);
         return query.getResultList();
     }
+    
+    @Override
+    public List<CarImages> find4Images(int carID){
+        Query query = em.createQuery("SELECT c FROM CarImages c WHERE c.carId.carId = ?1", CarImages.class);
+        query.setParameter(1, carID);
+        query.setMaxResults(4);
+        return query.getResultList();
+    }
 
     public CarImagesFacade() {
         super(CarImages.class);

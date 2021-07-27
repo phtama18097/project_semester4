@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="profile.xhtml">
+
+    <ui:define name="profile">
+        <h:form enctype="multipart/form-data">
+            <div class="card card-custom">
+                <div class="card-header py-3">
+                    <div class="card-title align-items-start flex-column">
+                        <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
+                        <span class="text-muted font-weight-bold font-size-sm mt-1">Change your account information</span>
+                    </div>
+                    <div class="card-toolbar">
+                        <h:commandButton action="#{employeeLoginMB.updateProfile()}" class="btn btn-success mr-2" value="Save Changes"></h:commandButton>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <h:outputLabel value="Firstname" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.firstName}" id="firstname" p:id="firstname" class="form-control" p:placeholder="Enter Firstname" />
+                            <h:message for="firstname" class="text-danger"/>  
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Lastname" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.lastName}" id="lastname" p:id="lastname" class="form-control" p:placeholder="Enter Lastname" />
+                            <h:message for="lastname" class="text-danger"/>  
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Gender" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:selectOneRadio value="#{employeeLoginMB.gender}" id="gender">
+                                <f:selectItem itemValue="true" itemLabel="&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;" p:id="rdMale" />
+                                <f:selectItem itemValue="false" itemLabel="&nbsp;&nbsp;Female" p:id="rdFemale"/>
+                            </h:selectOneRadio>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Birthdate" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.birthDate}" p:type="date" id="birthdate" p:id="birthdate" class="form-control"  >
+                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            </h:inputText>
+                            <h:message for="birthdate" class="text-danger"/>  
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Email" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.email}" p:type="email" id="email" p:id="email" class="form-control" p:placeholder="Enter Email" />
+                            <h:message for="email" class="text-danger"/>  
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Phone" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.phone}" id="phone" p:id="phone" class="form-control" p:placeholder="Enter Phone Number" />
+                            <h:message for="phone" class="text-danger"/>  
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel value="Address" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <h:inputText value="#{employeeLoginMB.empSignedIn.address}" id="address" p:id="address" class="form-control" p:placeholder="Enter Address" />
+                            <h:message for="address" class="text-danger"/>  
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <h:outputLabel value="Avatar" class="col-2 col-form-label" />
+                        <div class="col-10">
+                            <div class="custom-file">
+                                <h:inputFile value="#{employeeLoginMB.file}" p:type="file" class="custom-file-input" id="customFile" p:id="customFile"/>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <h:message for="customFile" class="text-danger"/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </h:form>  
+    </ui:define>
+
+</ui:composition>

@@ -31,5 +31,9 @@ public interface ToursFacadeLocal {
     int count();
 
     public List<Tours> findNewTours(int records, int page);
+
+    public List<Tours> findLowPriceTours(int records, int page);
+
+    public List<Tours> findToursByEmployee(int employeeID);
     
 }

@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container d-flex align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a jsf:outcome="homepage" >Home</a></li>
+                        <li class="breadcrumb-item"><a jsf:outcome="tours" >Tours</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><h:outputText value="#{businessMB.selectedTour.tourName}" /></li>
+                    </ol>
+
+                    <nav class="product-pager ml-auto" aria-label="Product">
+                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
+                            <i class="icon-angle-left"></i>
+                            <span>Prev</span>
+                        </a>
+
+                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
+                            <span>Next</span>
+                            <i class="icon-angle-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </nav>
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="product-details-top mb-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="product-gallery product-gallery-vertical">
+                                    <div class="row">
+                                        <figure class="product-main-image">
+                                            <img id="productThumbnail" src="#{request.contextPath}/uploads/imgDestinations/#{businessMB.tourImage.thumbnail}" alt="product image"/>
+                                        </figure>
+
+                                        <div id="product-zoom-gallery" class="product-image-gallery">
+                                            <c:forEach items="#{businessMB.tourImages}" var="im" >
+                                                <a onclick="changePicture('#{im.thumbnail}')" class="product-gallery-item " >
+                                                    <img src="#{request.contextPath}/uploads/imgDestinations/#{im.thumbnail}" style="max-height: 40%" alt="product side"  />
+                                                </a>
+                                            </c:forEach>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="product-details product-details-centered">
+                                    <h1 class="product-title"><h:outputText value="#{businessMB.selectedTour.tourName}" /></h1>
+
+                                    <div class="ratings-container">
+                                        <span class="social-label">Share:</span>
+                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                    </div>
+
+                                    <div class="product-price">
+                                        <h:outputText value="#{businessMB.selectedTour.unitPrice}">
+                                            <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                        </h:outputText>
+                                    </div>
+
+                                    <div class="product-content">
+                                        <p><h:outputText value="#{businessMB.selectedTour.shortDescription}" /></p>
+                                    </div>
+
+
+
+                                    <h:form>
+                                        <div class="product-details-action">
+                                            <div class="details-action-col">
+                                                <div class="product-details-quantity">
+                                                    <h:inputText value="#{cartMB.tourQty}" p:type="number" p:id="qty" class="form-control" p:min="1" p:max="999" p:step="1" p:data-decimals="0" />
+                                                </div>
+
+                                                <a onclick="$('#btnAddToCart').click();" style="cursor: pointer;" class="btn-product btn-cart"><span>book now</span></a>
+                                            </div>
+                                        </div>
+                                        <h:commandButton p:id="btnAddToCart" action="#{cartMB.addTourToCart(businessMB.selectedTour)}" style="display: none" />
+                                    </h:form>
+
+
+                                    <div class="product-details-footer">
+                                        <div class="product-cat">
+                                            <span>Information: </span>
+                                            <h:outputText value="#{businessMB.selectedTour.description}" escape="false"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-details-tab">
+                        <ul class="nav nav-pills justify-content-center" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Destinations (<h:outputText value="#{businessMB.desSchedules.size()}" />)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Restaurants (<h:outputText value="#{businessMB.resSchedules.size()}" />)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"  role="tab" aria-controls="product-review-tab" aria-selected="false">Accommodation (<h:outputText value="#{businessMB.accSchedules.size()}" />)</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
+                                <div class="product-desc-content">
+                                    <h3>Tour Package Description</h3>
+                                    <h:outputText value="#{businessMB.selectedTour.packageId.description}" escape="false"/>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+                                <div class="reviews">
+                                    <h3>Destination Information</h3>
+                                    <c:forEach items="#{businessMB.desSchedules}" var="dt">
+                                        <div class="review">
+                                            <div class="row no-gutters">
+                                                <div class="col-2">
+                                                    <h4><a href="#"><h:outputText value="#{dt.destinations.destinationName}"/></a></h4>  
+                                                    <span class="review-date"><h:outputText value="#{dt.dayQuantity} day(s)" style="color: #1cc0a0;" /></span>
+                                                </div>
+                                                <div class="col-10 row" style="padding-bottom: 2%">
+                                                    <div class="col-2">
+                                                        <img src="#{request.contextPath}/uploads/imgDestinations/#{dt.destinations.thumbnail}" alt="destination" />
+                                                    </div>
+                                                    <c:forEach items="#{businessMB.showDestinationImages(dt.destinations.destinationId)}" var="des">
+                                                        <div class="col-2">
+                                                            <img src="#{request.contextPath}/uploads/imgDestinations/#{des.fileName}" alt="destination" />
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                                <div class="col-2"></div>
+                                                <div class="col-10">
+                                                    <div class="review-content">
+                                                        <h:outputText value="#{dt.destinations.description}" escape="false"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+                                <div class="reviews">
+                                    <h3>Restaurant Information</h3>
+                                    <c:forEach items="#{businessMB.resSchedules}" var="rs">
+                                        <div class="review">
+                                            <div class="row no-gutters">
+                                                <div class="col-2">
+                                                    <h4><a href="#"><h:outputText value="#{rs.restaurants.restaurantName}"/></a></h4>  
+                                                    <span class="review-date">
+                                                        <h:outputText value="#{rs.visitDate}" style="color: #1cc0a0;">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </span>
+                                                </div>
+                                                <div class="col-10 row" style="padding-bottom: 2%">
+                                                    <div class="col-4">
+                                                        <img src="#{request.contextPath}/uploads/imgRestaurants/#{rs.restaurants.thumbnail}" alt="restaurant" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="review-content">
+                                                            <h:outputText value="#{rs.restaurants.description}" escape="false"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                                <div class="reviews">
+                                    <h3>Accommodation Information</h3>
+                                    <c:forEach items="#{businessMB.accSchedules}" var="ac">
+                                        <div class="review">
+                                            <div class="row no-gutters">
+                                                <div class="col-2">
+                                                    <h4><a href="#"><h:outputText value="#{ac.accommodations.accommodationName}"/></a></h4>  
+                                                    <span class="review-date">
+                                                        <h:outputText value="#{ac.visitDate}" style="color: #1cc0a0;">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </span>
+                                                </div>
+                                                <div class="col-10 row" style="padding-bottom: 2%">
+                                                    <div class="col-4">
+                                                        <img src="#{request.contextPath}/uploads/imgAccommodations/#{ac.accommodations.thumbnail}" alt="accommodation" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="review-content">
+                                                            <h:outputText value="#{ac.accommodations.description}" escape="false"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                         data-owl-options='{
+                         "nav": false, 
+                         "dots": true,
+                         "margin": 20,
+                         "loop": false,
+                         "responsive": {
+                         "0": {
+                         "items":1
+                         },
+                         "480": {
+                         "items":2
+                         },
+                         "768": {
+                         "items":3
+                         },
+                         "992": {
+                         "items":4
+                         },
+                         "1200": {
+                         "items":4,
+                         "nav": true,
+                         "dots": false
+                         }
+                         }
+                         }'>
+                        <c:forEach items="#{homePageMB.showNewTours()}" var="t">
+                            <div class="product">
+                                <span class="product-label label-sale">
+                                    <h:outputText value="#{t.departureDate}">
+                                        <f:convertDateTime pattern="dd/MM"/>
+                                    </h:outputText></span>
+                                <figure class="product-media">
+                                    <a href="#" onclick="detailTour(#{t.tourId})">
+                                        <img src="#{request.contextPath}/uploads/imgDestinations/#{t.thumbnail}" height="4%" alt="Product image" class="product-image"/>
+                                    </a>
+                                </figure>
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a>
+                                            <h:outputText value="#{t.departureDate}">
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                            </h:outputText>
+                                        </a>
+                                    </div>
+                                    <h3 class="product-title"><a onclick="detailTour(#{t.tourId})" href="#"><h:outputText value="#{t.tourName}" /></a></h3>
+                                    <div class="product-price">
+                                        <span class="new-price">
+                                            <h:outputText value="#{t.unitPrice}">
+                                                <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                            </h:outputText>
+                                        </span>
+                                    </div>
+
+                                    <div >
+                                        <div class="ratings-container">
+                                            <div class="ratings">
+                                                <div class="ratings-val" style="width: 80%;"></div>
+                                            </div>
+                                            <span class="ratings-text">( 10 Reviews )</span>
+                                        </div>
+                                        <div class="product-action">
+                                            <a onclick="addTourToCart(#{t.tourId})" style="cursor: pointer" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+
+                        <c:forEach items="#{homePageMB.showNewTours()}" var="t">
+                            <h:form>
+                                <h:commandButton p:id="btnDetail-#{t.tourId}" action="#{businessMB.detailTour(t.tourId)}" style="display: none"/>
+                                <h:commandButton p:id="btnAddTourToCart-#{t.tourId}" action="#{cartMB.addTourToCart(t)}" style="display: none"/>
+                            </h:form>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </ui:define>
+
+
+</ui:composition>

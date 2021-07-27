@@ -307,3 +307,7 @@ CREATE TABLE [TourRegistration](
 
 	PRIMARY KEY (RegistrationId)
 )
+GO
+
+
+    

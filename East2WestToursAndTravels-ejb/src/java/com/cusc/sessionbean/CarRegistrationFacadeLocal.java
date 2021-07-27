@@ -29,5 +29,9 @@ public interface CarRegistrationFacadeLocal {
     List<CarRegistration> findRange(int[] range);
 
     int count();
+
+    public List<CarRegistration> findHistory(int customerId);
+
+    public List<CarRegistration> findAllOrderByDesc();
     
 }

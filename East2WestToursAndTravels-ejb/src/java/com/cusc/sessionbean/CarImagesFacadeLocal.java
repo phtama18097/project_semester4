@@ -31,5 +31,7 @@ public interface CarImagesFacadeLocal {
     public List<CarImages> findImagesByCar(int carID);
 
     int count();
+
+    public List<CarImages> find4Images(int carID);
     
 }

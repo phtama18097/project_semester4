@@ -29,5 +29,7 @@ public interface AccommodationSchedulesFacadeLocal {
     List<AccommodationSchedules> findRange(int[] range);
 
     int count();
+
+    public List<AccommodationSchedules> findAccommodationsOfTour(int tourID);
     
 }

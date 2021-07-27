@@ -83,4 +83,12 @@ public class HomePageMB implements Serializable {
     public List<Cars> showNewCarsOnRight(){
         return carFacade.findNewCars(5, 2);
     }
+    
+    public List<Tours> showLowPriceTours(){
+        return toursFacade.findLowPriceTours(6, 1);
+    }
+    
+    public List<Cars> showLowPriceCars(){
+        return carFacade.findLowPriceCars(6, 1);
+    }
 }

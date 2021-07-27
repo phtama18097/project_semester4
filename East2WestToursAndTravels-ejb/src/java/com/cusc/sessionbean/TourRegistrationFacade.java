@@ -28,6 +28,13 @@ public class TourRegistrationFacade extends AbstractFacade<TourRegistration> imp
         return em;
     }
 
+    @Override
+    public List<TourRegistration> findHistory(int customerId){
+        Query query = em.createQuery("SELECT t FROM TourRegistration t WHERE t.customerId.customerId = ?1 ORDER BY t.registrationId DESC");
+        query.setParameter(1, customerId);
+        return query.getResultList();
+    }
+    
     public TourRegistrationFacade() {
         super(TourRegistration.class);
     }

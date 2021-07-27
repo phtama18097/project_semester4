@@ -34,6 +34,22 @@ public class ToursFacade extends AbstractFacade<Tours> implements ToursFacadeLoc
         query.setFirstResult((page-1)*records);
         return query.getResultList();
     }
+    
+    @Override
+    public List<Tours> findLowPriceTours(int records, int page){
+        Query query = em.createQuery("SELECT t FROM Tours t WHERE t.status = 1 ORDER BY t.unitPrice ASC");
+        query.setMaxResults(records);
+        query.setFirstResult((page-1)*records);
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<Tours> findToursByEmployee(int employeeID){
+        Query query = em.createQuery("SELECT t FROM Tours t WHERE t.employeeId.employeeId = ?1");
+        query.setParameter(1, employeeID);
+        return query.getResultList();
+    }
+        
     public ToursFacade() {
         super(Tours.class);
     }

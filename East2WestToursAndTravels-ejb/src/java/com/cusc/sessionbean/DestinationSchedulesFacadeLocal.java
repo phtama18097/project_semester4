@@ -6,6 +6,9 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.DestinationSchedules;
+import com.cusc.entities.Destinations;
+import com.cusc.entities.Tours;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +32,15 @@ public interface DestinationSchedulesFacadeLocal {
     List<DestinationSchedules> findRange(int[] range);
 
     int count();
+
+    public List<Tours> findToursByDestinationType(int typeId, int record, int page);
+
+    public int countToursByDestinationType(int typeId);
+
+    public List<DestinationSchedules> find4Schedules(int packageID);
+
+    public List<DestinationSchedules> findDestinations(int packageID);
+
+    
     
 }

@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/homepage.xhtml">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Your Cart</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content pb-0">
+                <div class="container">
+
+                    <div class="row">
+                        <c:if test="#{cartMB.findQuantityItemsInCart() == 0}">
+                            <h4 class="col-lg-9">Your cart does not any product. Continue shopping ...</h4>
+                        </c:if>
+                        <c:if test="#{cartMB.findQuantityItemsInCart() > 0}">
+                            <div class="col-lg-9">
+                                <h:form>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <c:forEach items="#{cartMB.tourCart}" var="ct" rendered="#{cartMB.tourCart.size()>0}">
+                                                <tr>
+                                                    <td class="product-col">
+                                                        <div class="product" style="border: none">
+                                                            <figure class="product-media">
+                                                                <a href="#">
+                                                                    <img src="#{request.contextPath}/uploads/imgDestinations/#{ct.tourId.thumbnail}" alt="tour image"/> 
+                                                                </a>
+                                                            </figure>
+
+                                                            <h3 class="product-title">
+                                                                <a><h:outputText value="#{ct.tourId.tourName}" /></a>
+                                                            </h3>
+                                                        </div>
+                                                    </td>
+
+                                                    <td >
+                                                        <h:outputText value="#{ct.tourId.unitPrice}" >
+                                                            <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                        </h:outputText>
+                                                    </td>
+                                                    <td class="quantity-col">
+                                                        <div class="cart-product-quantity">
+                                                            <h:inputText p:type="number" p:id="txtQty" onchange="$('#btnUpdateCart').click();" class="form-control" value="#{ct.quantity}" p:min="1" p:max="999" p:step="1" p:data-decimals="0" />
+                                                        </div>
+                                                    </td>
+                                                    <td >
+                                                        <h:outputText value="#{(ct.tourId.unitPrice*ct.quantity)}" >
+                                                            <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                        </h:outputText>
+                                                    </td>
+                                                    <td>
+                                                        <h:commandButton action="#{cartMB.removeItem(ct.tourId)}" style="border: none" value="X"/>
+                                                    </td>
+                                                </tr>
+
+                                            </c:forEach>
+                                            <c:forEach items="#{cartMB.carCart}" var="cd" rendered="#{cartMB.carCart.size()>0}">
+                                                <tr>
+                                                    <td class="product-col">
+                                                        <div class="product" style="border: none">
+                                                            <figure class="product-media">
+                                                                <a href="#">
+                                                                    <img src="#{request.contextPath}/uploads/imgCars/#{cd.cars.thumbnail}" alt="tour image"/> 
+                                                                </a>
+                                                            </figure>
+
+                                                            <h3 class="product-title">
+                                                                <a><h:outputText value="#{cd.cars.carName}" /></a>
+                                                            </h3>
+                                                        </div>
+                                                    </td>
+
+                                                    <td >
+                                                        <h:outputText value="#{cd.cars.unitPrice}" >
+                                                            <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                        </h:outputText>
+                                                    </td>
+                                                    <td class="quantity-col">
+                                                        <div class="cart-product-quantity">
+                                                            <h:inputText p:type="number" p:id="txtQty" onchange="$('#btnUpdateCart').click();" class="form-control" value="#{cd.quantity}" p:min="1" p:max="999" p:step="1" p:data-decimals="0" />
+                                                        </div>
+                                                    </td>
+                                                    <td >
+                                                        <h:outputText value="#{(cd.cars.unitPrice*cd.quantity)}" >
+                                                            <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                        </h:outputText>
+                                                    </td>
+                                                    <td>
+                                                        <h:commandButton action="#{cartMB.removeCarItem(cd.cars)}" style="border: none" value="X"/>
+                                                    </td>
+                                                </tr>
+
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="cart-bottom">
+
+                                        <a style="cursor: pointer" onclick="$('#btnRemoveAll').click();" class="btn btn-outline-dark-2"><span>REMOVE CART</span><i class="icon-close"></i></a>
+                                    </div>
+                                    <h:commandButton p:id="btnUpdateCart" action="#{cartMB.updateTourCart()}" style="display: none;" />
+                                    <h:commandButton p:id="btnRemoveAll" action="#{cartMB.removeAllCart()}" style="display: none;" />
+                                </h:form>
+                            </div>
+                            <aside class="col-lg-3">
+                                <div class="summary summary-cart">
+                                    <h3 class="summary-title">Cart Total</h3>
+
+                                    <table class="table table-summary">
+                                        <tbody>
+                                            <tr class="summary-subtotal">
+                                                <td>Subtotal:</td>
+                                                <td>
+                                                    <h:outputText value="#{cartMB.totalCart()}" >
+                                                        <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+                                            <tr class="summary-shipping">
+                                                <td>Shipping:</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+
+                                            <tr class="summary-shipping-row">
+                                                <td>
+                                                    <div class="custom-control custom-radio">
+                                                        <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                                    </div>
+                                                </td>
+                                                <td>0.00 ₫</td>
+                                            </tr>
+
+                                            <tr class="summary-shipping-estimate">
+                                                <td>Estimate for Your Address<br/> <a href="#{request.contextPath}/faces/client/profile.xhtml">Change address</a></td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+
+                                            <tr class="summary-total">
+                                                <td>Total:</td>
+                                                <td>
+                                                    <h:outputText value="#{cartMB.totalCart()}" >
+                                                        <f:convertNumber pattern="#,### ¤" currencySymbol="₫" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <a href="#{request.contextPath}/faces/client/checkout.xhtml" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                                </div>
+
+                                <a href="#{request.contextPath}/faces/client/homepage.xhtml" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                            </aside>
+                        </c:if>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </ui:define>
+
+</ui:composition>

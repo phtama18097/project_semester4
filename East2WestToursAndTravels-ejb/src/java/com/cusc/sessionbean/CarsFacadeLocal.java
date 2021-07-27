@@ -31,5 +31,17 @@ public interface CarsFacadeLocal {
     int count();
 
     public List<Cars> findNewCars(int records, int page);
+
+    public List<Cars> findLowPriceCars(int records, int page);
+
+    public List<Cars> findNewCarsByType(int typeId, int records, int page);
+
+    public List<Cars> findNewCarsByModel(int modelId, int records, int page);
+
+    public int countNewCarsByModel(int modelId);
+
+    public int countNewCarsByType(int typeId);
+
+    public int countNewCars();
     
 }

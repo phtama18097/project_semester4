@@ -28,5 +28,9 @@ public class CommonConstant {
     public static final String FILE_IO = "FILE_IO";
     public static final String FILE_EXTENSION = "FILE_EXTENSION";
     public static final String FILE_SIZE = "FILE_SIZE";
-
+ 
+    /**
+     *
+     * @constants for mail
+     */
 }

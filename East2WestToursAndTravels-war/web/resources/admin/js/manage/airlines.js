@@ -60,13 +60,15 @@ function detailObject(id, name) {
     $('#detailModal').modal();
 }
 
-// Catch 'N' Key of user to open modal
-$(document).ready(function () {
-    $(window).keydown(function (event) {
-        if (event.keyCode === 78) {
-            $('#newItem').modal();
-        }
-    });
+// Catch 'Ctrl + I' Key of user to open modal
+$(window).keydown(function (e) {
+    if (e.which === 17)
+        $(window).bind('keydown.ctrlI', function (e) {
+            if (e.which === 73) {
+                e.preventDefault();
+                $('#newItem').modal();
+            }
+        });
 });
 
 var err = $('#javax_faces_developmentstage_messages').text();

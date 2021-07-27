@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.PaymentMethods;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,6 +25,13 @@ public class PaymentMethodsFacade extends AbstractFacade<PaymentMethods> impleme
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @Override
+    public List<PaymentMethods> findActivePaymentMethods(){
+        Query query = em.createQuery("SELECT p FROM PaymentMethods p WHERE p.status = ?1", PaymentMethods.class);
+        query.setParameter(1, true);
+        return query.getResultList();
     }
 
     public PaymentMethodsFacade() {

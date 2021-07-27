@@ -29,5 +29,7 @@ public interface TourRegistrationFacadeLocal {
     List<TourRegistration> findRange(int[] range);
 
     int count();
+
+    public List<TourRegistration> findHistory(int customerId);
     
 }

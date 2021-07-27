@@ -6,9 +6,11 @@
 package com.cusc.sessionbean;
 
 import com.cusc.entities.CarRegistrationDetails;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,13 @@ public class CarRegistrationDetailsFacade extends AbstractFacade<CarRegistration
         return em;
     }
 
+    @Override
+    public List<CarRegistrationDetails> findDetailsByRegistration(int registrationId){
+        Query query = em.createNamedQuery("CarRegistrationDetails.findByRegistrationId");
+        query.setParameter("registrationId", registrationId);
+        return query.getResultList();
+    }
+    
     public CarRegistrationDetailsFacade() {
         super(CarRegistrationDetails.class);
     }

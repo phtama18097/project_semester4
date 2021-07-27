@@ -29,5 +29,7 @@ public interface CustomersFacadeLocal {
     List<Customers> findRange(int[] range);
 
     int count();
+
+    public Customers login(String username, String password);
     
 }

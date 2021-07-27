@@ -31,5 +31,7 @@ public interface DestinationImagesFacadeLocal {
     public List<DestinationImages> findImagesByDestination(int destinationID);
 
     int count();
+
+    public List<DestinationImages> findImages(int destinationID, int records, int page);
     
 }

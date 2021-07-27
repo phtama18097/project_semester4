@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="./mainTemplate.xhtml">
+
+    <ui:define name="content">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#{request.contextPath}/faces/client/homepage.xhtml">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">About us</li>
+                    </ol>
+                </div>
+            </nav>
+            
+            <div class="container">
+                <div class="page-header page-header-big text-center" style="background-image: url('#{request.contextPath}/resources/client/assets/images/about/about-us-3.jpg')">
+                        <h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
+                </div>
+            </div>
+
+            <div class="page-content pb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            <h2 class="title">Our Vision</h2>
+                            <p>East2West Tours and Travels was created to provide travelers with instant tour booking, car rental during travel and other travel services. The site begins its mission by serving the travel industry by providing high value services powered by technology and backed by 24/7 customer service.</p>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <h2 class="title">Our Services</h2>
+                            <p>East2West Tours and Travels is a young and dynamic company run by dedicated professional’s committed to providing the highest standards of service to the travel industry. We are in industry for the past 10 years. This experience enables us to create packages, which could become popular.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-5"></div>
+                </div>
+
+                <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5 mb-3 mb-lg-0">
+                                <h2 class="title">Who We Are</h2>
+                                <p class="lead text-primary mb-3">East2West Tours and Travels is a young and dynamic company <br/>run by dedicated professional’s committed to providing the highest standards of service to the travel industry.</p>
+                                <p class="mb-2">We place great emphasis on personalized service, meticulous attention to detail, innovative itineraries and excellent customer care.</p>
+
+                                <a href="#{request.contextPath}/faces/client/contact.xhtml" class="btn btn-sm btn-minwidth btn-outline-primary-2">
+                                    <span>GET IN TOUCH</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-6 offset-lg-1">
+                                <div class="about-images">
+                                    <img src="#{request.contextPath}/resources/client/assets/images/about/about-us-5.jpg" width="90%" alt="" class="about-img-front"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="mb-2"></div>
+
+                
+            </div>
+        </main>
+    </ui:define>
+
+</ui:composition>
