@@ -42,7 +42,6 @@ public class PaymentMethods implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MethodId")
     private Integer methodId;
-    @Size(max = 50)
     @Column(name = "MethodName")
     private String methodName;
     @Column(name = "Status")

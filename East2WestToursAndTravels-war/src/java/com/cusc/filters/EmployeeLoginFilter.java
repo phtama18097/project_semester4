@@ -166,7 +166,11 @@ public class EmployeeLoginFilter implements Filter {
                     chain.doFilter(wrappedRequest, wrappedResponse);
                 }
             } else {
-                chain.doFilter(wrappedRequest, wrappedResponse);          
+                if (url.contains("faces/adminLoginPage.xhtml")) {
+                    wrappedResponse.sendRedirect(wrappedRequest.getServletContext().getContextPath() + "/faces/admin/mainLayout.xhtml");
+                } else {
+                    chain.doFilter(wrappedRequest, wrappedResponse);
+                }         
             }
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,

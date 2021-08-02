@@ -122,7 +122,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.townId}, '#{item.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a id="editbutton-#{item.townId}" onclick="editObject(#{item.townId}, '#{item.townName}')" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -232,6 +232,8 @@
         <script>
            #{townMB.notice}
            #{townMB.notice = ""} 
+           #{townMB.message}
+           #{townMB.message = ""} 
         </script>
     </ui:define>
 

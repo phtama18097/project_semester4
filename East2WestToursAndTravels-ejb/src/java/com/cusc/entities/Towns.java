@@ -41,7 +41,6 @@ public class Towns implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TownId")
     private Integer townId;
-    @Size(max = 20)
     @Column(name = "TownName")
     private String townName;
     @OneToMany(mappedBy = "townId")

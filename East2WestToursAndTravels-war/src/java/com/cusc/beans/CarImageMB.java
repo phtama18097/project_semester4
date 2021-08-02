@@ -66,10 +66,10 @@ public class CarImageMB implements Serializable {
     public void delete(CarImages image){
         try {
             carImagesFacade.remove(image);
-            notice = NotificationTools.deleteSuccess("IMAGE");
+            notice = NotificationTools.deleteSuccess("image");
             ImageTools.deleteFile(image.getFileName(), "imgCars");
         } catch (Exception ex) {
-            notice = NotificationTools.deleteFail("IMAGE");
+            notice = NotificationTools.deleteFail("image");
         }
         imageList = null;
         imageList = carImagesFacade.findImagesByCar(car.getCarId());
@@ -141,7 +141,7 @@ public class CarImageMB implements Serializable {
                     return "manageCarImages";
                 }
             }
-            notice = NotificationTools.createSuccess("IMAGE");
+            notice = NotificationTools.createSuccess("image");
         } else {
             notice = NotificationTools.error(CommonConstant.IMAGE_IS_NULL_NOTICE);
         }

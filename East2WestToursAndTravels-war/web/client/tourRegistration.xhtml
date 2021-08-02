@@ -65,7 +65,7 @@
                 <f:facet name="header"><h:outputText value="Status"/></f:facet>
                 <h:outputText class="product-title text-primary" rendered="#{item.status == 1}" value="success" />
                 <h:outputText class="product-title text-info" rendered="#{item.status == 0}" value="pending"/>
-                <h:outputText class="product-title text-danger" rendered="#{item.status == -1}" value="canceled" />
+                <h:outputText class="product-title text-danger" rendered="#{item.status == 2}" value="canceled" />
             </h:column>
             <h:column>
                 <f:facet name="header"><h:outputText value="Actions"/></f:facet>

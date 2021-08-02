@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="mainLayout.xhtml">
+
+    <ui:define name="subheader">
+
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Tour Registration Detail</h5>
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#{request.contextPath}/faces/admin/manageTourRegistration.xhtml" class="text-muted">Manage Tour Registration</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:0;" class="text-muted">Tour Registration Detail</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <div class="dropdown dropdown-inline mr-2">
+                <button type="button" class="btn btn-light-success font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="svg-icon svg-icon-md">
+                        <svg   width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
+                                <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
+                            </g>
+                        </svg>
+                    </span>Actions</button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                    <ul class="navi flex-column navi-hover py-2">
+                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">Choose an option:</li>
+                        <c:if test="#{tourRegistrationMB.tourRegistration.status == 0}">
+                            <li class="navi-item">
+                                <a onclick="$('#btnApprove').click();" style="cursor: pointer" class="navi-link">
+                                    <span class="navi-icon">
+                                        <i class="flaticon2-accept"></i>
+                                    </span>
+                                    <span class="navi-text">Approve Booking</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a onclick="$('#btnDecline').click();" style="cursor: pointer" class="navi-link">
+                                    <span class="navi-icon">
+                                        <i class="flaticon2-cancel-music"></i>
+                                    </span>
+                                    <span class="navi-text">Decline Booking</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="navi-item">
+                            <a href="#" class="navi-link">
+                                <span class="navi-icon">
+                                    <i class="la la-print"></i>
+                                </span>
+                                <span class="navi-text">Print</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="#{request.contextPath}/faces/admin/manageTourRegistration.xhtml" class="btn btn-light-primary font-weight-bolder">
+                <span class="svg-icon svg-icon-md">
+                    <svg   width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"/>
+                            <rect fill="#000000" opacity="0.3" transform="translate(14.000000, 12.000000) rotate(-90.000000) translate(-14.000000, -12.000000) " x="13" y="5" width="2" height="14" rx="1"/>
+                            <rect fill="#000000" opacity="0.3" x="3" y="3" width="2" height="18" rx="1"/>
+                            <path d="M11.7071032,15.7071045 C11.3165789,16.0976288 10.6834139,16.0976288 10.2928896,15.7071045 C9.90236532,15.3165802 9.90236532,14.6834152 10.2928896,14.2928909 L16.2928896,8.29289093 C16.6714686,7.914312 17.281055,7.90106637 17.675721,8.26284357 L23.675721,13.7628436 C24.08284,14.136036 24.1103429,14.7686034 23.7371505,15.1757223 C23.3639581,15.5828413 22.7313908,15.6103443 22.3242718,15.2371519 L17.0300721,10.3841355 L11.7071032,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(16.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-16.999999, -11.999997) "/>
+                        </g>
+                    </svg>
+                </span>Back
+            </a>
+        </div>
+        <h:form style="display: none">
+            <h:commandButton p:id="btnApprove" action="#{tourRegistrationMB.updateStatus(tourRegistrationMB.tourRegistration.registrationId, 1)}" style="display: none"/>
+            <h:commandButton p:id="btnDecline" action="#{tourRegistrationMB.updateStatus(tourRegistrationMB.tourRegistration.registrationId, 2)}" style="display: none"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="d-flex flex-row">
+            <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
+                <div class="card card-custom card-stretch">
+                    <div class="card-body pt-4">
+                        <div class="d-flex justify-content-end">
+                            <div class="dropdown dropdown-inline">
+                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ki ki-bold-more-hor"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                <div class="symbol-label" style="background-image:url('#{request.contextPath}/uploads/imgCustomers/#{tourRegistrationMB.tourRegistration.customerId.avatar}')"></div>
+                            </div>
+                            <div>
+                                <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"><h:outputText value="#{tourRegistrationMB.tourRegistration.customerId.firstName}" /><h:outputText value=" #{tourRegistrationMB.tourRegistration.customerId.lastName}" /></a>
+                                <div class="text-muted">
+                                    <c:if test="#{tourRegistrationMB.tourRegistration.customerId.gender}">
+                                        <h:outputText value="Male"/>
+                                    </c:if>
+                                    <c:if test="#{!tourRegistrationMB.tourRegistration.customerId.gender}">
+                                        <h:outputText value="Female"/>
+                                    </c:if>
+                                </div>
+                                <div class="text-muted">
+                                    <h:outputText value="#{tourRegistrationMB.tourRegistration.customerId.birthDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-9">
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="font-weight-bold mr-2">Email:</span>
+                                <a href="mailto: #{tourRegistrationMB.tourRegistration.customerId.email}" class="text-muted text-hover-primary"><h:outputText value="#{tourRegistrationMB.tourRegistration.customerId.email}"/></a>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="font-weight-bold mr-2">Phone:</span>
+                                <a href="tel: #{tourRegistrationMB.tourRegistration.customerId.phone}" class="text-muted text-hover-primary">
+                                    <h:outputText value="#{tourRegistrationMB.tourRegistration.customerId.phone}"/>
+                                </a>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Address:</span>
+                                <span class="text-muted"><h:outputText value="#{tourRegistrationMB.tourRegistration.customerId.address}"/></span>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Registration Date:</span>
+                                <span class="text-muted"><h:outputText value="#{tourRegistrationMB.toDateTime(tourRegistrationMB.tourRegistration.registrationDate)}"/></span>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Quantity:</span>
+                                <span class="text-muted"><h:outputText class="label label-lg font-weight-bold label-light label-inline" value="#{tourRegistrationMB.tourRegistration.quantity}"/></span>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Total:</span>
+                                <span class="text-muted"><h:outputText class="label label-lg font-weight-bold label-light label-inline" value="#{tourRegistrationMB.tourRegistration.total}"><f:convertNumber pattern="#,### ¤" currencySymbol="₫" /></h:outputText></span>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Payment:</span>
+                                <span class="text-muted"><h:outputText value="#{tourRegistrationMB.tourRegistration.methodId.methodName}"/></span>
+                            </div>
+                            <div style="padding-bottom: 5%" class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Status:</span>
+                                <span class="text-muted">
+                                    <h:outputText rendered="#{tourRegistrationMB.tourRegistration.status == 2}" class="label label-lg font-weight-bold label-light-danger label-inline" value="canceled"/>
+                                    <h:outputText rendered="#{tourRegistrationMB.tourRegistration.status == 0}" class="label label-lg font-weight-bold label-light-info label-inline" value="pending" />
+                                    <h:outputText rendered="#{tourRegistrationMB.tourRegistration.status == 1}" class="label label-lg font-weight-bold label-light-success label-inline" value="success" />
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="font-weight-bold mr-2">Note:</span>
+                                <span class="text-muted"><h:outputText value="#{tourRegistrationMB.tourRegistration.note}"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-row-fluid ml-lg-8">
+                <div class="card card-custom">
+                    <div class="card-header card-header-tabs-line">
+                        <div class="card-title">
+                            <h3 class="card-label">Schedules</h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_des">Destinations</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_acc">Accommodations</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_res">Restaurants</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="kt_tab_pane_des" role="tabpanel">
+                                <h:dataTable value="#{tourRegistrationMB.showDestinationSchedules(tourRegistrationMB.tourRegistration.tourId.packageId.packageId)}" var="des" class="table table-sm" >
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{des.destinationSchedulesPK.destinationId}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-50 flex-shrink-0">
+                                                <h:graphicImage value="/uploads/imgDestinations/#{tourPackageMB.showThumbnail(des.destinationSchedulesPK.destinationId)}" alt="thumbnail"/> 
+                                            </div>
+                                            <div class="ml-3">
+                                                <span style="font-size: 13px" class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{tourPackageMB.showDestinationName(des.destinationSchedulesPK.destinationId)}"/></span>
+                                                <a href="#" class="text-muted text-hover-primary">
+                                                    <h:outputText style="font-size: 13px" value="#{tourPackageMB.showTypeName(des.destinationSchedulesPK.destinationId)}" />    
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Days"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{des.dayQuantity}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                            <div class="tab-pane fade" id="kt_tab_pane_acc" role="tabpanel">
+                                <h:dataTable value="#{tourRegistrationMB.showAccommodationSchedules(tourRegistrationMB.tourRegistration.tourId.tourId)}" var="item" class="table table-sm" >
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{item.accommodationSchedulesPK.accommodationId}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-50 flex-shrink-0">
+                                                <h:graphicImage value="/uploads/imgAccommodations/#{tourMB.showAccThumbnail(item.accommodationSchedulesPK.accommodationId)}" alt="thumbnail"/> 
+                                            </div>
+                                            <div class="ml-3">
+                                                <span style="font-size: 13px" class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{tourMB.showAccName(item.accommodationSchedulesPK.accommodationId)}"/></span>       
+                                            </div>
+                                        </div>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Visit Date"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{item.visitDate}" >
+                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                        </h:outputText>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                            <div class="tab-pane fade" id="kt_tab_pane_res" role="tabpanel">
+                                <h:dataTable value="#{tourRegistrationMB.showRestaurantSchedules(tourRegistrationMB.tourRegistration.tourId.tourId)}" var="res" class="table table-sm" >
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{res.restaurantSchedulesPK.restaurantId}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-50 flex-shrink-0">
+                                                <h:graphicImage value="/uploads/imgRestaurants/#{tourMB.showResThumbnail(res.restaurantSchedulesPK.restaurantId)}" alt="thumbnail"/> 
+                                            </div>
+                                            <div class="ml-3">
+                                                <span style="font-size: 13px" class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{tourMB.showResName(res.restaurantSchedulesPK.restaurantId)}"/></span>
+                                            </div>
+                                        </div>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header"><h:outputText value="Visit Date"/></f:facet>
+                                        <h:outputText style="font-size: 13px" value="#{res.visitDate}">
+                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                        </h:outputText>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+    <ui:define name="myScript">
+        <script>
+            #{tourRegistrationMB.notice}
+            #{tourRegistrationMB.notice = ""}
+        </script>
+    </ui:define>
+
+</ui:composition>

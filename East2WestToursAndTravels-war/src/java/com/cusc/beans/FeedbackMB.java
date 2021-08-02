@@ -6,6 +6,7 @@
 package com.cusc.beans;
 
 import com.cusc.entities.Feedbacks;
+import com.cusc.helps.NotificationTools;
 import com.cusc.sessionbean.FeedbacksFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -25,6 +26,7 @@ public class FeedbackMB implements Serializable {
     private FeedbacksFacadeLocal feedbacksFacade;
 
     private String notice = "";
+    private static final String BEAN_OBJECT = "feedback";
     
     public FeedbackMB() {
     }
@@ -36,9 +38,9 @@ public class FeedbackMB implements Serializable {
     public void delete(Feedbacks fb){
         try{
             feedbacksFacade.remove(fb);
-            notice = "toastr.success(\"The feedback has been deleted successfully!\");";
+            notice = NotificationTools.deleteSuccess(BEAN_OBJECT);
         }catch(Exception ex){
-            notice = "toastr.error(\"The feedback has a constraint. You cannot delete it.\");";
+            notice = NotificationTools.deleteFail(BEAN_OBJECT);
         }
     }
     

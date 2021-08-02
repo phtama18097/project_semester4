@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a class="navi-link" data-toggle="modal" data-target="#importItem" >
+                            <a style="cursor: pointer" class="navi-link" data-toggle="modal" data-target="#importItem" >
                                 <span class="navi-icon">
                                     <i class="la la-file-excel-o"></i>
                                 </span>
@@ -127,7 +127,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.methodId}, '#{item.methodName}',#{item.status})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a id="editbutton-#{item.methodId}" onclick="editObject(#{item.methodId}, '#{item.methodName}',#{item.status})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -258,7 +258,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Import Restaurants</div></h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Import Payment Methods</div></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -270,7 +270,7 @@
                                     <h:outputLabel value="Excel File" class="col-2 col-form-label" />
                                     <div class="col-10">
                                         <div class="custom-file">
-                                            <h:inputFile value="#{paymentMethodMB.excelFile}" p:type="file" class="custom-file-input" p:id="customFile"/>
+                                            <h:inputFile value="#{paymentMethodMB.excelFile}" p:type="file" p:accept="application/vnd.ms-excel" class="custom-file-input" p:id="customFile"/>
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
                                     </div>
@@ -294,6 +294,8 @@
         <script>
            #{paymentMethodMB.notice}
            #{paymentMethodMB.notice = ""} 
+           #{paymentMethodMB.message}
+           #{paymentMethodMB.message = ""} 
         </script>
     </ui:define>
 

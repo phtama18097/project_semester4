@@ -46,14 +46,12 @@ public class Destinations implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DestinationId")
     private Integer destinationId;
-    @Size(max = 100)
     @Column(name = "DestinationName")
     private String destinationName;
     @Lob
     @Size(max = 2147483647)
     @Column(name = "Description")
     private String description;
-    @Size(max = 100)
     @Column(name = "Thumbnail")
     private String thumbnail;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "destinations")

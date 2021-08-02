@@ -20,6 +20,9 @@ public class CommonConstant {
     public static final String INVALID_IMAGE_EXTENSION_NOTICE = "The extension of the file is invalid. Extentions: .jpg, .png, .jpeg";
     public static final String INVALID_XLS_EXTENSION_NOTICE = "The extension of the file is invalid. Extention: .xls";
     public static final String INVALID_FILE_SIZE_NOTICE = "Image file size must be less than 5MB.";
+    public static final String INVALID_PASSWORD = "The length of the password must be between 8 and 50 characters.";
+    public static final String EXISTED_USERNAME_NOTICE = "The username has existed in the system.";
+    public static final String EXISTED_EMAIL_NOTICE = "The email has existed in the system.";
 
     /**
      *

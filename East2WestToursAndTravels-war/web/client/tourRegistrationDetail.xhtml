@@ -125,8 +125,8 @@
                                         Status:
                                         <span style="float:right;">
                                             <h:outputText class="product-title text-primary" rendered="#{cartMB.regisTour.status == 1}" value="success" />
-                                            <h:outputText class="product-title text-info" rendered="#{cartMB.regisTour.status == 0}" value="pending..."/>
-                                            <h:outputText class="product-title text-danger" rendered="#{cartMB.regisTour.status == -1}" value="canceled" />
+                                            <h:outputText class="product-title text-info" rendered="#{cartMB.regisTour.status == 0}" value="pending"/>
+                                            <h:outputText class="product-title text-danger" rendered="#{cartMB.regisTour.status == 2}" value="canceled" />
                                         </span>
                                     </p>
                                 </li>
@@ -160,14 +160,14 @@
                                                 <div class="review">
                                                     <div class="row no-gutters">
                                                         <div class="col-2">
-                                                            <h4><a href="#"><h:outputText value="#{dt.destinations.destinationName}"/></a></h4>  
+                                                            <h4><a href="#"><h:outputText value="#{businessMB.showDestinationName(dt.destinationSchedulesPK.destinationId)}"/></a></h4>  
                                                             <span class="review-date"><h:outputText value="#{dt.dayQuantity} day(s)" style="color: #1cc0a0;" /></span>
                                                         </div>
                                                         <div class="col-10 row" style="padding-bottom: 2%">
                                                             <div class="col-2">
-                                                                <img src="#{request.contextPath}/uploads/imgDestinations/#{dt.destinations.thumbnail}" alt="destination" />
+                                                                <img src="#{request.contextPath}/uploads/imgDestinations/#{businessMB.showDestinationThumbnail(dt.destinationSchedulesPK.destinationId)}" alt="destination" />
                                                             </div>
-                                                            <c:forEach items="#{businessMB.showDestinationImages(dt.destinations.destinationId)}" var="des">
+                                                            <c:forEach items="#{businessMB.showDestinationImages(dt.destinationSchedulesPK.destinationId)}" var="des">
                                                                 <div class="col-2">
                                                                     <img src="#{request.contextPath}/uploads/imgDestinations/#{des.fileName}" alt="destination" />
                                                                 </div>
@@ -176,7 +176,7 @@
                                                         <div class="col-2"></div>
                                                         <div class="col-10">
                                                             <div class="review-content">
-                                                                <h:outputText value="#{dt.destinations.description}" escape="false"/>
+                                                                <h:outputText value="#{businessMB.showDestinationDescription(dt.destinationSchedulesPK.destinationId)}" escape="false"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -192,18 +192,18 @@
                                                 <div class="review">
                                                     <div class="row no-gutters">
                                                         <div class="col-2">
-                                                            <h4><a href="#"><h:outputText value="#{rs.restaurants.restaurantName}"/></a></h4>  
+                                                            <h4><a href="#"><h:outputText value="#{businessMB.showResName(rs.restaurantSchedulesPK.restaurantId)}"/></a></h4>  
                                                             <span class="review-date">
                                                                 <h:outputText value="#{cartMB.toDate(rs.visitDate)}" style="color: #1cc0a0;" />
                                                             </span>
                                                         </div>
                                                         <div class="col-10 row" style="padding-bottom: 2%">
                                                             <div class="col-4">
-                                                                <img src="#{request.contextPath}/uploads/imgRestaurants/#{rs.restaurants.thumbnail}" alt="restaurant" />
+                                                                <img src="#{request.contextPath}/uploads/imgRestaurants/#{businessMB.showResThumbnail(rs.restaurantSchedulesPK.restaurantId)}" alt="restaurant" />
                                                             </div>
                                                             <div class="col-6">
                                                                 <div class="review-content">
-                                                                    <h:outputText value="#{rs.restaurants.description}" escape="false"/>
+                                                                    <h:outputText value="#{businessMB.showResDescription(rs.restaurantSchedulesPK.restaurantId)}" escape="false"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -221,18 +221,18 @@
                                                 <div class="review">
                                                     <div class="row no-gutters">
                                                         <div class="col-2">
-                                                            <h4><a href="#"><h:outputText value="#{ac.accommodations.accommodationName}"/></a></h4>  
+                                                            <h4><a href="#"><h:outputText value="#{businessMB.showAccName(ac.accommodationSchedulesPK.accommodationId)}"/></a></h4>  
                                                             <span class="review-date">
                                                                 <h:outputText value="#{cartMB.toDate(ac.visitDate)}" style="color: #1cc0a0;" />
                                                             </span>
                                                         </div>
                                                         <div class="col-10 row" style="padding-bottom: 2%">
                                                             <div class="col-4">
-                                                                <img src="#{request.contextPath}/uploads/imgAccommodations/#{ac.accommodations.thumbnail}" alt="accommodation" />
+                                                                <img src="#{request.contextPath}/uploads/imgAccommodations/#{businessMB.showAccThumbnail(ac.accommodationSchedulesPK.accommodationId)}" alt="accommodation" />
                                                             </div>
                                                             <div class="col-6">
                                                                 <div class="review-content">
-                                                                    <h:outputText value="#{ac.accommodations.description}" escape="false"/>
+                                                                    <h:outputText value="#{businessMB.showAccDescription(ac.accommodationSchedulesPK.accommodationId)}" escape="false"/>
                                                                 </div>
                                                             </div>
                                                         </div>

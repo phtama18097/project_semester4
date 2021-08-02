@@ -6,21 +6,15 @@
 package com.cusc.beans;
 
 import com.cusc.entities.Configuration;
+import com.cusc.helps.CommonConstant;
+import com.cusc.helps.ImageTools;
+import com.cusc.helps.NotificationTools;
 import com.cusc.sessionbean.ConfigurationFacadeLocal;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 /**
@@ -35,7 +29,8 @@ public class ConfigurationMB implements Serializable {
     private ConfigurationFacadeLocal configurationFacade;
 
     private Part file;
-    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "imgConfigurations";
+    private static final String UPLOAD_DIRECTORY = "imgConfigurations";
+    private static final String BEAN_OBJECT = "configuration";
     
     private Configuration configuration;
     private int editID = 0;
@@ -54,15 +49,32 @@ public class ConfigurationMB implements Serializable {
         try {
             Configuration c = configurationFacade.find(editID);
 
-            if (file != null) {
-                deleteFile(c.getFileLocation());
-                c.setFileLocation(uploadFile());
+            if (file != null) {              
+                String result = ImageTools.uploadFile(file, UPLOAD_DIRECTORY);
+                switch (result) {
+                    case "":
+                        notice = NotificationTools.info(CommonConstant.IMAGE_IS_NULL_NOTICE);
+                        return;
+                    case CommonConstant.FILE_IO:
+                        notice = NotificationTools.error(CommonConstant.UPLOADING_FAIL_NOTICE);
+                        return;
+                    case CommonConstant.FILE_EXTENSION:
+                        notice = NotificationTools.error(CommonConstant.INVALID_IMAGE_EXTENSION_NOTICE);
+                        return;
+                    case CommonConstant.FILE_SIZE:
+                        notice = NotificationTools.error(CommonConstant.INVALID_FILE_SIZE_NOTICE);
+                        return;
+                    default:
+                        ImageTools.deleteFile(c.getFileLocation(), UPLOAD_DIRECTORY);
+                        c.setFileLocation(result);
+                        break;
+                }
             }
             configurationFacade.edit(c);
             resetForm();
-            notice = "toastr.success(\"The configuration has been updated successfully!\");";
+            notice = NotificationTools.updateSuccess(BEAN_OBJECT);
         } catch (Exception ex) {
-            notice = "toastr.error(\"The configuration has not updated. Try again.\");";
+            notice = NotificationTools.updateFail(BEAN_OBJECT);
         }
     }
     
@@ -73,84 +85,6 @@ public class ConfigurationMB implements Serializable {
         setEditID(0);
     }
     
-    private String uploadFile() {
-        String fileName = "";
-        if (file != null) {
-            InputStream content = null;
-            try {
-                String type = file.getContentType();
-                if (type.equals("image/jpeg") || type.equals("image/png") || type.equals("image/jpg")) {
-                    if (file.getSize() > 5242880) {
-                        //notice = "toastr.error(\"The thumbnail must less than 5MB. Try again\");";
-                    }
-                    Date date = new Date();
-                    fileName = file.getSubmittedFileName().substring(0, file.getSubmittedFileName().lastIndexOf("."));
-                    String extension = file.getSubmittedFileName().substring(file.getSubmittedFileName().lastIndexOf("."), file.getSubmittedFileName().length());
-
-                    fileName = fileName + date.getDate() + date.getMonth() + date.getYear() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getTimezoneOffset() + extension;
-
-                    content = file.getInputStream();
-
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext ec = context.getExternalContext();
-                    HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-
-                    String applicationPath = request.getServletContext().getRealPath("");
-
-                    String uploadFilePath = applicationPath + File.separator + UPLOAD_DIRECTORY;
-
-                    File fileSaveDir = new File(uploadFilePath);
-                    if (!fileSaveDir.exists()) {
-                        fileSaveDir.mkdirs();
-                    }
-                    OutputStream outputStream = null;
-                    try {
-                        File outputFilePath = new File(uploadFilePath + File.separator + fileName);
-                        content = file.getInputStream();
-                        outputStream = new FileOutputStream(outputFilePath);
-                        int read = 0;
-                        final byte[] bytes = new byte[1024];
-                        while ((read = content.read(bytes)) != -1) {
-                            outputStream.write(bytes, 0, read);
-                        }
-                    } catch (IOException e) {
-                        e.toString();
-                    } finally {
-                        if (outputStream != null) {
-                            outputStream.close();
-                        }
-                        if (content != null) {
-                            content.close();
-                        }
-                    }
-                }
-            } catch (IOException ex) {
-            } finally {
-                try {
-                    content.close();
-                } catch (IOException ex) {
-                }
-            }
-        }
-        return fileName;
-    }
-
-    private void deleteFile(String fileName) {
-        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            ExternalContext ec = context.getExternalContext();
-            HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-
-            String applicationPath = request.getServletContext().getRealPath("");
-
-            String uploadFilePath = applicationPath + File.separator + UPLOAD_DIRECTORY;
-
-            File fl = new File(uploadFilePath + File.separator + fileName);
-            fl.delete();
-        } catch (Exception ex) {
-        }
-    }
-
     public Configuration getConfiguration() {
         return configuration;
     }

@@ -46,4 +46,11 @@ public class NotificationTools {
         return "toastr.error(\"" + message + "\");";
     }
     
+    public static String openModal(){
+        return "openModal();";
+    }
+    
+    public static String editModal(int id){
+        return "$('#editbutton-"+id+"').click();";
+    }
 }

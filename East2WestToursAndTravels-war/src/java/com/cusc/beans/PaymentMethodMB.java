@@ -6,6 +6,7 @@
 package com.cusc.beans;
 
 import com.cusc.entities.PaymentMethods;
+import com.cusc.helps.NotificationTools;
 import com.cusc.sessionbean.PaymentMethodsFacadeLocal;
 import java.io.File;
 import java.io.IOException;
@@ -36,9 +37,9 @@ public class PaymentMethodMB implements Serializable {
 
     private PaymentMethods payment;
     private String notice = "";
+    private String message = "";
     private int editID = 0;
 
-    private final String UPLOAD_DIRECTORY = "uploads" + File.separator + "xlxs";
     private Part excelFile;
 
     public PaymentMethodMB() {
@@ -52,6 +53,15 @@ public class PaymentMethodMB implements Serializable {
     public void create() {
         try {
             PaymentMethods pm = new PaymentMethods();
+            boolean isInvalid = false;
+            if (payment.getMethodName().length() < 2 || payment.getMethodName().length() > 50) {
+                notice += NotificationTools.error("The length of the method name must be between 2 and 50 characters.");
+                isInvalid = true;
+            }
+            if (isInvalid) {
+                message = NotificationTools.openModal();
+                return;
+            }
             pm.setMethodName(payment.getMethodName());
             pm.setStatus(payment.getStatus());
             paymentMethodsFacade.create(pm);
@@ -74,6 +84,15 @@ public class PaymentMethodMB implements Serializable {
     public void update() {
         try {
             PaymentMethods pm = paymentMethodsFacade.find(editID);
+            boolean isInvalid = false;
+            if (payment.getMethodName().length() < 2 || payment.getMethodName().length() > 50) {
+                notice += NotificationTools.error("The length of the method name must be between 2 and 50 characters.");
+                isInvalid = true;
+            }
+            if (isInvalid) {
+                message = NotificationTools.editModal(pm.getMethodId());
+                return;
+            }
             pm.setMethodName(payment.getMethodName());
             pm.setStatus(payment.getStatus());
             paymentMethodsFacade.edit(pm);
@@ -124,17 +143,17 @@ public class PaymentMethodMB implements Serializable {
                         paymentMethodsFacade.create(pmt);
 
                     }
-                    notice = "toastr.success(\"The payment methods have been imported successfully.\");";
+                    notice = NotificationTools.success("The file has been imported successfully.");
                 } catch (IOException e) {
-                    notice = "toastr.error(\"The payment methods have not imported. Try again.\");";
+                    notice = NotificationTools.error("The file has not imported. Try again.");
                 } catch (Exception e){
-                    notice = "toastr.error(\"Data of the file is invalid. Try again!\");";
+                    notice = NotificationTools.error("Data of the file is invalid. Try again!");
                 }
             }else{
-                notice = "toastr.error(\"The extension of the file is invalid. Extentions: .xls\");";
+                notice = NotificationTools.error("The extension of the file is invalid. Extentions: .xls");
             }
         } else {
-            notice = "toastr.error(\"Please select a excel file to imported to database.\");";
+            notice = NotificationTools.error("Please select a excel file to imported to database.");
         }
 
     }
@@ -169,6 +188,14 @@ public class PaymentMethodMB implements Serializable {
 
     public void setExcelFile(Part excelFile) {
         this.excelFile = excelFile;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

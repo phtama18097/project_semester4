@@ -31,5 +31,13 @@ public interface CustomersFacadeLocal {
     int count();
 
     public Customers login(String username, String password);
+
+    public boolean validateEmail(String email);
+
+    public boolean validateUsername(String username);
+
+    public boolean validateExistedUsername(String newUsername, String existedUsername);
+
+    public boolean validateExistedEmail(String newEmail, String existedEmail);
     
 }

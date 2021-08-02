@@ -10,7 +10,7 @@
                 template="mainLayout.xhtml">
 
     <ui:define name="subheader">
-       <div class="d-flex align-items-center flex-wrap mr-2">
+        <div class="d-flex align-items-center flex-wrap mr-2">
             <h5 class="text-dark font-weight-bold my-1 mr-5">Manage Accommodations</h5>
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                 <li class="breadcrumb-item">
@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a style="cursor: pointer" data-toggle="modal" data-target="#importItem" class="navi-link">
                                 <span class="navi-icon">
                                     <i class="la la-file-excel-o"></i>
                                 </span>
@@ -107,7 +107,8 @@
                         <f:facet name="header"><h:outputText value="Name"/></f:facet>
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-50 flex-shrink-0">
-                                <h:graphicImage value="/uploads/imgAccommodations/#{item.thumbnail}" alt="thumbnail"/> 
+                                <h:graphicImage value="/uploads/imgAccommodations/#{item.thumbnail}" rendered="#{item.thumbnail!=null}" alt="thumbnail"/> 
+                                <img src="#{request.contextPath}/resources/admin/media/defaultImages/hotel.png" jsf:rendered="#{item.thumbnail==null}" alt=""/>
                             </div>
                             <div class="ml-3">
                                 <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.accommodationName}"/></span>
@@ -145,7 +146,7 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.accommodationId}, '#{item.accommodationName}', '#{item.description}',#{item.minPrice},#{item.maxPrice}, '#{item.location}', '#{item.thumbnail}',#{item.townId.townId})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a id="editbutton-#{item.accommodationId}" onclick="editObject(#{item.accommodationId}, '#{item.accommodationName}', '#{item.description}',#{item.minPrice},#{item.maxPrice}, '#{item.location}', '#{item.thumbnail}',#{item.townId.townId})" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -334,6 +335,40 @@
         </div>
         <!--end:Detail-->
 
+        <!--begin::Import-->
+        <div class="modal fade" id="importItem" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Import Accommodations</div></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <h:form enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <h:outputLabel value="Excel File" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <div class="custom-file">
+                                            <h:inputFile value="#{accommodationMB.excelFile}" p:type="file" p:accept="application/vnd.ms-excel" class="custom-file-input" p:id="customFile"/>
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton value="Import" class="btn btn-primary font-weight-bold" action="#{accommodationMB.importData()}" />
+                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <!-- end:Import -->
+
     </ui:define>
 
     <ui:define name="myScript">
@@ -345,6 +380,8 @@
         <script>
             #{accommodationMB.notice}
             #{accommodationMB.notice = ""}
+            #{accommodationMB.message}
+            #{accommodationMB.message = ""}
         </script>
     </ui:define>
 

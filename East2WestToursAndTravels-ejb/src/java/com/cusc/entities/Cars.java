@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,22 +52,18 @@ public class Cars implements Serializable {
     private Integer carId;
     @Column(name = "UnitPrice")
     private BigInteger unitPrice;
-    @Size(max = 300)
     @Column(name = "ShortDescripiton")
     private String shortDescripiton;
     @Lob
     @Size(max = 2147483647)
     @Column(name = "Description")
     private String description;
-    @Size(max = 100)
     @Column(name = "Thumbnail")
     private String thumbnail;
     @Column(name = "Status")
     private Short status;
-    @Size(max = 80)
     @Column(name = "CarName")
     private String carName;
-    @Size(max = 15)
     @Column(name = "LicencePlate")
     private String licencePlate;
     @OneToMany(mappedBy = "carId")

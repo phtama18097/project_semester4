@@ -203,7 +203,7 @@
                                                     <span class="ratings-text">( 10 Reviews )</span>
                                                 </div>
                                                 <div class="product-action">
-                                                    <a onclick="addTourToCart(#{item.tourId})" style="cursor: pointer" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                    <a onclick="addTourToCart(#{item.tourId})" style="cursor: pointer" class="btn-product btn-cart"><span>book now</span></a>
                                                     <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
                                                 </div>
                                             </div>
@@ -548,14 +548,14 @@
                          }
                          }'>
                         <c:forEach items="#{homePageMB.showLowPriceCars()}" var="item">
-                            <div class="product">
+                            <div class="product" style="padding-bottom: 15%">
                                 <figure class="product-media">
                                     <a style="cursor: pointer" onclick="$('#btnLPCar-#{item.carId}').click();">
                                         <img src="#{request.contextPath}/uploads/imgCars/#{item.thumbnail}" alt="Product image" class="product-image"/>
                                     </a>
                                 </figure>
 
-                                <div class="product-body">
+                                <div class="product-body" >
                                     <div class="product-cat">
                                         <a href="#" onclick="$('#btnChangeModels-#{item.modelId.modelId}').click();"><h:outputText value="#{item.modelId.modelName}" /></a>
                                     </div>
@@ -566,16 +566,10 @@
                                         </h:outputText>
                                     </div>
 
-                                    <div class="product-footer">
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div>
-                                            </div>
-                                            <span class="ratings-text">( 5 Reviews )</span>
-                                        </div>
+                                    <div class="product-footer" >
+                                        
                                         <div class="product-action">
-                                            <a style="cursor: pointer" onclick="$('#btnAddCarToCart-#{item.carId}').click();" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            <a href="#" class="btn-product btn-wishlist"><span>Add to Wishlist</span></a>
+                                            <a style="cursor: pointer" onclick="$('#btnAddCarToCart-#{item.carId}').click();" class="btn-product btn-cart"><span>rent now</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -586,7 +580,7 @@
                 </div>
             </div>
             <c:forEach items="#{homePageMB.showLowPriceCars()}" var="item">
-                <h:form>
+                <h:form style="display: none">
                     <h:commandButton p:id="btnAddCarToCart-#{item.carId}" action="#{cartMB.addCarToCart(item)}" style="display: none"/>
                     <h:commandButton action="#{businessMB.detailCar(item.carId)}" style="display: none" p:id="btnLPCar-#{item.carId}" />
                 </h:form>

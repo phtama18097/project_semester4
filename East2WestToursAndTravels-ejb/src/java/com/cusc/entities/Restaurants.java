@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,11 +50,9 @@ public class Restaurants implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RestaurantId")
     private Integer restaurantId;
-    @Size(max = 50)
     @Column(name = "RestaurantName")
     private String restaurantName;
     @Lob
-    @Size(max = 2147483647)
     @Column(name = "Description")
     private String description;
     @Column(name = "MinPrice")
@@ -61,7 +60,6 @@ public class Restaurants implements Serializable {
     @Column(name = "MaxPrice")
     private BigInteger maxPrice;
     @Lob
-    @Size(max = 2147483647)
     @Column(name = "Location")
     private String location;
     @Size(max = 100)

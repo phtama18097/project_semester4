@@ -32,12 +32,9 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -344,10 +341,6 @@ public class CartMB implements Serializable {
     public List<AccommodationSchedules> showAccommodationSchedules() {
         return accommodationSchedulesFacade.findAccommodationsOfTour(regisTour.getTourId().getTourId());
     }
-
-//    public List<CarRegistrationDetails> showCarRegistrationDetail() {
-//        return carRegistrationDetailsFacade.findDetailsByRegistration(regisCar.getRegistrationId());
-//    }
     
     public String convertDate(Date date) {
         return date == null ? "" : date.getDate() + "/" + (date.getMonth() + 1) + "/" + (date.getYear() + 1900) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();

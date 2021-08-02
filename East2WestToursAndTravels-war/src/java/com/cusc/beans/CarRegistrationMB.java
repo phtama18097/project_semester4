@@ -5,10 +5,18 @@
  */
 package com.cusc.beans;
 
+import com.cusc.entities.AccommodationSchedules;
 import com.cusc.entities.CarRegistration;
 import com.cusc.entities.CarRegistrationDetails;
+import com.cusc.entities.DestinationSchedules;
+import com.cusc.entities.RestaurantSchedules;
+import com.cusc.helps.NotificationTools;
+import com.cusc.sessionbean.AccommodationSchedulesFacadeLocal;
 import com.cusc.sessionbean.CarRegistrationDetailsFacadeLocal;
 import com.cusc.sessionbean.CarRegistrationFacadeLocal;
+import com.cusc.sessionbean.CarsFacadeLocal;
+import com.cusc.sessionbean.DestinationSchedulesFacadeLocal;
+import com.cusc.sessionbean.RestaurantSchedulesFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,6 +31,10 @@ import javax.ejb.EJB;
 @Named(value = "carRegistrationMB")
 @SessionScoped
 public class CarRegistrationMB implements Serializable {
+
+    
+    @EJB
+    private CarsFacadeLocal carsFacade;
 
     @EJB
     private CarRegistrationDetailsFacadeLocal carRegistrationDetailsFacade;
@@ -55,6 +67,35 @@ public class CarRegistrationMB implements Serializable {
     
     public String toDate(Date date) {
         return date == null? "" : date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear()+1900);
+    }
+    
+    public String showCarName(int carId){
+        return carsFacade.find(carId).getCarName();
+    }
+    
+    public String showCarLicencePlate(int carId){
+        return carsFacade.find(carId).getLicencePlate();
+    }
+    
+    public String showCarThumbnail(int carId){
+        return carsFacade.find(carId).getThumbnail();
+    }
+    
+    public void updateStatus(int id, int status){
+        CarRegistration rg = carRegistrationFacade.find(id);
+        rg.setStatus((short)status);
+        carRegistration = carRegistrationFacade.find(id);
+        carRegistrationFacade.edit(rg);
+        notice = NotificationTools.updateSuccess("registration status");
+    }
+    
+    public void returnCar(int id){
+        CarRegistration rg = carRegistrationFacade.find(id);
+        rg.setStatus((short)2);
+        rg.setReturnDate(new Date(System.currentTimeMillis()));
+        carRegistrationFacade.edit(rg);
+        carRegistration = carRegistrationFacade.find(id);
+        notice = NotificationTools.updateSuccess("car registration");
     }
     
     public String getNotice() {

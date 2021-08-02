@@ -124,7 +124,7 @@
                         <h:outputText rendered="#{item.status == 3}" class="label label-lg font-weight-bold label-light-danger label-inline" value="canceled"/>  
                         <h:outputText rendered="#{item.status == 0}" class="label label-lg font-weight-bold label-light-info label-inline" value="pending"/>
                         <h:outputText rendered="#{item.status == 1}" class="label label-lg font-weight-bold label-light-primary label-inline" value="renting"/>
- 
+
                         <h:outputText rendered="#{item.returnDate != null}" value="#{carRegistrationMB.toDateTime(item.returnDate)}" />
                     </h:column>
                     <h:column>
@@ -146,19 +146,6 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
-                        <div class="dropdown dropdown-inline">
-                            <a class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
-                                <span class="svg-icon svg-icon-md">
-                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"/>
-                                            <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
-                                            <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </a>
-                        </div>
                         <a onclick="$('#btnDetail-#{item.registrationId}').click();" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -173,7 +160,7 @@
                         <h:form>
                             <h:commandButton p:id="btnDetail-#{item.registrationId}" action="#{carRegistrationMB.detail(item.registrationId)}" style="display: none"/>
                         </h:form>
-                                             
+
                     </h:column>
 
                 </h:dataTable>
@@ -182,203 +169,12 @@
         </div>
         <!--end::Card-->
 
-        <!--begin::Form-->
-        <div class="modal fade" id="newItem" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">New Cars</div></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <h:form enctype="multipart/form-data">
-                        <div class="modal-body">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <h:outputLabel value="Name" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:inputText value="#{carMB.car.carName}" id="carName" p:id="carName" class="form-control" p:placeholder="Enter Car Name" />
-                                        <h:message for="carName" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Licence Plate" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:inputText value="#{carMB.car.licencePlate}" id="plate" p:id="plate" class="form-control" p:placeholder="Enter Licence Plate" />
-                                        <h:message for="plate" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Type" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:selectOneMenu value="#{carMB.typeID}" class="form-control" p:id="slType">
-                                            <f:selectItem itemValue="0" itemLabel="Select a type for the car"/>
-                                            <f:selectItems value="#{carTypeMB.showAll()}" var="typ" itemValue="#{typ.typeId}" itemLabel="#{typ.description}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Model" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:selectOneMenu value="#{carMB.modelID}" class="form-control" p:id="slModel">
-                                            <f:selectItem itemValue="0" itemLabel="Select a model for the car"/>
-                                            <f:selectItems value="#{carModelMB.showAll()}" var="mol" itemValue="#{mol.modelId}" itemLabel="#{mol.modelName}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Unit Price" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:inputText value="#{carMB.car.unitPrice}" id="unitPrice" p:data-mask="000,000,000,000" p:data-mask-reverse="true"  p:id="unitPrice" class="form-control" p:placeholder="Enter Unit Price" >
-                                            <f:convertNumber pattern="#,###" />
-                                        </h:inputText>
-                                        <h:message for="unitPrice" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Short Description" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:inputText value="#{carMB.car.shortDescripiton}" id="shortDescription" p:id="shortDescription" class="form-control" p:placeholder="Enter Short Description" />
-                                        <h:message for="shortDescription" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Description" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:inputTextarea value="#{carMB.car.description}" id="txaDescription" p:id="txaDescription" />
-                                        <h:message for="txaDescription" class="text-danger"/>  
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Thumbnail" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <div class="custom-file">
-                                            <h:inputFile value="#{carMB.file}" p:type="file" p:accept="image/*" class="custom-file-input" p:id="customFile"/>
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Status" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <h:selectOneMenu value="#{carMB.car.status}" class="form-control" p:id="slStatus">
-                                            <f:selectItem itemValue="0" itemLabel="The car is BROKEN"/>
-                                            <f:selectItem itemValue="1" itemLabel="The car is AVAILABLE"/>
-                                            <f:selectItem itemValue="2" itemLabel="The car is RENTED"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-                                
-                                
-                                <h:inputHidden p:id="carID" value="#{carMB.editID}" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{carMB.create()}" />
-                            <h:commandButton value="Save changes" p:id="btnSaveChange" class="btn btn-primary font-weight-bold" action="#{carMB.update()}" />
-                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
-                        </div>
-                    </h:form>
-                </div>
-            </div>
-        </div>
-        <!-- end:Form -->
-
-        <!--begin::Detail-->
-        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Car Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <h:form >
-                        <div class="modal-body">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <h:outputLabel value="Car Id" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtID" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Name" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtName" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Licence Plate" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtPlate" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Type" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtType" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Model" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtModel" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Unit Price" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtPrice" class="form-control" p:readonly="true" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Short Description" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtShort" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Description" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <textarea id="dtDescription" readonly="true" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Status" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <input id="dtStatus" class="form-control" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <h:outputLabel value="Thumbnail" class="col-3 col-form-label" />
-                                    <div class="col-9">
-                                        <img id="dtThumbnail" width="50%" /> 
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
-                        </div>
-                    </h:form>
-                </div>
-            </div>
-        </div>
-        <!--end:Detail-->
-
     </ui:define>
 
     <ui:define name="myScript">
-        <h:outputScript name="admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js" />
-        <h:outputScript name="admin/js/pages/crud/forms/editors/ckeditor-classic.js" />
-        <h:outputScript name="admin/js/manage/cars.js" />
         <script>
-            #{carMB.notice}
-            #{carMB.notice = ""}
+            #{carRegistrationMB.notice}
+            #{carRegistrationMB.notice = ""}
         </script>
     </ui:define>
 

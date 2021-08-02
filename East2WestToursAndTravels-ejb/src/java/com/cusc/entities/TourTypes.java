@@ -41,7 +41,6 @@ public class TourTypes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TypeId")
     private Integer typeId;
-    @Size(min = 2, max = 50, message = "Type name must be between 2 and 50 characters long.")
     @Column(name = "TypeName")
     private String typeName;
     @OneToMany(mappedBy = "typeId")

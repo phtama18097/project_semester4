@@ -91,17 +91,6 @@
                     </svg>
                 </span>New Record
             </a>
-            <a jsf:outcome="scheduleTours" class="btn btn-primary font-weight-bolder" >
-                <span class="svg-icon svg-icon-md">
-                    <svg   width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24" />
-                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                        </g>
-                    </svg>
-                </span>Schedule Tour
-            </a>
         </div>
     </ui:define>
 
@@ -122,12 +111,9 @@
                             </div>
                             <div class="ml-3">
                                 <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.tourName}"/></span>
+                                <a href="#" class="text-muted text-hover-primary"><h:outputText value="#{item.packageId.packageName}"/></a>
                             </div>
                         </div>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Package Name"/></f:facet>
-                        <h:outputText value="#{item.packageId.packageName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Unit Price"/></f:facet>
@@ -136,26 +122,87 @@
                         </h:outputText>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Departute Date"/></f:facet>
-                        <h:outputText value="#{item.departureDate}">
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
-                        </h:outputText>
+                        <f:facet name="header"><h:outputText value="Time"/></f:facet>
+                        <div class="d-flex align-items-center">
+                            <div class="ml-3">
+                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                                    <small>Depart </small>
+                                    <h:outputText value="#{item.departureDate}" class="label label-lg font-weight-bold label-light label-inline">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </h:outputText>
+                                </span>
+                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                                    <small>Return </small>
+                                    <h:outputText value="#{item.returnDate}" class="label label-lg font-weight-bold label-light label-inline">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </h:outputText>
+                                </span>
+                            </div>
+                        </div>
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Return Date"/></f:facet>
-                        <h:outputText value="#{item.returnDate}">
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
-                        </h:outputText>
+                        <f:facet name="header"><h:outputText value="Schedules"/></f:facet>
+                        <div jsf:rendered="#{!tourMB.notifyRestaurantSchedule(item.tourId)}" class="label label-lg font-weight-bold label-light-danger label-inline" >
+                            <h:outputText value="#{tourMB.countSchdedules(item.tourId)}" /> &nbsp;<span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M6,3 L6.45024814,7.5024814 C6.47849172,7.78491722 6.71615552,8 7,8 C7.28384448,8 7.52150828,7.78491722 7.54975186,7.5024814 L8,3 L9,3 L9.45024814,7.5024814 C9.47849172,7.78491722 9.71615552,8 10,8 C10.2838445,8 10.5215083,7.78491722 10.5497519,7.5024814 L11,3 L12,3 L12,7.5 C12,9.43299662 10.4329966,11 8.5,11 C6.56700338,11 5,9.43299662 5,7.5 L5,3 L6,3 Z" fill="#000000"/>
+                                        <path d="M8.5,13 L8.5,13 C9.06103732,13 9.52434927,13.4382868 9.55547002,13.9984604 L9.91679497,20.5023095 C9.96026576,21.2847837 9.36118509,21.9543445 8.57871083,21.9978153 C8.55249915,21.9992715 8.5262521,22 8.5,22 L8.5,22 C7.71631915,22 7.0810203,21.3647011 7.0810203,20.5810203 C7.0810203,20.5547682 7.08174882,20.5285212 7.08320503,20.5023095 L7.44452998,13.9984604 C7.47565073,13.4382868 7.93896268,13 8.5,13 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M17.5,15 L17.5,15 C18.0634495,15 18.5311029,15.4354411 18.571247,15.9974587 L18.8931294,20.503812 C18.9480869,21.2732161 18.3689134,21.9414932 17.5995092,21.9964506 C17.5663922,21.9988161 17.5332014,22 17.5,22 L17.5,22 C16.7286356,22 16.1033212,21.3746856 16.1033212,20.6033212 C16.1033212,20.5701198 16.1045051,20.536929 16.1068706,20.503812 L16.428753,15.9974587 C16.4688971,15.4354411 16.9365505,15 17.5,15 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M19,3 L19,13 L15,13 L15,7 C15,4.790861 16.790861,3 19,3 Z" fill="#000000"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
+                        <div jsf:rendered="#{tourMB.notifyRestaurantSchedule(item.tourId)}" class="label label-lg font-weight-bold label-light-success label-inline" >
+                            <h:outputText value="#{tourMB.countSchdedules(item.tourId)}" /> &nbsp;<span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M6,3 L6.45024814,7.5024814 C6.47849172,7.78491722 6.71615552,8 7,8 C7.28384448,8 7.52150828,7.78491722 7.54975186,7.5024814 L8,3 L9,3 L9.45024814,7.5024814 C9.47849172,7.78491722 9.71615552,8 10,8 C10.2838445,8 10.5215083,7.78491722 10.5497519,7.5024814 L11,3 L12,3 L12,7.5 C12,9.43299662 10.4329966,11 8.5,11 C6.56700338,11 5,9.43299662 5,7.5 L5,3 L6,3 Z" fill="#000000"/>
+                                        <path d="M8.5,13 L8.5,13 C9.06103732,13 9.52434927,13.4382868 9.55547002,13.9984604 L9.91679497,20.5023095 C9.96026576,21.2847837 9.36118509,21.9543445 8.57871083,21.9978153 C8.55249915,21.9992715 8.5262521,22 8.5,22 L8.5,22 C7.71631915,22 7.0810203,21.3647011 7.0810203,20.5810203 C7.0810203,20.5547682 7.08174882,20.5285212 7.08320503,20.5023095 L7.44452998,13.9984604 C7.47565073,13.4382868 7.93896268,13 8.5,13 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M17.5,15 L17.5,15 C18.0634495,15 18.5311029,15.4354411 18.571247,15.9974587 L18.8931294,20.503812 C18.9480869,21.2732161 18.3689134,21.9414932 17.5995092,21.9964506 C17.5663922,21.9988161 17.5332014,22 17.5,22 L17.5,22 C16.7286356,22 16.1033212,21.3746856 16.1033212,20.6033212 C16.1033212,20.5701198 16.1045051,20.536929 16.1068706,20.503812 L16.428753,15.9974587 C16.4688971,15.4354411 16.9365505,15 17.5,15 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M19,3 L19,13 L15,13 L15,7 C15,4.790861 16.790861,3 19,3 Z" fill="#000000"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>&nbsp;
+                        <div jsf:rendered="#{tourMB.notifyAccommodationSchedule(item.tourId)}" class="label label-lg font-weight-bold label-light-success label-inline" >
+                            <h:outputText value="#{tourMB.countAccommodationSchdedules(item.tourId)}" /> &nbsp;<span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M4,22 L2,22 C2,19.2385763 4.23857625,18 7,18 L17,18 C19.7614237,18 22,19.2385763 22,22 L20,22 C20,20.3431458 18.6568542,20 17,20 L7,20 C5.34314575,20 4,20.3431458 4,22 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                        <rect fill="#000000" x="1" y="14" width="22" height="6" rx="1"/>
+                                        <path d="M13,13 L11,13 L11,12 C11,11.4477153 10.5522847,11 10,11 L6,11 C5.44771525,11 5,11.4477153 5,12 L5,13 L4,13 C3.44771525,13 3,12.5522847 3,12 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12 C21,12.5522847 20.5522847,13 20,13 L19,13 L19,12 C19,11.4477153 18.5522847,11 18,11 L14,11 C13.4477153,11 13,11.4477153 13,12 L13,13 Z" fill="#000000" opacity="0.3"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
+                        <div jsf:rendered="#{!tourMB.notifyAccommodationSchedule(item.tourId)}" class="label label-lg font-weight-bold label-light-danger label-inline" >
+                            <h:outputText value="#{tourMB.countAccommodationSchdedules(item.tourId)}" /> &nbsp;<span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M4,22 L2,22 C2,19.2385763 4.23857625,18 7,18 L17,18 C19.7614237,18 22,19.2385763 22,22 L20,22 C20,20.3431458 18.6568542,20 17,20 L7,20 C5.34314575,20 4,20.3431458 4,22 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                        <rect fill="#000000" x="1" y="14" width="22" height="6" rx="1"/>
+                                        <path d="M13,13 L11,13 L11,12 C11,11.4477153 10.5522847,11 10,11 L6,11 C5.44771525,11 5,11.4477153 5,12 L5,13 L4,13 C3.44771525,13 3,12.5522847 3,12 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12 C21,12.5522847 20.5522847,13 20,13 L19,13 L19,12 C19,11.4477153 18.5522847,11 18,11 L14,11 C13.4477153,11 13,11.4477153 13,12 L13,13 Z" fill="#000000" opacity="0.3"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Status"/></f:facet>
                         <h:outputText class="label label-lg font-weight-bold label-light-success label-inline" rendered="#{item.status == 1}" value="Active" />
-                        <h:outputText rendered="#{item.status == 0}" class="label label-lg font-weight-bold label-light-danger label-inline" value="Disable"/>
+                        <h:outputText rendered="#{item.status == 0}" class="label label-lg font-weight-bold label-light-danger label-inline" value="Disable"/>&nbsp;
+
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Actions"/></f:facet>
                         <div class="dropdown dropdown-inline">
-                            <a onclick="detailObject(#{item.tourId}, '#{item.tourName}', '#{item.packageId.packageName}',#{item.unitPrice}, '#{item.shortDescription}', '#{item.description}', '#{item.departureDate}', '#{item.returnDate}',#{item.minQuantity},#{item.maxQuantity},#{item.status},'#{item.thumbnail}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                            <a onclick="detailObject(#{item.tourId}, '#{item.tourName}', '#{item.packageId.packageName}',#{item.unitPrice}, '#{item.shortDescription}', '#{item.description}', '#{item.departureDate}', '#{item.returnDate}',#{item.minQuantity},#{item.maxQuantity},#{item.status}, '#{item.thumbnail}')" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
                                 <span class="svg-icon svg-icon-md">
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -167,13 +214,39 @@
                                 </span>
                             </a>
                         </div>
-                        <a onclick="editObject(#{item.tourId}, '#{item.tourName}',#{item.packageId.packageId},#{item.unitPrice}, '#{item.shortDescription}', '#{item.description}', '#{item.departureDate}', '#{item.returnDate}',#{item.minQuantity},#{item.maxQuantity},#{item.status});" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                        <a id="editbutton-#{item.tourId}" onclick="editObject(#{item.tourId}, '#{item.tourName}',#{item.packageId.packageId},#{item.unitPrice}, '#{item.shortDescription}', '#{item.description}', '#{item.departureDate}', '#{item.returnDate}',#{item.minQuantity},#{item.maxQuantity},#{item.status});" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                             <span class="svg-icon svg-icon-md">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
                                         <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "/>
                                         <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a onclick="$('#btnViewRestaurant-#{item.tourId}').click();" class="btn btn-sm btn-clean btn-icon mr-2" title="Schedule Restaurants">
+                            <span class="svg-icon svg-icon-md">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M12.5,19 C8.91014913,19 6,16.0898509 6,12.5 C6,8.91014913 8.91014913,6 12.5,6 C16.0898509,6 19,8.91014913 19,12.5 C19,16.0898509 16.0898509,19 12.5,19 Z M12.5,16.4 C14.6539105,16.4 16.4,14.6539105 16.4,12.5 C16.4,10.3460895 14.6539105,8.6 12.5,8.6 C10.3460895,8.6 8.6,10.3460895 8.6,12.5 C8.6,14.6539105 10.3460895,16.4 12.5,16.4 Z M12.5,15.1 C11.0640597,15.1 9.9,13.9359403 9.9,12.5 C9.9,11.0640597 11.0640597,9.9 12.5,9.9 C13.9359403,9.9 15.1,11.0640597 15.1,12.5 C15.1,13.9359403 13.9359403,15.1 12.5,15.1 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M22,13.5 L22,13.5 C22.2864451,13.5 22.5288541,13.7115967 22.5675566,13.9954151 L23.0979976,17.8853161 C23.1712756,18.4226878 22.7950533,18.9177172 22.2576815,18.9909952 C22.2137086,18.9969915 22.1693798,19 22.125,19 L22.125,19 C21.5576012,19 21.0976335,18.5400324 21.0976335,17.9726335 C21.0976335,17.9415812 21.0990414,17.9105449 21.1018527,17.8796201 L21.4547321,13.9979466 C21.4803698,13.7159323 21.7168228,13.5 22,13.5 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M24,5 L24,12 L21,12 L21,8 C21,6.34314575 22.3431458,5 24,5 Z" fill="#000000" transform="translate(22.500000, 8.500000) scale(-1, 1) translate(-22.500000, -8.500000) "/>
+                                        <path d="M0.714285714,5 L1.03696911,8.32873399 C1.05651593,8.5303749 1.22598532,8.68421053 1.42857143,8.68421053 C1.63115754,8.68421053 1.80062692,8.5303749 1.82017375,8.32873399 L2.14285714,5 L2.85714286,5 L3.17982625,8.32873399 C3.19937308,8.5303749 3.36884246,8.68421053 3.57142857,8.68421053 C3.77401468,8.68421053 3.94348407,8.5303749 3.96303089,8.32873399 L4.28571429,5 L5,5 L5,8.39473684 C5,9.77544872 3.88071187,10.8947368 2.5,10.8947368 C1.11928813,10.8947368 -7.19089982e-16,9.77544872 -8.8817842e-16,8.39473684 L0,5 L0.714285714,5 Z" fill="#000000"/>
+                                        <path d="M2.5,12.3684211 L2.5,12.3684211 C2.90055463,12.3684211 3.23115721,12.6816982 3.25269782,13.0816732 L3.51381042,17.9301218 C3.54396441,18.4900338 3.11451066,18.9683769 2.55459863,18.9985309 C2.53641556,18.9995101 2.51820943,19 2.5,19 L2.5,19 C1.93927659,19 1.48472045,18.5454439 1.48472045,17.9847204 C1.48472045,17.966511 1.48521034,17.9483049 1.48618958,17.9301218 L1.74730218,13.0816732 C1.76884279,12.6816982 2.09944537,12.3684211 2.5,12.3684211 Z" fill="#000000" opacity="0.3"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a onclick="$('#btnViewAccommodation-#{item.tourId}').click();" class="btn btn-sm btn-clean btn-icon mr-2" title="Schedule Accommodations">
+                            <span class="svg-icon svg-icon-md">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M4,22 L2,22 C2,19.2385763 4.23857625,18 7,18 L17,18 C19.7614237,18 22,19.2385763 22,22 L20,22 C20,20.3431458 18.6568542,20 17,20 L7,20 C5.34314575,20 4,20.3431458 4,22 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                        <rect fill="#000000" x="1" y="14" width="22" height="6" rx="1"/>
+                                        <path d="M13,13 L11,13 L11,12 C11,11.4477153 10.5522847,11 10,11 L6,11 C5.44771525,11 5,11.4477153 5,12 L5,13 L4,13 C3.44771525,13 3,12.5522847 3,12 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12 C21,12.5522847 20.5522847,13 20,13 L19,13 L19,12 C19,11.4477153 18.5522847,11 18,11 L14,11 C13.4477153,11 13,11.4477153 13,12 L13,13 Z" fill="#000000" opacity="0.3"/>
                                     </g>
                                 </svg>
                             </span>
@@ -189,8 +262,10 @@
                                 </svg>
                             </span>
                         </a>
-                        <h:form>
+                        <h:form style="display: none">
                             <h:commandButton p:id="btnDelete-#{item.tourId}" action="#{tourMB.delete(item)}" style="display: none"/>
+                            <h:commandButton p:id="btnViewRestaurant-#{item.tourId}" action="#{tourMB.viewRestaurantSchedule(item.tourId)}" style="display: none"/>
+                            <h:commandButton p:id="btnViewAccommodation-#{item.tourId}" action="#{tourMB.viewAccommodationSchedule(item.tourId)}" style="display: none"/>
                         </h:form>
                     </h:column>
 
@@ -436,6 +511,8 @@
         <script>
             #{tourMB.notice}
             #{tourMB.notice = ""}
+            #{tourMB.message}
+            #{tourMB.message = ""}
         </script>
     </ui:define>
 

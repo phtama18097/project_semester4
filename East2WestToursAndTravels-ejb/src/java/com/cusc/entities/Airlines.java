@@ -41,7 +41,7 @@ public class Airlines implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AirlineId")
     private Integer airlineId;
-    @Size(max = 50)
+    @Size(min = 2, max = 50, message = "The length of the name must be between 2 and 50 characters.")
     @Column(name = "AirlineName")
     private String airlineName;
     @OneToMany(mappedBy = "airlineId")

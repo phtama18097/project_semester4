@@ -14,13 +14,16 @@ import com.cusc.entities.Destinations;
 import com.cusc.entities.RestaurantSchedules;
 import com.cusc.entities.Tours;
 import com.cusc.sessionbean.AccommodationSchedulesFacadeLocal;
+import com.cusc.sessionbean.AccommodationsFacadeLocal;
 import com.cusc.sessionbean.CarImagesFacadeLocal;
 import com.cusc.sessionbean.CarModelsFacadeLocal;
 import com.cusc.sessionbean.CarTypesFacadeLocal;
 import com.cusc.sessionbean.CarsFacadeLocal;
 import com.cusc.sessionbean.DestinationImagesFacadeLocal;
 import com.cusc.sessionbean.DestinationSchedulesFacadeLocal;
+import com.cusc.sessionbean.DestinationsFacadeLocal;
 import com.cusc.sessionbean.RestaurantSchedulesFacadeLocal;
+import com.cusc.sessionbean.RestaurantsFacadeLocal;
 import com.cusc.sessionbean.TourTypesFacadeLocal;
 import com.cusc.sessionbean.ToursFacadeLocal;
 import javax.inject.Named;
@@ -39,6 +42,15 @@ import javax.ejb.EJB;
 @Named(value = "businessMB")
 @SessionScoped
 public class BusinessMB implements Serializable {
+
+    @EJB
+    private AccommodationsFacadeLocal accommodationsFacade;
+
+    @EJB
+    private RestaurantsFacadeLocal restaurantsFacade;
+
+    @EJB
+    private DestinationsFacadeLocal destinationsFacade;
 
     @EJB
     private CarImagesFacadeLocal carImagesFacade;
@@ -184,11 +196,55 @@ public class BusinessMB implements Serializable {
         tourImages = new ArrayList<>();
         if (schedule.size() > 0) {
             for (DestinationSchedules item : schedule) {
-                tourImages.add(item.getDestinations());
+                tourImages.add(destinationsFacade.find(item.getDestinationSchedulesPK().getDestinationId()));
             }
-            tourImage = schedule.get(0).getDestinations();
+            tourImage = destinationsFacade.find(schedule.get(0).getDestinationSchedulesPK().getDestinationId());
         }
         return "tourDetails";
+    }
+    
+    public List<DestinationSchedules> showDestinationDetail(int id){
+        return destinationSchedulesFacade.findDestinations(id);
+    }
+    
+    public String showResName(int id) {
+        return restaurantsFacade.find(id).getRestaurantName();
+    }
+
+    public String showResDescription(int id) {
+        return restaurantsFacade.find(id).getDescription();
+    }
+    
+    public String showResThumbnail(int id) {
+        return restaurantsFacade.find(id).getThumbnail();
+    }
+
+    public String showAccName(int id) {
+        return accommodationsFacade.find(id).getAccommodationName();
+    }
+    
+    public String showAccDescription(int id) {
+        return accommodationsFacade.find(id).getDescription();
+    }
+
+    public String showAccThumbnail(int id) {
+        return accommodationsFacade.find(id).getThumbnail();
+    }
+    
+    public String showDestinationName(int id) {
+        return destinationsFacade.find(id).getDestinationName();
+    }
+    
+    public String showDestinationDescription(int id) {
+        return destinationsFacade.find(id).getDescription();
+    }
+
+    public String showDestinationThumbnail(int id) {
+        return destinationsFacade.find(id).getThumbnail();
+    }
+
+    public String showTypeName(int id) {
+        return destinationsFacade.find(id).getTypeId().getTypeName();
     }
     
     public String detailCar(int id){

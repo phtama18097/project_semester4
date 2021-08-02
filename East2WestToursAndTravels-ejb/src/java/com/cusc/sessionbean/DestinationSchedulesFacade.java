@@ -8,9 +8,7 @@ package com.cusc.sessionbean;
 import com.cusc.entities.DestinationSchedules;
 import com.cusc.entities.Destinations;
 import com.cusc.entities.Tours;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -73,7 +71,22 @@ public class DestinationSchedulesFacade extends AbstractFacade<DestinationSchedu
         query.setParameter(1, packageID);
         return query.getResultList();
     }
+    
+    @Override
+    public List<Destinations> findDestinationForPackage(int packageID){
+        Query query = em.createQuery("SELECT d FROM Destinations d WHERE d.destinationId NOT IN (SELECT p.destinationSchedulesPK.destinationId FROM DestinationSchedules p WHERE p.destinationSchedulesPK.packageId = ?1)");
+        query.setParameter(1, packageID);
+        return query.getResultList();
+    }
+    
 
+    @Override
+    public int countSchedule(int packageId){
+        Query query = em.createQuery("SELECT d FROM DestinationSchedules d WHERE d.destinationSchedulesPK.packageId = ?1");
+        query.setParameter(1, packageId);
+        return query.getResultList().size();  
+    }
+    
     public DestinationSchedulesFacade() {
         super(DestinationSchedules.class);
     }

@@ -41,6 +41,12 @@ public interface DestinationSchedulesFacadeLocal {
 
     public List<DestinationSchedules> findDestinations(int packageID);
 
+    public List<Destinations> findDestinationForPackage(int packageID);
+
+    public int countSchedule(int packageId);
+
+
+
     
     
 }

@@ -26,6 +26,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -56,16 +58,13 @@ public class Tours implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TourId")
     private Integer tourId;
-    @Size(max = 120)
     @Column(name = "TourName")
     private String tourName;
     @Column(name = "UnitPrice")
     private BigInteger unitPrice;
-    @Size(max = 200)
     @Column(name = "ShortDescription")
     private String shortDescription;
     @Lob
-    @Size(max = 2147483647)
     @Column(name = "Description")
     private String description;
     @Column(name = "DepartureDate")

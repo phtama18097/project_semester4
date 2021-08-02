@@ -48,7 +48,7 @@
                                         <div id="product-zoom-gallery" class="product-image-gallery">
                                             <c:forEach items="#{businessMB.tourImages}" var="im" >
                                                 <a onclick="changePicture('#{im.thumbnail}')" class="product-gallery-item " >
-                                                    <img src="#{request.contextPath}/uploads/imgDestinations/#{im.thumbnail}" style="max-height: 40%" alt="product side"  />
+                                                    <img src="#{request.contextPath}/uploads/imgDestinations/#{im.thumbnail}" alt="product side"  />
                                                 </a>
                                             </c:forEach>
 
@@ -136,14 +136,14 @@
                                         <div class="review">
                                             <div class="row no-gutters">
                                                 <div class="col-2">
-                                                    <h4><a href="#"><h:outputText value="#{dt.destinations.destinationName}"/></a></h4>  
+                                                    <h4><a href="#"><h:outputText value="#{businessMB.showDestinationName(dt.destinationSchedulesPK.destinationId)}"/></a></h4>  
                                                     <span class="review-date"><h:outputText value="#{dt.dayQuantity} day(s)" style="color: #1cc0a0;" /></span>
                                                 </div>
                                                 <div class="col-10 row" style="padding-bottom: 2%">
                                                     <div class="col-2">
-                                                        <img src="#{request.contextPath}/uploads/imgDestinations/#{dt.destinations.thumbnail}" alt="destination" />
+                                                        <img src="#{request.contextPath}/uploads/imgDestinations/#{businessMB.showDestinationThumbnail(dt.destinationSchedulesPK.destinationId)}" alt="destination" />
                                                     </div>
-                                                    <c:forEach items="#{businessMB.showDestinationImages(dt.destinations.destinationId)}" var="des">
+                                                    <c:forEach items="#{businessMB.showDestinationImages(dt.destinationSchedulesPK.destinationId)}" var="des">
                                                         <div class="col-2">
                                                             <img src="#{request.contextPath}/uploads/imgDestinations/#{des.fileName}" alt="destination" />
                                                         </div>
@@ -152,7 +152,7 @@
                                                 <div class="col-2"></div>
                                                 <div class="col-10">
                                                     <div class="review-content">
-                                                        <h:outputText value="#{dt.destinations.description}" escape="false"/>
+                                                        <h:outputText value="#{businessMB.showDestinationDescription(dt.destinationSchedulesPK.destinationId)}" escape="false"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,7 +168,7 @@
                                         <div class="review">
                                             <div class="row no-gutters">
                                                 <div class="col-2">
-                                                    <h4><a href="#"><h:outputText value="#{rs.restaurants.restaurantName}"/></a></h4>  
+                                                    <h4><a href="#"><h:outputText value="#{businessMB.showResName(rs.restaurantSchedulesPK.restaurantId)}"/></a></h4>  
                                                     <span class="review-date">
                                                         <h:outputText value="#{rs.visitDate}" style="color: #1cc0a0;">
                                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -177,11 +177,11 @@
                                                 </div>
                                                 <div class="col-10 row" style="padding-bottom: 2%">
                                                     <div class="col-4">
-                                                        <img src="#{request.contextPath}/uploads/imgRestaurants/#{rs.restaurants.thumbnail}" alt="restaurant" />
+                                                        <img src="#{request.contextPath}/uploads/imgRestaurants/#{businessMB.showResThumbnail(rs.restaurantSchedulesPK.restaurantId)}" alt="restaurant" />
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="review-content">
-                                                            <h:outputText value="#{rs.restaurants.description}" escape="false"/>
+                                                            <h:outputText value="#{businessMB.showResDescription(rs.restaurantSchedulesPK.restaurantId)}" escape="false"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,7 +199,7 @@
                                         <div class="review">
                                             <div class="row no-gutters">
                                                 <div class="col-2">
-                                                    <h4><a href="#"><h:outputText value="#{ac.accommodations.accommodationName}"/></a></h4>  
+                                                    <h4><a href="#"><h:outputText value="#{businessMB.showAccName(ac.accommodationSchedulesPK.accommodationId)}"/></a></h4>  
                                                     <span class="review-date">
                                                         <h:outputText value="#{ac.visitDate}" style="color: #1cc0a0;">
                                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -208,11 +208,11 @@
                                                 </div>
                                                 <div class="col-10 row" style="padding-bottom: 2%">
                                                     <div class="col-4">
-                                                        <img src="#{request.contextPath}/uploads/imgAccommodations/#{ac.accommodations.thumbnail}" alt="accommodation" />
+                                                        <img src="#{request.contextPath}/uploads/imgAccommodations/#{businessMB.showAccThumbnail(ac.accommodationSchedulesPK.accommodationId)}" alt="accommodation" />
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="review-content">
-                                                            <h:outputText value="#{ac.accommodations.description}" escape="false"/>
+                                                            <h:outputText value="#{businessMB.showAccDescription(ac.accommodationSchedulesPK.accommodationId)}" escape="false"/>
                                                         </div>
                                                     </div>
                                                 </div>

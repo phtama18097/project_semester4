@@ -29,5 +29,9 @@ public interface RestaurantsFacadeLocal {
     List<Restaurants> findRange(int[] range);
 
     int count();
+
+    public List<Restaurants> findRestaurantsForTour(int id);
+
+    public int countSchedule(int id);
     
 }

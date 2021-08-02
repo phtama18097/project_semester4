@@ -41,7 +41,6 @@ public class FeedbackTypes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TypeId")
     private Integer typeId;
-    @Size(max = 50)
     @Column(name = "TypeName")
     private String typeName;
     @OneToMany(mappedBy = "typeId")

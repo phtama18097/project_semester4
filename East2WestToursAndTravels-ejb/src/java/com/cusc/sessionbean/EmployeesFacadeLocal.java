@@ -31,5 +31,11 @@ public interface EmployeesFacadeLocal {
     int count();
 
     public Employees login(String username, String password);
+
+    public boolean validateEmail(String email);
+
+    public boolean validateUsername(String username);
+
+    public boolean validateExistedEmail(String newEmail, String existedEmail);
     
 }

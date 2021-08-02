@@ -125,6 +125,7 @@ $(window).keydown(function (e) {
         });
 });
 
+
 var err = $('#javax_faces_developmentstage_messages').text();
 if (err !== "") {
     $('#newItem').modal();

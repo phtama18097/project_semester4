@@ -144,6 +144,12 @@
         <script>
             #{employeeLoginMB.notice}
             #{employeeLoginMB.notice = ""}
+            #{employeeLoginMB.message}
+            #{employeeLoginMB.message = ""}
+
+            function openModal(){
+                $('#newItem').modal();
+            }
         </script>
 
         <ui:insert name="myScript"></ui:insert>

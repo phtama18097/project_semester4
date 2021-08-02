@@ -16,6 +16,7 @@ import com.cusc.sessionbean.ToursFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.Part;
@@ -38,6 +39,7 @@ public class EmployeeLoginMB implements Serializable {
     private String username = "";
     private String password = "";
     private String notice = "";
+    private String message = "";
     private boolean isLoggedIn = false;
 
     private Part file;
@@ -95,26 +97,68 @@ public class EmployeeLoginMB implements Serializable {
     public void updateProfile() {
         try {
             Employees c = employeesFacade.find(empSignedIn.getEmployeeId());
+            boolean isInvalid = false;
+            if (empSignedIn.getFirstName().length() < 1 || empSignedIn.getFirstName().length() > 20) {
+                notice += NotificationTools.error("The length of the firstname must be between 1 and 20 characters.");
+                isInvalid = true;
+            }
+            if (empSignedIn.getLastName().length() < 1 || empSignedIn.getLastName().length() > 20) {
+                notice += NotificationTools.error("The length of the lastname must be between 1 and 20 characters.");
+                isInvalid = true;
+            }
+            if (empSignedIn.getBirthDate() == null) {
+                notice += NotificationTools.error("Customer's birthdate must be entered.");
+                isInvalid = true;              
+            }
+            if (empSignedIn.getBirthDate() != null && !dobIsValid(empSignedIn.getBirthDate())) {
+                    notice += NotificationTools.error("Customer's age must be greater than 14.");
+                    isInvalid = true;
+                }
+            if (empSignedIn.getPhone().length() < 5 || empSignedIn.getPhone().length() > 20) {
+                notice += NotificationTools.error("The length of the phone number must be between 5 and 20 characters.");
+                isInvalid = true;
+            }
+            if (empSignedIn.getEmail().length() < 5 || empSignedIn.getEmail().length() > 60) {
+                notice += NotificationTools.error("The length of the email must be between 5 and 60 characters.");
+                isInvalid = true;
+            }
+            if (employeesFacade.validateExistedEmail(empSignedIn.getEmail(), c.getEmail())) {
+                notice += NotificationTools.error(CommonConstant.EXISTED_EMAIL_NOTICE);
+                isInvalid = true;
+            }
+            if (empSignedIn.getAddress().length() < 5 || empSignedIn.getAddress().length() > 120) {
+                notice += NotificationTools.error("The length of the address must be between 5 and 120 characters.");
+                isInvalid = true;
+            }
             if (file != null) {
-                ImageTools.deleteFile(c.getAvatar(), UPLOAD_DIRECTORY);
                 String result = ImageTools.uploadFile(file, UPLOAD_DIRECTORY);
                 switch (result) {
                     case "":
-                        notice = NotificationTools.info(CommonConstant.IMAGE_IS_NULL_NOTICE);
-                        return;
+                        notice += NotificationTools.info(CommonConstant.IMAGE_IS_NULL_NOTICE);
+                        isInvalid = true;
+                        break;
                     case CommonConstant.FILE_IO:
-                        notice = NotificationTools.error(CommonConstant.UPLOADING_FAIL_NOTICE);
-                        return;
+                        notice += NotificationTools.error(CommonConstant.UPLOADING_FAIL_NOTICE);
+                        isInvalid = true;
+                        break;
                     case CommonConstant.FILE_EXTENSION:
-                        notice = NotificationTools.error(CommonConstant.INVALID_IMAGE_EXTENSION_NOTICE);
-                        return;
+                        notice += NotificationTools.error(CommonConstant.INVALID_IMAGE_EXTENSION_NOTICE);
+                        isInvalid = true;
+                        break;
                     case CommonConstant.FILE_SIZE:
-                        notice = NotificationTools.error(CommonConstant.INVALID_FILE_SIZE_NOTICE);
-                        return;
+                        notice += NotificationTools.error(CommonConstant.INVALID_FILE_SIZE_NOTICE);
+                        isInvalid = true;
+                        break;
                     default:
                         c.setAvatar(result);
+                        ImageTools.deleteFile(empSignedIn.getAvatar(), UPLOAD_DIRECTORY);
                         break;
                 }
+            }
+            if (isInvalid) {
+                message = NotificationTools.editModal(c.getEmployeeId());
+                setEmpSignedIn(c);
+                return;
             }
             c.setFirstName(empSignedIn.getFirstName());
             c.setLastName(empSignedIn.getLastName());
@@ -132,6 +176,22 @@ public class EmployeeLoginMB implements Serializable {
         }
     }
 
+    private boolean dobIsValid(Date value) {
+        Date today = new Date(System.currentTimeMillis());
+        if ((today.getYear() - value.getYear()) == 14) {
+            if ((today.getMonth() - value.getMonth()) == 0) {
+                if ((today.getDate() - value.getDate()) > 0) {
+                    return false;
+                }
+            } else if ((today.getMonth() - value.getMonth()) > 0) {
+                return false;
+            }
+        } else if ((today.getYear() - value.getYear()) < 14) {
+            return false;
+        }
+        return true;
+    }
+    
     public void changePassword() {
         if (!PasswordTools.encrypt(password).equals(empSignedIn.getPassword())) {
             notice = NotificationTools.error("Your current password is inccorrect.");
@@ -228,6 +288,14 @@ public class EmployeeLoginMB implements Serializable {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -55,16 +56,12 @@ public class Employees implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EmployeeId")
     private Integer employeeId;
-    @Size(max = 50)
     @Column(name = "Username")
     private String username;
-    @Size(max = 60)
     @Column(name = "Password")
     private String password;
-    @Size(max = 20)
     @Column(name = "FirstName")
     private String firstName;
-    @Size(max = 20)
     @Column(name = "LastName")
     private String lastName;
     @Column(name = "Gender")
@@ -72,18 +69,12 @@ public class Employees implements Serializable {
     @Column(name = "BirthDate")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 60)
     @Column(name = "Email")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 20)
     @Column(name = "Phone")
     private String phone;
-    @Size(max = 120)
     @Column(name = "Address")
     private String address;
-    @Size(max = 100)
     @Column(name = "Avatar")
     private String avatar;
     @Column(name = "Point")

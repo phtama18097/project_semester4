@@ -41,7 +41,6 @@ public class CarModels implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ModelId")
     private Integer modelId;
-    @Size(max = 50)
     @Column(name = "ModelName")
     private String modelName;
     @OneToMany(mappedBy = "modelId")

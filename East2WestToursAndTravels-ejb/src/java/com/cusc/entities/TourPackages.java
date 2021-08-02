@@ -44,11 +44,9 @@ public class TourPackages implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PackageId")
     private Integer packageId;
-    @Size(max = 120)
     @Column(name = "PackageName")
     private String packageName;
     @Lob
-    @Size(max = 2147483647)
     @Column(name = "Description")
     private String description;
     @Column(name = "Status")

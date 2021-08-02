@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="mainLayout.xhtml">
+
+    <ui:define name="subheader">
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <h5 class="text-dark font-weight-bold my-1 mr-5">Profile</h5>
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="" class="text-muted">Schedule Accommodations for <h:outputText value="#{tourMB.scheduledTour.tourName}" /></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <a jsf:outcome="scheduleTours" class="btn btn-primary font-weight-bolder" >
+                <span class="svg-icon svg-icon-md">
+                    <svg   width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"/>
+                            <path d="M6.82866499,18.2771971 L13.5693679,12.3976203 C13.7774696,12.2161036 13.7990211,11.9002555 13.6175044,11.6921539 C13.6029128,11.6754252 13.5872233,11.6596867 13.5705402,11.6450431 L6.82983723,5.72838979 C6.62230202,5.54622572 6.30638833,5.56679309 6.12422426,5.7743283 C6.04415337,5.86555116 6,5.98278612 6,6.10416552 L6,17.9003957 C6,18.1765381 6.22385763,18.4003957 6.5,18.4003957 C6.62084305,18.4003957 6.73759731,18.3566309 6.82866499,18.2771971 Z" fill="#000000"/>
+                            <rect fill="#000000" opacity="0.3" transform="translate(16.500000, 12.000000) scale(-1, 1) translate(-16.500000, -12.000000) " x="15" y="6" width="3" height="12" rx="1"/>
+                        </g>
+                    </svg>
+                </span>Schedule Restaurants
+            </a>&nbsp;
+            <a href="#{request.contextPath}/faces/admin/manageTours.xhtml" type="button" class="btn btn-light-primary font-weight-bold"  id="btnCloseChange" data-dismiss="modal">Back</a>
+        </div>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="d-flex flex-row">
+            <div class="col-sm-5">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">
+                                <small>Tour: </small>
+                                <h:outputText value="#{tourMB.scheduledTour.tourName}" />
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h:dataTable value="#{tourMB.showAccommodationSchedules(tourMB.scheduledTour.tourId)}" var="item" class="table table-sm" >
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                <h:outputText style="font-size: 13px" value="#{item.accommodationSchedulesPK.accommodationId}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                                <div class="d-flex align-items-center">
+                                    <div class="symbol symbol-50 flex-shrink-0">
+                                        <h:graphicImage value="/uploads/imgAccommodations/#{tourMB.showAccThumbnail(item.accommodationSchedulesPK.accommodationId)}" alt="thumbnail"/> 
+                                    </div>
+                                    <div class="ml-3">
+                                        <span style="font-size: 13px" class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{tourMB.showAccName(item.accommodationSchedulesPK.accommodationId)}"/></span>
+                                        <a href="#" class="text-muted text-hover-primary">
+                                            <h:outputText style="font-size: 13px" value="#{item.visitDate}" >
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                            </h:outputText>
+                                        </a>
+                                    </div>
+                                </div>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Action"/></f:facet>
+                                <a onclick="confirmDelete(#{item.accommodationSchedulesPK.accommodationId});" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                    <span class="svg-icon svg-icon-md">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"/>
+                                                <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </a>
+                                <h:form style="display: none">
+                                    <h:commandButton p:id="btnDeleteDes-#{item.accommodationSchedulesPK.accommodationId}" style="display: none" action="#{tourMB.deleteAccommodationSchedule(item.accommodationSchedulesPK.accommodationId)}" />
+                                </h:form>
+                            </h:column>  
+
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">
+                                Add Accommodation for <h:outputText value="#{tourMB.scheduledTour.tourName}" />
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h:dataTable value="#{tourMB.showAccommodationForTour(tourMB.scheduledTour.tourId)}" var="item" class="table table-separate table-head-custom table-checkable" id="table-admin" >
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+                                <h:outputText value="#{item.accommodationId}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                                <div class="d-flex align-items-center">
+                                    <div class="symbol symbol-50 flex-shrink-0">
+                                        <h:graphicImage value="/uploads/imgAccommodations/#{item.thumbnail}" alt="thumbnail"/> 
+                                    </div>
+                                    <div class="ml-3">
+                                        <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2"><h:outputText value="#{item.accommodationName}"/></span>
+                                        <a href="#" class="text-muted text-hover-primary">
+                                            <h:outputText value="#{item.townId.townName}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="Action"/></f:facet>
+                                <a onclick="addAccommodation(#{item.accommodationId});" class="btn btn-sm btn-clean btn-icon" title="Add Accommodation">
+                                    <span class="svg-icon svg-icon-md">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                                <path d="M11,14 L9,14 C8.44771525,14 8,13.5522847 8,13 C8,12.4477153 8.44771525,12 9,12 L11,12 L11,10 C11,9.44771525 11.4477153,9 12,9 C12.5522847,9 13,9.44771525 13,10 L13,12 L15,12 C15.5522847,12 16,12.4477153 16,13 C16,13.5522847 15.5522847,14 15,14 L13,14 L13,16 C13,16.5522847 12.5522847,17 12,17 C11.4477153,17 11,16.5522847 11,16 L11,14 Z" fill="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin::Form-->
+        <div class="modal fade" id="newItem" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Choose visit date for <h:outputText value="#{tourMB.scheduledTour.tourName}" /></div></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <h:form>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <h:outputLabel value="Visit Date" class="col-2 col-form-label" />
+                                    <div class="col-10">
+                                        <h:inputText value="#{tourMB.accommodationVisitDate}" p:type="date" id="quantity" p:id="quantity" class="form-control" >
+                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                        </h:inputText>
+                                        <h:message for="quantity" class="text-danger"/>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h:inputHidden p:id="resID" value="#{tourMB.accommodationId}" />
+                        <div class="modal-footer">
+                            <h:commandButton value="Add New" p:id="btnAddNew" class="btn btn-primary font-weight-bold" action="#{tourMB.scheduleAccommodation()}" />
+                            <button type="button" class="btn btn-light-primary font-weight-bold" id="btnCloseChange" data-dismiss="modal">Close</button>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <!-- end:Form -->
+
+    </ui:define>
+
+    <ui:define name="myScript">
+        <h:outputScript name="admin/js/manage/scheduleAccommodations.js" />
+        <script>
+            #{tourMB.notice}
+            #{tourMB.notice = ""}
+            #{tourMB.message}
+            #{tourMB.message = ""}
+        </script>
+    </ui:define>
+
+</ui:composition>
